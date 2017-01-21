@@ -1,25 +1,17 @@
-MusicTitle：Sweethearts, Composer: H F Neilsson, The tempo is: 100 quarter notes per minute, G major. Key signature: F-sharp, Time Signature :4 2
+MusicTitle：Sweethearts, Composer: H F Neilsson    tempo is: 100 quarter notes per minute, G major. Key signature: F-sharp, Time Signature :2 4
 right hand
 1: eighth D5 G5 B5 D6 , 16th B5 , 16th D6 , 16th D6 , 16th B5 , 16th A5 , 16th G5
-2: eighth A4 D5 F5 , 16th D5 , 16th E5 , 16th E5 , 16th D5 , 16th C5 , 16th A4
-3: eighth F4 A4 D5 , 16th sharp C5 , crescendo , 16th D5 , 16th sharp D5 , 16th E5 , 16th sharp E5 , 16th F5 , stop
+2: eighth A4 D5 F5 , 16th D5 , 8th E5 , 16th D5 , 16th C5 , 16th A4
+3: eighth F4 A4 D5 , 16th sharp C5 , crescendo , 16th D5 , 16th sharp D5 , 16th E5 , 16th sharp E5 , 16th F5
 4: eighth G5 , 16th D5 , 16th D5 , eighth D5 , eighth D5
 5: loud , eighth D5 D6 , 16th G5 B5 , 16th D5 D6 , 16th D5 D6 , 16th B5 , 16th A5 , 16th G5
-6: quarter D5 F5 , eighth rest , eighth rest , eighth rest , 16th D5 , 16th E5 , 16th E5 , 16th D5 , 16th C5 , 16th A4
-7: quarter D5 F5 , eighth rest , eighth rest , eighth rest , 16th D5 , 16th E5 , 16th E5 , 16th D5 , 16th C5 , 16th A4
-8: quarter D5 F5 , eighth rest , eighth rest , eighth rest , 16th D5 , 16th E5 , 16th E5 , 16th D5 , 16th C5 , 16th A4
-9: quarter D5 F5 , eighth rest , eighth rest , eighth rest , 16th D5 , 16th E5 , 16th E5 , 16th D5 , 16th C5 , 16th A4
-10: eighth D5 C6 , 16th F5 A5 , 16th D5 C6 , 16th D5 C6 , 16th F5 A5 , 16th sharp E5 sharp G5 , 16th F5 A5
-11: quarter B4 D5 B5 , eighth rest
-12: quarter B4 D5 B5 , eighth rest
-13: very loud , eighth B4 B5 , 16th sharp D5 F5 , 16th B4 B5 , 16th B4 B5 , 16th A5 , 16th G5 , 16th F5
-14: eighth G4 G5 , 16th B4 E5 , 16th G4 G5 , 16th G4 G5 , 16th F4 F5 , 16th G4 G5 , 16th sharp G4 sharp G5
-15: eighth A4 A5 , 16th sharp C5 E5 , 16th A4 A5 , 16th A4 A5 , 16th B4 G5 , 16th A4 F5 , 16th G4 E5
-16: eighth F4 D5 , eighth rest , quarter D5 F5 D6 , quarter rest , quarter D4 A4 C5
-17: eighth F4 D5 , eighth rest , quarter D5 F5 D6 , quarter rest , quarter D4 A4 C5
-18: eighth F4 D5 , eighth rest , quarter D5 F5 D6 , quarter rest , quarter D4 A4 C5
-19: eighth F4 D5 , eighth rest , quarter D5 F5 D6 , quarter rest , quarter D4 A4 C5
-20: eighth F4 D5 , eighth rest , quarter D5 F5 D6 , quarter rest , quarter D4 A4 C5
+6: (first musical line) dotted quarter D5 F5 , eighth rest , eighth rest , (second musical line) eighth rest , 16th D5 , 16th E5 , 16th E5 , 16th D5 , 16th C5 , 16th A4
+c7: eighth D5 C6 , 16th F5 A5 , 16th D5 C6 , 16th D5 C6 , 16th F5 A5 , 16th sharp E5 sharp G5 , 16th F5 A5
+8: dotted quarter B4 D5 B5 , eighth rest
+9: very loud , eighth B4 B5 , 16th sharp D5 F5 , 16th B4 B5 , 16th B4 B5 , 16th A5 , 16th G5 , 16th F5
+10: eighth G4 G5 , 16th B4 E5 , 16th G4 G5 , 16th G4 G5 , 16th F4 F5 , 16th G4 G5 , 16th sharp G4 sharp G5
+11: eighth A4 A5 , 16th sharp C5 E5 , 16th A4 A5 , 16th A4 A5 , 16th B4 G5 , 16th A4 F5 , 16th G4 E5
+16: (first musical line)eighth F4 D5 , eighth rest , quarter D5 F5 D6 , (second musical line) quarter rest , quarter D4 A4 C5
 21: eighth D5 D6 , 16th G5 B5 , 16th D5 D6 , 16th D5 D6 , 16th B5 , 16th A5 , 16th G5
 22: quarter D5 F5 , eighth rest , eighth rest , 16th D5 , 16th E5 , 16th E5 , 16th D5 , 16th C5 , 16th A4
 23: quarter D5 F5 , eighth rest , eighth rest , 16th D5 , 16th E5 , 16th E5 , 16th D5 , 16th C5 , 16th A4
@@ -30,13 +22,13 @@ right hand
 28: eighth D5 D6 , 16th G5 B5 , 16th D5 D6 , 16th D5 D6 , 16th B5 , 16th A5 , 16th G5
 29: eighth E5 E6 , 16th G5 C6 , 16th E5 E6 , 16th E5 E6 , 16th C6 , 16th B5 , 16th A5
 30: eighth D5 D6 , 16th G5 B5 , 16th D5 D6 , 16th D5 D6 , 16th E5 C6 , 16th D5 B5 , 16th C5 A5
-31: eighth B4 G5 , 16th D5 , 16th D5 , eighth D5 , eighth D5
-32: eighth B4 G5 , start slur 16th D5 , 16th E5 , 16th D5 stop slur , eighth sharp C5 , eighth D5
+31: eighth B4 G5 , 16th D5 , 16th D5 , eighth D5 , eighth D5 (repeat from to, continue from)
+32: eighth B4 G5 , start slur (tuplet) 16th D5 , 16th E5 , 16th D5 stop slur , eighth sharp C5 , eighth D5
 33: eighth B4 G5 , start slur 16th D5 , 16th E5 , 16th D5 stop slur , eighth sharp C5 , eighth D5
 34: eighth B4 G5 , start slur 16th D5 , 16th E5 , 16th D5 stop slur , eighth sharp C5 , eighth D5
 35: 16th sharp C5 , eighth D5 , 16th F5 , eighth A5 , 16th sharp G5 , 16th A5
 36: 16th B5 , eighth A5 , 16th F5 , eighth E5 , eighth D5
-37: eighth rest , 16th D6 , 16th sharp C6 , 16th D6 , eighth E6 , 16th D6 , half B4 D5 B5
+37: (first musical line) eighth rest , 16th D6 , 16th sharp C6 , 16th D6 , eighth E6 , 16th D6 , (second musical line) half B4 D5 B5
 38: eighth rest , 16th D6 , 16th sharp C6 , 16th D6 , eighth E6 , 16th D6 , half B4 D5 B5
 39: eighth B5 , eighth rest , quarter rest , eighth B4 D5 B5 , eighth B4 G5 B5 , eighth sharp A4 G5 sharp A5 , eighth B4 G5 B5
 40: eighth B5 , eighth rest , quarter rest , eighth B4 D5 B5 , eighth B4 G5 B5 , eighth sharp A4 G5 sharp A5 , eighth B4 G5 B5
