@@ -64,52 +64,57 @@ angular.module('myApp.search', ['ngRoute'])
         }
     }
 
+    $scope.search = function() {
+        if($scope.showResult == true) return;
+        $scope.showResult = true;
+        $scope.blur();
+        key.unbind('up');
+        key.unbind('down');
+        key.unbind('esc');
+        key.unbind('backspace');
+
+        key('up', function() {
+          console.log('up key pressed');
+          $scope.up();
+        });
+
+        key('down', function() {
+          console.log('down key pressed');
+          $scope.down();
+        });
+
+        key('esc', function() {
+          console.log('esc key pressed');
+          $scope.focus();
+          $scope.showResult = false;
+          $scope.$apply();
+        });
+
+        key('backspace', function() {
+          console.log('backspace key pressed');
+          $scope.focus();
+          $scope.showResult = false;
+          $scope.$apply();
+        });
+
+        httpUtil.get("/")
+        .then(function(response) {
+
+        }, function(error) {
+            //TODO: PUT ALL THESE CODE INTO "THEN"
+            var response = fakeData.searchList; // TODO: Change to real API data
+            if (response !== null) {
+                $scope.searchList = response;
+                if($scope.searchList.length > 0) $scope.selected = 0;
+            }
+        });
+
+    }
+
     $scope.getKey = function(event) {
         if(event.code == 'Enter') {
             console.log($scope.searchString);
-            $scope.showResult = true;
-            $scope.blur();
-            key.unbind('up');
-            key.unbind('down');
-            key.unbind('esc');
-            key.unbind('backspace');
-
-            key('up', function() {
-              console.log('up key pressed');
-              $scope.up();
-            });
-
-            key('down', function() {
-              console.log('down key pressed');
-              $scope.down();
-            });
-
-            key('esc', function() {
-              console.log('esc key pressed');
-              $scope.focus();
-              $scope.showResult = false;
-              $scope.$apply();
-            });
-
-            key('backspace', function() {
-              console.log('backspace key pressed');
-              $scope.focus();
-              $scope.showResult = false;
-              $scope.$apply();
-            });
-
-            httpUtil.get("/")
-            .then(function(response) {
-
-            }, function(error) {
-                //TODO: PUT ALL THESE CODE INTO "THEN"
-                var response = fakeData.searchList; // TODO: Change to real API data
-                if (response !== null) {
-                    $scope.searchList = response;
-                    if($scope.searchList.length > 0) $scope.selected = 0;
-                }
-            });
-
+            $scope.search();
         }
         if(event.key == '1' && event.ctrlKey == true && !$scope.onFocus) {
             navigation('favorite');
