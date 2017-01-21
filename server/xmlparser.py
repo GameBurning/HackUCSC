@@ -103,7 +103,6 @@ def generateJson(scoreName):
     for clef in _attrib.findall('clef'):
         sign.append(clef.find('sign').text)
 
-
     whole_text = [] #Division texts list
 
     #- Read whole score measure by measure -#
@@ -111,6 +110,13 @@ def generateJson(scoreName):
         m_text = []
         for i in range(0, clef_num):
             m_text.append([])
+
+        backupNums = m_single.findall('backup')
+        if len(backupNums) > 1:
+            for i in range(len(m_single)):
+                if m_single[i] 
+
+
         for element in m_single:
             if element.tag == "note":
                 note = element
@@ -133,8 +139,12 @@ def generateJson(scoreName):
                         _step = note.find('accidental').text + " " + _step
 
                     if note.find('chord') is not None:
-                        if m_text[int(_staff) - 1][-1][:5] != "chord":
-                            m_text[int(_staff) - 1][-1] = "chord " + m_text[int(_staff) - 1][-1]
+
+                        # if "chord" not in m_text[int(_staff) - 1][-1]:
+                        #     m_text[int(_staff) - 1][-1] = "chord " + m_text[int(_staff) - 1][-1]
+                        if note.find('notations/arpeggiate') is not None:
+                            if 'arpeggiated' not in m_text[int(_staff) - 1][-1]:
+                                m_text[int(_staff) - 1][-1] = 'arpeggiated ' + m_text[int(_staff) - 1][-1]
                         note_text = " " + _step + _octave
                         m_text[int(_staff) - 1][-1] += note_text
                     else:
@@ -143,6 +153,8 @@ def generateJson(scoreName):
                             note_text = "dotted " + note_text
                         if note.find('notations') is not None:
                             ssset = set()
+                            if note.find('notations/articulations/staccato') is not None:
+                                note_text = "staccato " + note_text
                             for slur in note.findall('notations/slur'):
                                 ssset.add(slur.attrib['type'])
                                 #print(ssset)
@@ -151,6 +163,7 @@ def generateJson(scoreName):
                                     note_text = "start slur " + note_text
                                 if ssset == set(['stop']):
                                     note_text += " stop slur"
+
                         m_text[int(_staff) - 1].append(note_text)
 
 
@@ -209,4 +222,5 @@ def generateJson(scoreName):
 
     return json.dumps(scoreInfo,indent=4, separators=(',', ': '))
 
-print(generateJson('Sweethearts'))
+#print(generateJson('Sweethearts'))
+#print(generateJson('Nyan_Cat'))
