@@ -65,6 +65,7 @@ angular.module('myApp.history', ['ngRoute'])
           console.log('down key pressed');
           $scope.down();
         });
+        
     }
 
 }]);

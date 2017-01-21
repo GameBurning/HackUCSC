@@ -9,6 +9,11 @@ angular.module('myApp')
             element[0].focus();
           });
         }
+        else {
+            $timeout(function() {
+              element[0].blur();
+            });
+        }
       });
       element.bind('blur', function() {
         scope.$apply(model.assign(scope, false));
