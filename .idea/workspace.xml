@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5f3b57e-23c8-4c18-b36b-8782ecf3ce7c" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/test/testCases/Autumn_Leaves.xml" afterPath="$PROJECT_DIR$/server/test/testCases/Autumn_Leaves.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/test/testCases/Fur_Elise.xml" afterPath="$PROJECT_DIR$/server/test/testCases/Fur_Elise.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/xmlparser.py" afterPath="$PROJECT_DIR$/server/xmlparser.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,8 +22,8 @@
       <file leaf-file-name="xmlparser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/xmlparser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="117" column="24" lean-forward="false" selection-start-line="117" selection-start-column="24" selection-end-line="117" selection-end-column="24" />
+            <state relative-caret-position="155">
+              <caret line="236" column="23" lean-forward="true" selection-start-line="236" selection-start-column="23" selection-end-line="236" selection-end-column="23" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
               </folding>
@@ -56,6 +58,12 @@
       <find>arpegg</find>
       <find>arpe</find>
       <find>staccato</find>
+      <find>first</find>
+      <find>tupl</find>
+      <find>tuplet</find>
+      <find>grace</find>
+      <find>tied</find>
+      <find>tie</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -70,7 +78,6 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="640" />
     <option name="y" value="22" />
     <option name="width" value="640" />
     <option name="height" value="774" />
@@ -315,7 +322,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="640" y="22" width="640" height="774" extended-state="0" />
+    <frame x="0" y="22" width="640" height="774" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -349,7 +356,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="26" />
+      <option name="time" value="31" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -416,8 +423,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/xmlparser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="117" column="24" lean-forward="false" selection-start-line="117" selection-start-column="24" selection-end-line="117" selection-end-column="24" />
+        <state relative-caret-position="155">
+          <caret line="236" column="23" lean-forward="true" selection-start-line="236" selection-start-column="23" selection-end-line="236" selection-end-column="23" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
           </folding>
