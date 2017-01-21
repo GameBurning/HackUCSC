@@ -9,12 +9,13 @@ angular.module('myApp.favorite', ['ngRoute'])
   });
 }])
 
-.controller('FavoriteCtrl', ['$scope', 'httpUtil', 'fakeData', '$location', function($scope, httpUtil, fakeData, $location) {
+.controller('FavoriteCtrl', ['$scope', 'httpUtil', 'fakeData', '$location', 'navigation',function($scope, httpUtil, fakeData, $location, navigation) {
     $scope.favoriteList = [];
     $scope.selected = null;
 
     key.unbind('up');
     key.unbind('down');
+    key.unbind('enter');
 
     httpUtil.get("/")
     .then(function(response) {
@@ -65,6 +66,12 @@ angular.module('myApp.favorite', ['ngRoute'])
         key('down', function() {
           console.log('down key pressed');
           $scope.down();
+        });
+
+        key('enter', function() {
+          console.log('enter key pressed');
+          navigation('play', {"id" : $scope.favoriteList[$scope.selected].id});
+          $scope.$apply();
         });
     }
 

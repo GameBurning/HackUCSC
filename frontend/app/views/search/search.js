@@ -68,10 +68,19 @@ angular.module('myApp.search', ['ngRoute'])
         if($scope.showResult == true) return;
         $scope.showResult = true;
         $scope.blur();
+        key.unbind('enter');
         key.unbind('up');
         key.unbind('down');
         key.unbind('esc');
         key.unbind('backspace');
+
+        key('enter', function() {
+          console.log('enter key pressed');
+          $scope.focus();
+          $scope.showResult = false;
+          $scope.$apply();
+          navigation('play', {"id" : $scope.searchList[$scope.selected].id});
+        });
 
         key('up', function() {
           console.log('up key pressed');

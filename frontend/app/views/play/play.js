@@ -10,5 +10,5 @@ angular.module('myApp.play', ['ngRoute'])
 }])
 
 .controller('PlayCtrl', ['$scope', 'httpUtil', function($scope, httpUtil) {
-    
+    debugger
 }]);

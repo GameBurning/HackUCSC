@@ -9,12 +9,13 @@ angular.module('myApp.history', ['ngRoute'])
   });
 }])
 
-.controller('HistoryCtrl', ['$scope', 'httpUtil', 'fakeData', '$location', function($scope, httpUtil, fakeData, $location) {
+.controller('HistoryCtrl', ['$scope', 'httpUtil', 'fakeData', '$location','navigation', function($scope, httpUtil, fakeData, $location, navigation) {
     $scope.historyList = [];
     $scope.selected = null;
 
     key.unbind('up');
     key.unbind('down');
+    key.unbind('enter');
 
     httpUtil.get("/")
     .then(function(response) {
@@ -65,7 +66,13 @@ angular.module('myApp.history', ['ngRoute'])
           console.log('down key pressed');
           $scope.down();
         });
-        
+
+        key('enter', function() {
+          console.log('enter key pressed');
+          navigation('play', {"id" : $scope.historyList[$scope.selected].id});
+          $scope.$apply();
+        });
+
     }
 
 }]);
