@@ -9,6 +9,13 @@ angular.module('myApp.favorite', ['ngRoute'])
   });
 }])
 
-.controller('FavoriteCtrl', [function() {
+.controller('FavoriteCtrl', ['$scope', 'httpUtil', function($scope, httpUtil) {
+    httpUtil.get("/")
+    .then(function(response) {
+        if (response !== null) {
 
+        }
+    }, function(error) {
+        
+    })
 }]);

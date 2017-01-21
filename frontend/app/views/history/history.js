@@ -9,6 +9,6 @@ angular.module('myApp.history', ['ngRoute'])
   });
 }])
 
-.controller('HistoryCtrl', [function() {
+.controller('HistoryCtrl', ['$scope', 'httpUtil', function($scope, httpUtil) {
 
 }]);

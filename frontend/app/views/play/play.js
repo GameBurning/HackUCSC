@@ -9,6 +9,6 @@ angular.module('myApp.play', ['ngRoute'])
   });
 }])
 
-.controller('PlayCtrl', [function() {
+.controller('PlayCtrl', ['$scope', 'httpUtil', function($scope, httpUtil) {
 
 }]);
