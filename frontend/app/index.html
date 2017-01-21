@@ -15,10 +15,14 @@
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
-  <ul class="menu">
-    <li><a href="#!/view1">view1</a></li>
-    <li><a href="#!/view2">view2</a></li>
-  </ul>
+    <div id = "nav" ng-controller="mainCtrl">
+        <h1>Navigation</h1>
+        <ul class="menu">
+            <li><a href="#!/search" ng-click = "nav('search')">search</a></li>
+            <li><a href="#!/favorite"  ng-click = "nav('favorite')">favorite</a></li>
+            <li><a href="#!/history"  ng-click = "nav('history')">history</a></li>
+        </ul>
+    </div>
 
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -35,10 +39,13 @@
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/keymaster/keymaster.js"></script>
   <script src="app.js"></script>
-  <script src="view1/view1.js"></script>
-  <script src="view2/view2.js"></script>
-  <script src="components/version/version.js"></script>
-  <script src="components/version/version-directive.js"></script>
-  <script src="components/version/interpolate-filter.js"></script>
+  <script src="mainCtrl.js"></script>
+
+  <script src="views/favorite/favorite.js"></script>
+  <script src="views/history/history.js"></script>
+  <script src="views/play/play.js"></script>
+  <script src="views/search/search.js"></script>
+
+  <script src="services/navigationService.js"></script>
 </body>
 </html>
