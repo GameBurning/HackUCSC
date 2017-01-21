@@ -16,7 +16,7 @@ fifthkey_dict = dict(zip(['-5', '-4', '-3' ,'-2' , '-1', '0', '1', '2', '3',\
  '2个升号','3个升号','4个升号','5个升号']))
 
 #- 读取XML文件 -#
-tree = ET.parse('599/1-2.xml')
+tree = ET.parse('testCases/1-2.xml')
 _root = tree.getroot()
 
 #- 获取标题信息 -#
