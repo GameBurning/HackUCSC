@@ -10,7 +10,18 @@ angular.module('myApp.search', ['ngRoute'])
 }])
 
 .controller('SearchCtrl', ['$scope', 'httpUtil', function($scope, httpUtil) {
+
+    $scope.open = function () {
+      $scope.isOpen = true;
+    };
+
+    $scope.close = function () {
+      $scope.isOpen = false;
+    };
+
+    $scope.open();
+
     key.unbind('up');
     key.unbind('down');
-    
+
 }]);
