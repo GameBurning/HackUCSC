@@ -8,7 +8,7 @@ angular.module('myApp')
     // var server_base = "http://localhost:8000/"
 
     //RealServer
-    var server_base = "http://115.159.200.61:8000/";
+    var server_base = "/";
 
     self.server = server_base + "api";
     self.image_url_base = server_base + "documents/";
