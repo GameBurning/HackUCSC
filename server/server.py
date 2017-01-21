@@ -4,7 +4,7 @@ from os import listdir
 import json
 app = Flask(__name__)
 
-scoreNames = [m for m in listdir('test/testCases/')]
+scoreNames = [m.split('.')[0] for m in listdir('test/testCases/')]
 #print(scoreNames)
 
 @app.route('/api/musicscores/<scorename>')
