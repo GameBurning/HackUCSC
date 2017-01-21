@@ -27,7 +27,7 @@ angular.module('myApp')
     ];
 
     return {
-      favoriteList: data.favoriteList,
-      historyList: data.historyList,
+      favoriteList: favoriteList,
+      historyList: historyList,
     };
   });

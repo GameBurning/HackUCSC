@@ -10,5 +10,7 @@ angular.module('myApp.search', ['ngRoute'])
 }])
 
 .controller('SearchCtrl', ['$scope', 'httpUtil', function($scope, httpUtil) {
+    key.unbind('up');
+    key.unbind('down');
     
 }]);

@@ -1,1 +1,6 @@
-<p>This is the partial for view favorite.</p>
+<div class = "favorite">
+    <p>This is the partial for view favorite.</p>
+    <div ng-repeat="item in favoriteList track by $index" ng-click="select($index)" ng-class = "{ highlight : selected == $index}">
+      {{item.name}}
+    </div>
+</div>
