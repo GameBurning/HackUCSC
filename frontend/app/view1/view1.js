@@ -10,5 +10,8 @@ angular.module('myApp.view1', ['ngRoute'])
 }])
 
 .controller('View1Ctrl', [function() {
-
+    key('ctrl+x', function() {
+          console.log('x key pressed');
+          $location.path('/view2'); // problem: location doesn't change
+      });
 }]);
