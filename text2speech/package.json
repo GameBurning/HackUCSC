@@ -1,0 +1,17 @@
+{
+  "name": "text2speech",
+  "version": "1.0.0",
+  "description": "middleware for server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "lodash": "^4.17.4",
+    "randomstring": "^1.1.5",
+    "watson-developer-cloud": "^2.15.2"
+  }
+}

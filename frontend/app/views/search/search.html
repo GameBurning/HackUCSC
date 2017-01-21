@@ -1,3 +1,10 @@
-<p>This is the partial for view search.</p>
-<input type="text"></input>
-<button type="button">Search</button>
+<div>
+    <p>This is the partial for view search.</p>
+    <input ng-click = "focus();showResult = false; $apply();" ng-model="searchString" type="text" focus-me="shouldFocus" ng-keypress="getKey($event)" ng-blur="setUnfocus()" ng-focus="setFocus()"></input>
+    <button type="button" ng-click="search()">Search</button>
+    <div ng-if = "showResult == true">
+        <div ng-repeat="item in searchList track by $index" ng-click="select($index)" ng-class = "{ highlight : selected == $index}">
+            {{item.name}}
+        </div>
+    </div>
+</div>
