@@ -13,7 +13,7 @@ def api_score(scorename):
 
 
 
-@app.route('/api/musicscores')
+@app.route('/api/musicscores/')
 def api_search():
     if 'keyword' in request.args:
         rList = []
