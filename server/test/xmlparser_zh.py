@@ -7,8 +7,7 @@ sys.setdefaultencoding('utf8')
 octave_dict = {'1': '大字二组','2': '大字一组','3': '大字组','4': '小字组',\
 '5': '小字一组','6': '小字二组','7': '小字三组','8': '小字四组','9': '小字五组'}
 
-digit_dict = dict(zip(['1', '2', '3' ,'4' , '5', '6', '7', '8', '9', '0'],\
-['一','二','三','四','五','六','七','八','九','零']))
+
 fifthkey_dict = dict(zip(['-5', '-4', '-3' ,'-2' , '-1', '0', '1', '2', '3',\
  '4', '5'],['5个降号','4个降号','3个降号','2个降号','1个降号','没有升降号','1个升号',\
  '2个升号','3个升号','4个升号','5个升号']))
@@ -19,7 +18,7 @@ _root = tree.getroot()
 
 #- 获取标题信息 -#
 _work = _root.find('work')
-r_worktitle = "乐谱标题："
+r_worktitle = "MusicTitle："
 if _work != None:
     r_worktitle += _work.find('work-title').text
 else:
@@ -28,7 +27,7 @@ else:
 identification = _root.find('identification')
 #- 获取作者 -#
 _creator = identification.find('creator')
-r_composer = "作者"
+r_composer = "Composer: "
 if _creator != None and _creator.attrib['type'] == "composer":
     r_composer += _creator.text
 else:
@@ -49,17 +48,17 @@ if p[0].attrib['id'] != "P1" or m[0][0].attrib["number"] != \
     sys.exit("Not P1 or M1")
 print len(m[0])
 
-#- 读取Tempo -#
+#- Read Tempo -#
 _beatunit = m[0][0].find('direction/direction-type/metronome/beat-unit')
-beatunit = "未指定"
+beatunit = "not defined"
 if _beatunit != None:
     beatunit = _beatunit.text
 _perminute = m[0][0].find('direction/direction-type/metronome/per-minute')
 if _perminute != None:
-    beatunit += _perminute.text + " 每分钟"
-r_tempo = "曲速为: " + beatunit
+    beatunit += _perminute.text + " per minute"
+r_tempo = "The tempo is: " + beatunit
 
-#- 读取Attributes#
+#- Read Attributes#
 clef_num = 0
 #_stafflayout = p[0].find('measure/print/staff-layout')
 _attrib = m[0][0].find('attributes')
@@ -70,21 +69,21 @@ else:
     clef_num = int(_stafflayout.text)
 print clef_num
 
-#- 读取division -#
+#- Read Division -#
 divisions = _attrib.find('divisions').text
 key = _attrib.find('key/fifths').text
 r_key = fifthkey_dict[key]
 beats = _attrib.find('time/beats').text
 beat_type = _attrib.find('time/beat-type').text
-r_beat = digit_dict[beat_type] + digit_dict[beats] + "拍"
+r_beat = beat_type + beats + "beat"
 
 sign = []
 for clef in _attrib.findall('clef'):
     sign.append(clef.find('sign').text)
 
-whole_text = [] #每小节的文字
+whole_text = [] #Division texts list
 
-#- 分小结读取乐谱内容 -#
+#- Read whole score division by division -#
 for m_page in m:
     for m_single in page:
         m_text = []

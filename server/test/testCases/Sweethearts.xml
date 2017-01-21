@@ -1285,6 +1285,7 @@
         <stem>up</stem>
         <staff>1</staff>
         </note>
+
       <note>
         <rest>
           <display-step>D</display-step>
@@ -1295,6 +1296,16 @@
         <type>eighth</type>
         <staff>1</staff>
         </note>
+
+      <note>
+        <rest/>
+        <duration>6</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <staff>1</staff>
+        </note>
+
+
       <backup>
         <duration>24</duration>
         </backup>
