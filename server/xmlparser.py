@@ -85,7 +85,7 @@ if _stafflayout == None:
     clef_num = 1
 else:
     clef_num = int(_stafflayout.text)
-print(clef_num)
+#print(clef_num)
 
 #- Read Division -#
 divisions = _attrib.find('divisions').text
@@ -140,7 +140,7 @@ for m_single in m:
                         ssset = set()
                         for slur in note.findall('notations/slur'):
                             ssset.add(slur.attrib['type'])
-                            print(ssset)
+                            #print(ssset)
                         if ssset != set():
                             if ssset == set(['start']):
                                 note_text = "start slur " + note_text
