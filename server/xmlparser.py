@@ -133,6 +133,8 @@ def generateJson(scoreName):
                         _step = note.find('accidental').text + " " + _step
 
                     if note.find('chord') is not None:
+                        if m_text[int(_staff) - 1][-1][:5] != "chord":
+                            m_text[int(_staff) - 1][-1] = "chord " + m_text[int(_staff) - 1][-1]
                         note_text = " " + _step + _octave
                         m_text[int(_staff) - 1][-1] += note_text
                     else:
