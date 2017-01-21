@@ -3,12 +3,10 @@ import xml.etree.ElementTree as ET
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-note_dict = {'A': '拉','B': '西','C': '多','D': '來','E': '咪', 'F': '发',\
-'G': '娑'}
+
 octave_dict = {'1': '大字二组','2': '大字一组','3': '大字组','4': '小字组',\
 '5': '小字一组','6': '小字二组','7': '小字三组','8': '小字四组','9': '小字五组'}
-note_type = {'whole': '全音符', 'half': '二分音符', 'quarter': '四分音符', \
-'eighth':'八分音符', '16th':'十六分音符', '32th':'三十二音符'}
+
 digit_dict = dict(zip(['1', '2', '3' ,'4' , '5', '6', '7', '8', '9', '0'],\
 ['一','二','三','四','五','六','七','八','九','零']))
 fifthkey_dict = dict(zip(['-5', '-4', '-3' ,'-2' , '-1', '0', '1', '2', '3',\
@@ -109,6 +107,3 @@ r_tempo + comma + \
 r_key + comma + \
 r_beat
 print read_heading
-
-
-read_body = ""
