@@ -5,7 +5,7 @@ import json
 app = Flask(__name__)
 
 scoreNames = [m for m in listdir('test/testCases/')]
-print(scoreNames)
+#print(scoreNames)
 
 @app.route('/api/musicscores/<scorename>')
 def api_score(scorename):
