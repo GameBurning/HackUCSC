@@ -169,4 +169,18 @@ r_tempo + comma + \
 r_key + comma + \
 r_beat
 print(read_heading)
-print(whole_text)
+#print(whole_text)
+
+print("right hand")
+num = 0
+for m in whole_text:
+    num += 1
+    print(num, end=': ')
+    print(" , ".join(m[0]))
+
+num = 0
+print("left hand")
+for m in whole_text:
+    num += 1
+    print(num, end=': ')
+    print(" , ".join(m[1]))
