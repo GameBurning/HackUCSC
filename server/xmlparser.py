@@ -42,7 +42,7 @@ def generateJson(scoreName):
 
     #- Read title -#
     _work = _root.find('work')
-    #r_worktitle = "MusicTitle："
+    #r_worktitle = "MusicTitle"
     r_worktitle = ""
     if _work != None:
         r_worktitle += _work.find('work-title').text
