@@ -85,7 +85,7 @@ if _stafflayout == None:
     clef_num = 1
 else:
     clef_num = int(_stafflayout.text)
-print(clef_num)
+#print(clef_num)
 
 #- Read Division -#
 divisions = _attrib.find('divisions').text
@@ -93,7 +93,7 @@ key = _attrib.find('key/fifths').text
 r_key = fifthkey_dict[key]
 beats = _attrib.find('time/beats').text
 beat_type = _attrib.find('time/beat-type').text
-r_beat = "Time Signature :" + beat_type + " " + beats
+r_beat = "Time Signature :" + beats + " " + beat_type
 
 sign = []
 for clef in _attrib.findall('clef'):
@@ -119,7 +119,6 @@ for m_single in m:
                     _staff = note.find('staff').text
                     note_text = _type + " rest"
                     m_text[int(_staff)-1].append(note_text)
-                    whole_text.append(m_text)
             else:
                 _step = note.find('pitch/step').text
                 _octave = note.find('pitch/octave').text
@@ -135,11 +134,13 @@ for m_single in m:
                     m_text[int(_staff) - 1][-1] += note_text
                 else:
                     note_text = _type + " " + _step + _octave
-                    if note.find('notations'):
+                    if note.find('dot') is not None:
+                        note_text = "dotted " + note_text
+                    if note.find('notations') is not None:
                         ssset = set()
                         for slur in note.findall('notations/slur'):
                             ssset.add(slur.attrib['type'])
-                            print(ssset)
+                            #print(ssset)
                         if ssset != set():
                             if ssset == set(['start']):
                                 note_text = "start slur " + note_text
@@ -157,7 +158,7 @@ for m_single in m:
                 m_text[int(_staff) - 1].append(dynamic_dict[element[0][0][0].tag])
             elif element[0][0].tag == 'octave-shift':
                 m_text[int(_staff) - 1].append(octave_shift)
-            elif element[0][0].tag == 'wedge':
+            elif element[0][0].tag == 'wedge' and element[0][0].attrib['type']!="stop":
                 m_text[int(_staff) - 1].append(element[0][0].attrib['type'])
 
     whole_text.append(m_text)
