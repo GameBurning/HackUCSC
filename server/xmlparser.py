@@ -114,7 +114,8 @@ def generateJson(scoreName):
         backupNums = m_single.findall('backup')
         if len(backupNums) > 1:
             for i in range(len(m_single)):
-                if m_single[i] 
+                if m_single[i] == 0:
+                    None
 
 
         for element in m_single:
