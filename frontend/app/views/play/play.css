@@ -67,6 +67,7 @@
     height: 100%;
     margin: 5vw;
     display: inline-block;
+    transition-duration: 2s;
 }
 
 .play .scroll-cards {

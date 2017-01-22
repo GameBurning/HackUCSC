@@ -98,7 +98,6 @@ angular.module('myApp.play', ['ngRoute'])
     }
 
     $scope.increaseBlock = function() {
-        debugger
         if($scope.blockSize == $scope.size || $scope.size == 0) return;
         let oldblockSize = $scope.blockSize;
         let newblockSize = $scope.blockSize + 1;
@@ -106,11 +105,35 @@ angular.module('myApp.play', ['ngRoute'])
 
         $scope.blockSize = newblockSize;
         $scope.offset = newOffset;
+
         $scope.prevBlock();
+
+        setTimeout(function(){
+            httpUtil.get("http://localhost:8001/speak?sentence='sentence size, "+$scope.blockSize+"'")
+                  .then(function(response) {
+                      //TODO: PUT ALL THESE CODE INTO "THEN"
+                      // var response = fakeData.searchList; // TODO: Change to real API data
+
+                      if (response !== null) {
+                          //var snd = new Audio("http://localhost:8001" + response);
+                          //snd.play();
+
+                          var sound = new Howl({
+                              src: ["http://localhost:8001" + response],
+                              autoplay: true,
+                              loop: false,
+                              onend: function() {
+                                console.log('Finished!');
+                              }
+                            });
+                      }
+
+                  }, function(error) {
+                  });
+        },1500);
     }
 
     $scope.decreaseBlock = function() {
-        debugger
         if($scope.blockSize == 1) return;
         let oldblockSize = $scope.blockSize;
         let newblockSize = $scope.blockSize - 1;
@@ -120,10 +143,33 @@ angular.module('myApp.play', ['ngRoute'])
         $scope.offset = newOffset;
 
         $scope.prevBlock();
+
+        setTimeout(function(){
+            httpUtil.get("http://localhost:8001/speak?sentence='sentence size, "+$scope.blockSize+"'")
+                  .then(function(response) {
+                      //TODO: PUT ALL THESE CODE INTO "THEN"
+                      // var response = fakeData.searchList; // TODO: Change to real API data
+
+                      if (response !== null) {
+                          //var snd = new Audio("http://localhost:8001" + response);
+                          //snd.play();
+
+                          var sound = new Howl({
+                              src: ["http://localhost:8001" + response],
+                              autoplay: true,
+                              loop: false,
+                              onend: function() {
+                                console.log('Finished!');
+                              }
+                            });
+                      }
+
+                  }, function(error) {
+                  });
+        },1500);
     }
 
     $scope.nextBlock = function() {
-        debugger
         if($scope.offset + $scope.blockSize < $scope.size) {
             $scope.offset += $scope.blockSize;
         }
@@ -135,7 +181,6 @@ angular.module('myApp.play', ['ngRoute'])
     }
 
     $scope.prevBlock = function() {
-        debugger
         if($scope.offset - $scope.blockSize > 0) {
             $scope.offset -= $scope.blockSize;
         }

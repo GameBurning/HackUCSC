@@ -17,6 +17,16 @@ angular.module('myApp.search', ['ngRoute'])
     $scope.searchList = [];
     $scope.selected = null;
 
+    var sound = new Howl({
+        src: ['/resources/sounds/search.wav'],
+        preload: true,
+        autoplay: true,
+        rate : 1,
+        onend: function() {
+            console.log('Finished!');
+        },
+      });
+
     $scope.setUnfocus = function() {
         $scope.onFocus = false;
     }
@@ -52,6 +62,27 @@ angular.module('myApp.search', ['ngRoute'])
                 $scope.selected --;
                 $scope.$apply();
             }
+            httpUtil.get("http://localhost:8001/speak?sentence='"+$scope.searchList[$scope.selected].name+"'")
+                  .then(function(response) {
+                      //TODO: PUT ALL THESE CODE INTO "THEN"
+                      // var response = fakeData.searchList; // TODO: Change to real API data
+
+                      if (response !== null) {
+                          //var snd = new Audio("http://localhost:8001" + response);
+                          //snd.play();
+
+                          var sound = new Howl({
+                              src: ["http://localhost:8001" + response],
+                              autoplay: true,
+                              loop: false,
+                              onend: function() {
+                                console.log('Finished!');
+                              }
+                            });
+                      }
+
+                  }, function(error) {
+                  });
         }
     }
 
@@ -61,6 +92,27 @@ angular.module('myApp.search', ['ngRoute'])
                 $scope.selected ++;
                 $scope.$apply();
             }
+            httpUtil.get("http://localhost:8001/speak?sentence='"+$scope.searchList[$scope.selected].name+"'")
+                  .then(function(response) {
+                      //TODO: PUT ALL THESE CODE INTO "THEN"
+                      // var response = fakeData.searchList; // TODO: Change to real API data
+
+                      if (response !== null) {
+                          //var snd = new Audio("http://localhost:8001" + response);
+                          //snd.play();
+
+                          var sound = new Howl({
+                              src: ["http://localhost:8001" + response],
+                              autoplay: true,
+                              loop: false,
+                              onend: function() {
+                                console.log('Finished!');
+                              }
+                            });
+                      }
+
+                  }, function(error) {
+                  });
         }
     }
 
@@ -68,11 +120,36 @@ angular.module('myApp.search', ['ngRoute'])
         if($scope.showResult == true) return;
         $scope.showResult = true;
         $scope.blur();
+
         key.unbind('enter');
         key.unbind('left');
         key.unbind('right');
         key.unbind('esc');
         key.unbind('backspace');
+
+        if($scope.searchList[$scope.selected]) {
+            httpUtil.get("http://localhost:8001/speak?sentence='"+$scope.searchList[$scope.selected].name+"'")
+                  .then(function(response) {
+                      //TODO: PUT ALL THESE CODE INTO "THEN"
+                      // var response = fakeData.searchList; // TODO: Change to real API data
+
+                      if (response !== null) {
+                          //var snd = new Audio("http://localhost:8001" + response);
+                          //snd.play();
+
+                          var sound = new Howl({
+                              src: ["http://localhost:8001" + response],
+                              autoplay: true,
+                              loop: false,
+                              onend: function() {
+                                console.log('Finished!');
+                              }
+                            });
+                      }
+
+                  }, function(error) {
+                  });
+        }
 
         key('enter', function() {
           console.log('enter key pressed');

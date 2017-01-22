@@ -18,6 +18,16 @@ angular.module('myApp.history', ['ngRoute'])
     key.unbind('right');
     key.unbind('enter');
 
+    var sound = new Howl({
+        src: ['/resources/sounds/history.wav'],
+        preload: true,
+        autoplay: true,
+        rate : 1,
+        onend: function() {
+            console.log('Finished!');
+        },
+      });
+
     httpUtil.get("/")
     .then(function(response) {
 
@@ -53,6 +63,30 @@ angular.module('myApp.history', ['ngRoute'])
                 $scope.selected --;
                 $scope.$apply();
             }
+            setTimeout(function(){
+                httpUtil.get("http://localhost:8001/speak?sentence='"+$scope.historyList[$scope.selected]+"'")
+                      .then(function(response) {
+                          //TODO: PUT ALL THESE CODE INTO "THEN"
+                          // var response = fakeData.searchList; // TODO: Change to real API data
+
+                          if (response !== null) {
+                              //var snd = new Audio("http://localhost:8001" + response);
+                              //snd.play();
+
+                              var sound = new Howl({
+                                  src: ["http://localhost:8001" + response],
+                                  autoplay: true,
+                                  loop: false,
+                                  onend: function() {
+                                    console.log('Finished!');
+                                  }
+                                });
+                          }
+
+                      }, function(error) {
+                      });
+            },1500);
+
         }
     }
 
@@ -62,6 +96,27 @@ angular.module('myApp.history', ['ngRoute'])
                 $scope.selected ++;
                 $scope.$apply();
             }
+            httpUtil.get("http://localhost:8001/speak?sentence='"+$scope.historyList[$scope.selected]+"'")
+                  .then(function(response) {
+                      //TODO: PUT ALL THESE CODE INTO "THEN"
+                      // var response = fakeData.searchList; // TODO: Change to real API data
+
+                      if (response !== null) {
+                          //var snd = new Audio("http://localhost:8001" + response);
+                          //snd.play();
+
+                          var sound = new Howl({
+                              src: ["http://localhost:8001" + response],
+                              autoplay: true,
+                              loop: false,
+                              onend: function() {
+                                console.log('Finished!');
+                              }
+                            });
+                      }
+
+                  }, function(error) {
+            });
         }
     }
 
