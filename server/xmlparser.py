@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 import json
 
-# TODO: Chrod in the first place
+#TODO: First repeat and sencond repeat have diffrent ending
 
 fifthkey_dict = {
 '-1':'F major. B-flat',\
@@ -42,7 +42,7 @@ def generateJson(scoreName):
 
     #- Read title -#
     _work = _root.find('work')
-    #r_worktitle = "MusicTitle："
+    #r_worktitle = "MusicTitle"
     r_worktitle = ""
     if _work != None:
         r_worktitle += _work.find('work-title').text
@@ -111,11 +111,11 @@ def generateJson(scoreName):
         for i in range(0, clef_num):
             m_text.append([])
 
-        backupNums = m_single.findall('backup')
-        if len(backupNums) > 1:
-            for i in range(len(m_single)):
-                if m_single[i] == 0:
-                    None
+        firstTimeBackupToStaff1 = True
+
+        backups = m_single.findall('backup')
+        if len(backups) > 1:
+            m_text[0].append('first musical line')
 
 
         for element in m_single:
@@ -129,6 +129,7 @@ def generateJson(scoreName):
                         _staff = note.find('staff').text
                         note_text = _type + " rest"
                         m_text[int(_staff)-1].append(note_text)
+
                 else:
                     _step = note.find('pitch/step').text
                     _octave = note.find('pitch/octave').text
@@ -148,22 +149,41 @@ def generateJson(scoreName):
                                 m_text[int(_staff) - 1][-1] = 'arpeggiated ' + m_text[int(_staff) - 1][-1]
                         note_text = " " + _step + _octave
                         m_text[int(_staff) - 1][-1] += note_text
+
                     else:
-                        note_text = _type + " " + _step + _octave
+                        note_text = _type + " " + _step + " " + _octave
                         if note.find('dot') is not None:
                             note_text = "dotted " + note_text
+                        if note.find('grace') is not None:
+                            if note.find('grace').attrib['slash'] == "yes":
+                                note_text = "grace note " + note_text
+
+                        if note.find('tie') is not None:
+                            note_text = "tied note " + note_text
+
                         if note.find('notations') is not None:
+                            isTuplet = False
                             ssset = set()
                             if note.find('notations/articulations/staccato') is not None:
                                 note_text = "staccato " + note_text
+
+
                             for slur in note.findall('notations/slur'):
                                 ssset.add(slur.attrib['type'])
                                 #print(ssset)
+                            if note.find('notations/tuplet') is not None:
+                                isTuplet = True
                             if ssset != set():
                                 if ssset == set(['start']):
-                                    note_text = "start slur " + note_text
+                                    if isTuplet:
+                                        note_text = "start tuplet " + note_text
+                                    else:
+                                        note_text = "start slur " + note_text
                                 if ssset == set(['stop']):
-                                    note_text += " stop slur"
+                                    if isTuplet:
+                                        note_text = note_text + " stop tuplet "
+                                    else:
+                                        note_text = note_text + " stop slur "
 
                         m_text[int(_staff) - 1].append(note_text)
 
@@ -179,6 +199,11 @@ def generateJson(scoreName):
                     m_text[int(_staff) - 1].append(octave_shift)
                 elif element[0][0].tag == 'wedge' and element[0][0].attrib['type']!="stop":
                     m_text[int(_staff) - 1].append(element[0][0].attrib['type'])
+
+            elif element.tag == "backup":
+                if firstTimeBackupToStaff1 and m_text[0][0] == 'first musical line':
+                    m_text[0].append('second musical line')
+                    firstTimeBackupToStaff1 = False
 
         whole_text.append(m_text)
 
@@ -224,4 +249,5 @@ def generateJson(scoreName):
     return json.dumps(scoreInfo,indent=4, separators=(',', ': '))
 
 #print(generateJson('Sweethearts'))
-#print(generateJson('Nyan_Cat'))
+#print(generateJson('Fur_Elise'))
+#print(generateJson('Autumn_Leaves'))
