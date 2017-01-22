@@ -8,10 +8,8 @@ angular.module('myApp')
     // var server_base = "http://localhost:8000/"
 
     //RealServer
-    var server_base = "/";
 
-    self.server = server_base + "api";
-    self.image_url_base = server_base + "documents/";
+    //   http://gameburning.com:5000/api/musicscores
 
     var csrfcookie = function() {
       var cookieValue = null,
@@ -49,7 +47,7 @@ angular.module('myApp')
       }
       var deferred = $q.defer();
 
-      $http.get(self.server + url)
+      $http.get(url)
         .success(function(data) {
           deferred.resolve(data);
         })
@@ -80,7 +78,7 @@ angular.module('myApp')
 
       var deferred = $q.defer();
 
-      $http.post(self.server + url, params, {
+      $http.post(url, params, {
           headers: {
             'Content-Type': 'application/json',
             'charset': 'UTF-8',
@@ -118,7 +116,7 @@ angular.module('myApp')
 
       var deferred = $q.defer();
 
-      $http.put(self.server + url, params, {
+      $http.put(url, params, {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
           }
@@ -147,7 +145,7 @@ angular.module('myApp')
 
       var deferred = $q.defer();
 
-      $http.delete(self.server + url)
+      $http.delete(url)
         .success(function(data) {
           deferred.resolve(data);
         })

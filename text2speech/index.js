@@ -4,6 +4,9 @@ var _ = require('lodash');
 var app = express();
 var randomstring = require("randomstring");
 
+// use:  http://localhost:8001/speak?sentence=good day Jamie
+// use:  http://localhost:8001/voice/ffdsafdsafdsafsadrjenqw.wav
+
 var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 var text_to_speech = new TextToSpeechV1 ({
   username: 'a97c57a2-b373-4aea-b706-869950719784',
@@ -56,6 +59,6 @@ app.get('/speak', function(req, res){
 
 app.use('/voice', express.static(__dirname + '/voiceStore'));
 
-app.listen(8001, function(){
+app.listen(8001, '0.0.0.0', function(){
     console.log("starting server");
 })
