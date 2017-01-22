@@ -9,7 +9,7 @@ angular.module('myApp.play', ['ngRoute'])
   });
 }])
 
-.controller('PlayCtrl', ['$scope', 'httpUtil','$location','fakeData', function($scope, httpUtil, $location, fakeData) {
+.controller('PlayCtrl', ['$scope', 'httpUtil','$location','fakeData','$q', function($scope, httpUtil, $location, fakeData, $q) {
     console.log($location.search());
     $scope.score_meta = null;
     $scope.score_content = null;
@@ -116,7 +116,6 @@ angular.module('myApp.play', ['ngRoute'])
         $scope.$apply();
     }
 
-
     $scope.setLeftHand = function(){
         $scope.hand = "Left";
         console.log($scope.hand);
@@ -167,6 +166,71 @@ angular.module('myApp.play', ['ngRoute'])
       $scope.nextBlock();
     });
 
+    var play = function(list) {
+        if(list.length == 0) return;
+        var sound = new Howl({
+            src: [list[0]],
+            preload: true,
+            autoplay: true,
+            onend: function() {
+                console.log('Finished!');
+                list.splice(0, 1);
+                setTimeout(function(){ play(list); }, 300);
+            },
+          });
+
+    }
+
+    var playAList = function(list) {
+        if(list.length == 0) return;
+          let promises = [];
+          for(var i = 0; i < list.length; i++) {
+              promises.push(httpUtil.get("http://localhost:8001/speak?sentence='"+list[i]+"'"));
+          }
+          $q.all(promises)
+          .then(function(values) {
+                console.log(values);
+                for(var i = 0; i < values.length; i++) {
+                    values[i] = "http://localhost:8001" + values[i];
+                }
+
+                play(values);
+
+            });
+
+        // httpUtil.get("http://localhost:8001/speak?sentence='"+list[0]+"'")
+        // .then(function(response) {
+        //     //TODO: PUT ALL THESE CODE INTO "THEN"
+        //     // var response = fakeData.searchList; // TODO: Change to real API data
+        //
+        //     if (response !== null) {
+        //         //var snd = new Audio("http://localhost:8001" + response);
+        //         //snd.play();
+        //
+        //         var sound = new Howl({
+        //             src: ["http://localhost:8001" + response],
+        //             autoplay: true,
+        //             loop: false,
+        //             volume: 0.5,
+        //             onend: function() {
+        //                 list.splice(0, 1);
+        //                 playAList(list);
+        //             }
+        //           });
+        //     }
+        //
+        // }, function(error) {
+        //     debugger
+        //     var response = fakeData.searchList; // TODO: Change to real API data
+        //
+        //     if (response !== null) {
+        //         $scope.searchList = response;
+        //         if($scope.searchList.length > 0) $scope.selected = 0;
+        //     }
+        //
+        // });
+    }
+
     key('space', function() {
       let sentences = [];
       for(var i = 0; i < $scope.blockSize.size && i + $scope.offset.offset < $scope.size; i++) {
@@ -174,28 +238,42 @@ angular.module('myApp.play', ['ngRoute'])
       }
       console.log(sentences);
 
-      for(var i = 0; i < sentences.length; i++) {
-          httpUtil.get("http://localhost:8001/speak?sentence='"+sentences[i]+"'")
-          .then(function(response) {
-              //TODO: PUT ALL THESE CODE INTO "THEN"
-              // var response = fakeData.searchList; // TODO: Change to real API data
+      playAList(sentences);
 
-              if (response !== null) {
-                  var snd = new Audio("http://localhost:8001" + response);
-                  snd.play();
-              }
-
-          }, function(error) {
-              debugger
-              var response = fakeData.searchList; // TODO: Change to real API data
-
-              if (response !== null) {
-                  $scope.searchList = response;
-                  if($scope.searchList.length > 0) $scope.selected = 0;
-              }
-
-          });
-      }
+      //
+    //   for(var i = 0; i < 1; i++) {
+    //       httpUtil.get("http://localhost:8001/speak?sentence='"+sentences[i]+"'")
+    //       .then(function(response) {
+    //           //TODO: PUT ALL THESE CODE INTO "THEN"
+    //           // var response = fakeData.searchList; // TODO: Change to real API data
+      //
+    //           if (response !== null) {
+    //               //var snd = new Audio("http://localhost:8001" + response);
+    //               //snd.play();
+      //
+    //               var sound = new Howl({
+    //                   src: ["http://localhost:8001" + response],
+    //                   autoplay: true,
+    //                   loop: false,
+    //                   volume: 0.5,
+    //                   onend: function() {
+    //                     console.log('Finished!');
+    //                   }
+    //                 });
+      //
+    //           }
+      //
+    //       }, function(error) {
+    //           debugger
+    //           var response = fakeData.searchList; // TODO: Change to real API data
+      //
+    //           if (response !== null) {
+    //               $scope.searchList = response;
+    //               if($scope.searchList.length > 0) $scope.selected = 0;
+    //           }
+      //
+    //       });
+    //   }
 
     });
 
