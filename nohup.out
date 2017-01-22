@@ -1,0 +1,13 @@
+[2017-01-22 06:20:25 +0000] [28606] [INFO] Starting gunicorn 19.4.5
+[2017-01-22 06:20:25 +0000] [28606] [INFO] Listening at: http://0.0.0.1:4000 (28606)
+[2017-01-22 06:20:25 +0000] [28606] [INFO] Using worker: sync
+[2017-01-22 06:20:25 +0000] [28611] [INFO] Booting worker with pid: 28611
+[2017-01-22 06:20:25 +0000] [28612] [INFO] Booting worker with pid: 28612
+[2017-01-22 06:20:25 +0000] [28615] [INFO] Booting worker with pid: 28615
+[2017-01-22 06:20:25 +0000] [28618] [INFO] Booting worker with pid: 28618
+[2017-01-22 06:20:45 +0000] [28606] [INFO] Handling signal: int
+[2017-01-22 06:20:45 +0000] [28611] [INFO] Worker exiting (pid: 28611)
+[2017-01-22 06:20:45 +0000] [28612] [INFO] Worker exiting (pid: 28612)
+[2017-01-22 06:20:45 +0000] [28615] [INFO] Worker exiting (pid: 28615)
+[2017-01-22 06:20:45 +0000] [28618] [INFO] Worker exiting (pid: 28618)
+[2017-01-22 06:20:45 +0000] [28606] [INFO] Shutting down: Master
