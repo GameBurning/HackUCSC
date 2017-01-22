@@ -79,7 +79,7 @@ angular.module('myApp.search', ['ngRoute'])
           $scope.focus();
           $scope.showResult = false;
           $scope.$apply();
-          navigation('play', {"id" : $scope.searchList[$scope.selected].id});
+          navigation('play', {"id" : $scope.searchList[$scope.selected]});
         });
 
         key('up', function() {
@@ -106,11 +106,15 @@ angular.module('myApp.search', ['ngRoute'])
           $scope.$apply();
         });
 
-        httpUtil.get("/")
+        httpUtil.get("http://gameburning.com:5000/api/musicscores/?keyword="+$scope.searchString)
         .then(function(response) {
-
-        }, function(error) {
             //TODO: PUT ALL THESE CODE INTO "THEN"
+            // var response = fakeData.searchList; // TODO: Change to real API data
+            if (response !== null) {
+                $scope.searchList = response;
+                if($scope.searchList.length > 0) $scope.selected = 0;
+            }
+        }, function(error) {
             var response = fakeData.searchList; // TODO: Change to real API data
             if (response !== null) {
                 $scope.searchList = response;

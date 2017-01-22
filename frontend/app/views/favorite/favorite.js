@@ -20,6 +20,11 @@ angular.module('myApp.favorite', ['ngRoute'])
     httpUtil.get("/")
     .then(function(response) {
 
+        //TODO: PUT ALL THESE CODE INTO "THEN"
+        if (response !== null) {
+            $scope.favoriteList = response;
+            if($scope.favoriteList.length > 0) $scope.selected = 0;
+        }
 
     }, function(error) {
         //TODO: PUT ALL THESE CODE INTO "THEN"

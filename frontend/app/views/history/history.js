@@ -20,6 +20,11 @@ angular.module('myApp.history', ['ngRoute'])
     httpUtil.get("/")
     .then(function(response) {
 
+        //TODO: PUT ALL THESE CODE INTO "THEN"
+        if (response !== null) {
+            $scope.historyList = response;
+            if($scope.historyList.length > 0) $scope.selected = 0;
+        }
 
     }, function(error) {
         //TODO: PUT ALL THESE CODE INTO "THEN"
