@@ -1,10 +1,22 @@
-<div>
-    <p>This is the partial for view search.</p>
-    <input ng-click = "focus();showResult = false; $apply();" ng-model="searchString" type="text" focus-me="shouldFocus" ng-keypress="getKey($event)" ng-blur="setUnfocus()" ng-focus="setFocus()"></input>
-    <button type="button" ng-click="search()">Search</button>
-    <div ng-if = "showResult == true">
-        <div ng-repeat="item in searchList track by $index" ng-click="select($index)" ng-class = "{ highlight : selected == $index}">
-            {{item}}
-        </div>
+<div class = "search">
+    <div id="light_beam"></div>
+
+    <div ng-class="{smallsearchsection: showResult}" class = "search-section">
+        <img ng-if = "showResult !== true" class="elise-search" src="/resources/Elise.png"/>
+        <input ng-class="{smallsearchbar: showResult}" class = "search-bar" ng-click = "focus();showResult = false; $apply();" ng-model="searchString" type="text" focus-me="shouldFocus" ng-keypress="getKey($event)" ng-blur="setUnfocus()" ng-focus="setFocus()"></input>
     </div>
+
+    <div ng-if = "showResult == true && selected !== null" class="result">
+        <p class = "result-name">{{searchList[selected].name}}</p>
+        <p class = "result-author">{{searchList[selected].composer}}</p>
+        <p class = "result-difficulty">{{"Difficulty : "+searchList[selected].hardness}}</p>
+    </div>
+    
+    <button ng-if = "showResult == true && selected !== null && selected != 0" class="left-search" />
+    <button ng-if = "showResult == true && selected !== null && selected != searchList.length-1" class="right-search" />
+
+    <button href="#!/favorite" ng-click="nav('favorite')" class="favorite-search" />
+    <button href="#!/favorite" ng-click="nav('favorite')" class="shortcut-2">
+    <button href="#!/history" ng-click="nav('history')" class="history-search"/>
+    <button href="#!/favorite" ng-click="nav('history')" class="shortcut-3">
 </div>
