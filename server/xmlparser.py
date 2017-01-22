@@ -151,7 +151,7 @@ def generateJson(scoreName):
                         m_text[int(_staff) - 1][-1] += note_text
 
                     else:
-                        note_text = _type + " " + _step + _octave
+                        note_text = _type + " " + _step + " " + _octave
                         if note.find('dot') is not None:
                             note_text = "dotted " + note_text
                         if note.find('grace') is not None:
