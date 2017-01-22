@@ -12,27 +12,32 @@ angular.module('myApp.history', ['ngRoute'])
 .controller('HistoryCtrl', ['$scope', 'httpUtil', 'fakeData', '$location','navigation', function($scope, httpUtil, fakeData, $location, navigation) {
     $scope.historyList = [];
     $scope.selected = null;
+    $scope.showResult = false;
 
-    key.unbind('up');
-    key.unbind('down');
+    key.unbind('left');
+    key.unbind('right');
     key.unbind('enter');
 
     httpUtil.get("/")
     .then(function(response) {
 
+        var response = fakeData.historyList; // TODO: Change to real API data
         //TODO: PUT ALL THESE CODE INTO "THEN"
         if (response !== null) {
             $scope.historyList = response;
             if($scope.historyList.length > 0) $scope.selected = 0;
+            $scope.showResult = true;
         }
 
     }, function(error) {
+
         //TODO: PUT ALL THESE CODE INTO "THEN"
         var response = fakeData.historyList; // TODO: Change to real API data
 
         if (response !== null) {
             $scope.historyList = response;
             if($scope.historyList.length > 0) $scope.selected = 0;
+            $scope.showResult = true;
         }
 
     })
@@ -42,7 +47,7 @@ angular.module('myApp.history', ['ngRoute'])
         console.log(ind);
     }
 
-    $scope.up = function(ind) {
+    $scope.prev = function(ind) {
         if($scope.selected != null) {
             if($scope.selected > 0) {
                 $scope.selected --;
@@ -51,7 +56,7 @@ angular.module('myApp.history', ['ngRoute'])
         }
     }
 
-    $scope.down = function(ind) {
+    $scope.next = function(ind) {
         if($scope.selected != null) {
             if($scope.selected < $scope.historyList.length - 1) {
                 $scope.selected ++;
@@ -62,14 +67,14 @@ angular.module('myApp.history', ['ngRoute'])
 
     if($location.path() == '/history') {
 
-        key('up', function() {
+        key('left', function() {
           console.log('up key pressed');
-          $scope.up();
+          $scope.prev();
         });
 
-        key('down', function() {
+        key('right', function() {
           console.log('down key pressed');
-          $scope.down();
+          $scope.next();
         });
 
         key('enter', function() {

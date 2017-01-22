@@ -12,18 +12,21 @@ angular.module('myApp.favorite', ['ngRoute'])
 .controller('FavoriteCtrl', ['$scope', 'httpUtil', 'fakeData', '$location', 'navigation',function($scope, httpUtil, fakeData, $location, navigation) {
     $scope.favoriteList = [];
     $scope.selected = null;
+    $scope.showResult = false;
 
-    key.unbind('up');
-    key.unbind('down');
+    key.unbind('left');
+    key.unbind('right');
     key.unbind('enter');
 
     httpUtil.get("/")
     .then(function(response) {
 
+        var response = fakeData.favoriteList; // TODO: Change to real API data
         //TODO: PUT ALL THESE CODE INTO "THEN"
         if (response !== null) {
             $scope.favoriteList = response;
             if($scope.favoriteList.length > 0) $scope.selected = 0;
+            $scope.showResult = true;
         }
 
     }, function(error) {
@@ -33,6 +36,7 @@ angular.module('myApp.favorite', ['ngRoute'])
         if (response !== null) {
             $scope.favoriteList = response;
             if($scope.favoriteList.length > 0) $scope.selected = 0;
+            $scope.showResult = true;
         }
     })
 
@@ -42,7 +46,7 @@ angular.module('myApp.favorite', ['ngRoute'])
     }
 
 
-    $scope.up = function(ind) {
+    $scope.prev = function(ind) {
         if($scope.selected != null) {
             if($scope.selected > 0) {
                 $scope.selected --;
@@ -51,7 +55,7 @@ angular.module('myApp.favorite', ['ngRoute'])
         }
     }
 
-    $scope.down = function(ind) {
+    $scope.next = function(ind) {
         if($scope.selected != null) {
             if($scope.selected < $scope.favoriteList.length - 1) {
                 $scope.selected ++;
@@ -63,14 +67,14 @@ angular.module('myApp.favorite', ['ngRoute'])
     console.log($location.path());
     if($location.path() == '/favorite') {
 
-        key('up', function() {
+        key('left', function() {
           console.log('up key pressed');
-          $scope.up();
+          $scope.prev();
         });
 
-        key('down', function() {
+        key('right', function() {
           console.log('down key pressed');
-          $scope.down();
+          $scope.next();
         });
 
         key('enter', function() {

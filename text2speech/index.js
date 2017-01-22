@@ -39,8 +39,7 @@ app.get('/speak', function(req, res){
 
 		var query = {
 	      text: sentence,
-	      "language": "en-US",
-		  "gender": "male",
+	      voice: 'en-US_AllisonVoice',
 	      accept: 'audio/wav'
 	    };
 

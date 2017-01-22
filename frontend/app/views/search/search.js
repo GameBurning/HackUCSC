@@ -31,8 +31,8 @@ angular.module('myApp.search', ['ngRoute'])
       $scope.showResult = false;
       $scope.setFocus();
 
-      key.unbind('up');
-      key.unbind('down');
+      key.unbind('left');
+      key.unbind('right');
       key.unbind('esc');
       key.unbind('backspace');
 
@@ -69,8 +69,8 @@ angular.module('myApp.search', ['ngRoute'])
         $scope.showResult = true;
         $scope.blur();
         key.unbind('enter');
-        key.unbind('up');
-        key.unbind('down');
+        key.unbind('left');
+        key.unbind('right');
         key.unbind('esc');
         key.unbind('backspace');
 
@@ -82,12 +82,12 @@ angular.module('myApp.search', ['ngRoute'])
           navigation('play', {"id" : $scope.searchList[$scope.selected]});
         });
 
-        key('up', function() {
+        key('left', function() {
           console.log('up key pressed');
           $scope.up();
         });
 
-        key('down', function() {
+        key('right', function() {
           console.log('down key pressed');
           $scope.down();
         });
@@ -108,6 +108,7 @@ angular.module('myApp.search', ['ngRoute'])
 
         httpUtil.get("http://gameburning.com:5000/api/musicscores/?keyword="+$scope.searchString)
         .then(function(response) {
+            debugger
             //TODO: PUT ALL THESE CODE INTO "THEN"
             // var response = fakeData.searchList; // TODO: Change to real API data
             if (response !== null) {
