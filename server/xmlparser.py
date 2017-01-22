@@ -248,6 +248,6 @@ def generateJson(scoreName):
 
     return json.dumps(scoreInfo,indent=4, separators=('.', ': '))
 
-#print(generateJson('Sweethearts'))
+print(generateJson('Sweethearts'))
 #print(generateJson('Fur_Elise'))
 #print(generateJson('Autumn_Leaves'))
