@@ -168,25 +168,41 @@
     left: 67vw;
 }
 
+@keyframes changePos {
+  from {
+    transform: translate(-1100px, -1450px) rotate(130deg);
+  }
+
+  to {
+    transform: translate(-1100px, -1450px) rotate(123deg);
+  }
+}
+
+
 .search #light_beam {
-  transform: translate(-1100px, -1450px) rotate(130deg);
-  transform-origin: 100% 100%;
-  transition: all 1s;
-  position: absolute;
-  bottom: 0;
-  left: 500px;
-  width: 0;
-  height: 0;
-  border-top: 400px solid yellow;
-  border-left: 100px solid transparent;
-  border-right: 100px solid transparent;
-  position: absolute;
+    animation-duration: 8s;
+    animation-name: changePos;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+
+
+    transform-origin: 100% 100%;
+    transition: all 1s;
+    position: absolute;
+    bottom: 0;
+    left: 500px;
+    width: 0;
+    height: 0;
+    border-top: 400px solid yellow;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    position: absolute;
     bottom: 0;
     left: 495px;
     top: 0;
     width: 0;
     height: 0;
-    border-top: 1400px solid rgb(96,96,96);
+    border-top: 1480px solid rgb(96,96,96);
     border-left: 120px solid transparent;
     border-right: 160px solid transparent;
 }
