@@ -1,10 +1,10 @@
 from flask import Flask, request
-from .xmlparser import *
+from server.xmlparser import *
 from os import listdir
 import json
 app = Flask(__name__)
 
-scoreNames = [m.split('.')[0] for m in listdir('test/testCases/')]
+scoreNames = [m.split('.')[0] for m in listdir('server/test/testCases/')]
 #print(scoreNames)
 
 @app.route('/api/musicscores/<scorename>')
