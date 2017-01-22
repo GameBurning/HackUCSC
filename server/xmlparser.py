@@ -151,7 +151,7 @@ def generateJson(scoreName):
                         m_text[int(_staff) - 1][-1] += note_text
 
                     else:
-                        note_text = _type + " " + _step + _octave
+                        note_text = _type + " " + _step + " " + _octave
                         if note.find('dot') is not None:
                             note_text = "dotted " + note_text
                         if note.find('grace') is not None:
@@ -207,7 +207,7 @@ def generateJson(scoreName):
 
         whole_text.append(m_text)
 
-    comma = " , "
+    comma = " . "
     read_heading = r_worktitle + comma + \
     r_composer + comma + \
     r_tempo + comma + \
@@ -246,7 +246,7 @@ def generateJson(scoreName):
         'scoreContent':scoreContent
     }
 
-    return json.dumps(scoreInfo,indent=4, separators=(',', ': '))
+    return json.dumps(scoreInfo,indent=4, separators=('.', ': '))
 
 #print(generateJson('Sweethearts'))
 #print(generateJson('Fur_Elise'))

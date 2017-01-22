@@ -4,7 +4,7 @@
     <button type="button" ng-click="search()">Search</button>
     <div ng-if = "showResult == true">
         <div ng-repeat="item in searchList track by $index" ng-click="select($index)" ng-class = "{ highlight : selected == $index}">
-            {{item.name}}
+            {{item}}
         </div>
     </div>
 </div>
