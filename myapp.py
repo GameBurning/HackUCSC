@@ -34,9 +34,31 @@ composer_dict = {
     'Waltz_No.1_in_C_Major':'Noah Garnier'
 }
 
+fav_list = []
+hist_list = []
+
+@app.route('/api/musicscores/favorite/')
+def api_fav():
+    if 'name' in request.args:
+        if request.args['name'] not in fav_list:
+            fav_list.append(request.args['name'])
+        return json.dumps(fav_list)
+    else:
+        return json.dumps(fav_list)
+
 @app.route('/api/musicscores/<scorename>')
 def api_score(scorename):
+    if scorename not in hist_list:
+        hist_list.append(scorename)
+    else:
+        del(hist_list[hist_list.index(scorename)])
+        hist_list.append(scorename)
     return generateJson(scorename)
+    
+
+@app.route('/api/musicscores/history/')
+def api_hist():
+    return json.dumps(hist_list)
 
 @app.route('/api/musicscores/')
 def api_search():
