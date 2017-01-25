@@ -1,8 +1,8 @@
 {
-  "name": "musical-score-reader",
+  "name": "fur-elise",
   "private": true,
   "version": "0.0.1",
-  "description": "Help visually impaired people read music score",
+  "description": "read music scores for visually impaired people",
   "repository": "https://github.com/GameBurning/HackUCSC",
   "license": "MIT",
   "devDependencies": {
