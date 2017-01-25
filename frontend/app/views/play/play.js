@@ -22,12 +22,13 @@ angular.module('myApp.play', ['ngRoute'])
     $scope.start = 0;
     $scope.hand = "Right";
 
-    key.unbind('up');
-    key.unbind('down');
-    key.unbind('left');
-    key.unbind('right');
-    key.unbind('space');
-    key.unbind('enter');
+    let clearKeys = function() {
+        for(var i = 0 ; i < utility.registered_keys.length; i++) {
+            key.unbind(utility.registered_keys[i]);
+        }
+    }
+
+    clearKeys();
 
     let active_sounds = [];
     let stop_all_sounds = function() {
@@ -37,33 +38,7 @@ angular.module('myApp.play', ['ngRoute'])
     }
 
     $scope.like = function() {
-        httpUtil.get("http://gameburning.com:5000/api/musicscores/" + score_id)
-        .then(function(response) {
 
-            //TODO: PUT ALL THESE CODE INTO "THEN"
-            // var response = fakeData.searchList; // TODO: Change to real API data
-            if (response !== null) {
-                $scope.score_meta = response.metaInfo;
-                $scope.score_content = response.scoreContent;
-                for (var prop in $scope.score_content) {
-                    $scope.measures.push($scope.score_content[prop]);
-                }
-                $scope.size = $scope.measures.length;
-                $scope.start();
-            }
-        }, function(error) {
-
-            var response = fakeData.musicScore; // TODO: Change to real API data
-            if (response !== null) {
-                $scope.score_meta = response.metaInfo;
-                $scope.score_content = response.scoreContent;
-                for (var prop in $scope.score_content) {
-                    $scope.measures.push($scope.score_content[prop]);
-                }
-                $scope.size = $scope.measures.length;
-                $scope.start();
-            }
-        });
     }
 
     if($location.search() && $location.search().id) {

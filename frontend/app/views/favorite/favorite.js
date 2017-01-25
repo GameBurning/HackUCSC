@@ -15,9 +15,13 @@ function($scope, httpUtil, fakeData, $location, navigation,utility) {
     $scope.selected = null;
     $scope.showResult = false;
 
-    key.unbind('left');
-    key.unbind('right');
-    key.unbind('enter');
+    let clearKeys = function() {
+        for(var i = 0 ; i < utility.registered_keys.length; i++) {
+            key.unbind(utility.registered_keys[i]);
+        }
+    }
+
+    clearKeys();
 
     let active_sounds = [];
     let stop_all_sounds = function() {

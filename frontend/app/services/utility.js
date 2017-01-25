@@ -2,6 +2,8 @@ angular.module('myApp')
   .service('utility', ['httpUtil', '$q', 'config', function(httpUtil, $q, config) {
     var self = this;
 
+    self.registered_keys = ['up','down','left','right','space','enter','-','_','+','=','f'];
+
     self.get_voice_by_text = function(text) {
         var deferred = $q.defer();
         httpUtil.get( config.api.text_to_speech + "/speak?sentence='"+ text +"'")
@@ -67,25 +69,25 @@ angular.module('myApp')
         return deferred.promise;
     }
 
-    self.get_music_score_by_id = function(id) {
+    self.search_score = function(search_text) {
         var deferred = $q.defer();
-        httpUtil.get( config.api.text_to_speech + "/speak?sentence='"+ text +"'")
-            .then(function(response) {
-              if (response !== null) {
-                deferred.resolve(config.api.text_to_speech + response);
-              }
-              else {
-                  deferred.reject({
-                    err: "Ah!.. response is null",
-                    status: 1
-                  })
-              }
-            }, function(error) {
+        httpUtil.get(config.api.music_score + "/musicscores/?keyword=" + search_text)
+        .then(function(response) {
+            if (response !== null) {
+                deferred.resolve(response);
+            }
+            else {
                 deferred.reject({
-                  err: error,
-                  status: 0
+                  err: "Ah!.. response is null",
+                  status: 1
                 })
-            });
+            }
+        }, function(error) {
+            deferred.reject({
+              err: error,
+              status: 0
+            })
+        });
         return deferred.promise;
     }
 
