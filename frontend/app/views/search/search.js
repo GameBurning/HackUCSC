@@ -9,19 +9,30 @@ angular.module('myApp.search', ['ngRoute'])
   });
 }])
 
-.controller('SearchCtrl', ['$scope', 'httpUtil', 'navigation', 'fakeData', function($scope, httpUtil, navigation, fakeData) {
-
+.controller('SearchCtrl', ['$scope', 'httpUtil', 'navigation', 'fakeData', 'utility',
+    function($scope, httpUtil, navigation, fakeData, utility) {
     $scope.shouldFocus = true;
     $scope.showResult = false;
     $scope.searchString = "";
     $scope.searchList = [];
     $scope.selected = null;
 
+    let active_sounds = [];
+    let stop_all_sounds = function() {
+        for(var i = 0; i < active_sounds.length; i++) {
+            active_sounds[i].stop();
+        }
+    }
+
     var sound = new Howl({
         src: ['/resources/sounds/search.wav'],
         preload: true,
         autoplay: true,
         rate : 1,
+        onload: function() {
+            stop_all_sounds();
+            active_sounds.push(sound);
+        },
         onend: function() {
             console.log('Finished!');
         },
@@ -62,27 +73,23 @@ angular.module('myApp.search', ['ngRoute'])
                 $scope.selected --;
                 $scope.$apply();
             }
-            httpUtil.get("http://localhost:8001/speak?sentence='"+$scope.searchList[$scope.selected].name+"'")
-                  .then(function(response) {
-                      //TODO: PUT ALL THESE CODE INTO "THEN"
-                      // var response = fakeData.searchList; // TODO: Change to real API data
+            utility.get_voice_by_text($scope.searchList[$scope.selected].name)
+                .then(function(sound_url){
+                    var sound = new Howl({
+                        src: [sound_url],
+                        autoplay: true,
+                        loop: false,
+                        onload: function() {
+                            stop_all_sounds();
+                            active_sounds.push(sound);
+                        },
+                        onend: function() {
+                            console.log('Finished!');
+                        },
+                      });
+                }, function(error){
 
-                      if (response !== null) {
-                          //var snd = new Audio("http://localhost:8001" + response);
-                          //snd.play();
-
-                          var sound = new Howl({
-                              src: ["http://localhost:8001" + response],
-                              autoplay: true,
-                              loop: false,
-                              onend: function() {
-                                console.log('Finished!');
-                              }
-                            });
-                      }
-
-                  }, function(error) {
-                  });
+                });
         }
     }
 
@@ -92,27 +99,23 @@ angular.module('myApp.search', ['ngRoute'])
                 $scope.selected ++;
                 $scope.$apply();
             }
-            httpUtil.get("http://localhost:8001/speak?sentence='"+$scope.searchList[$scope.selected].name+"'")
-                  .then(function(response) {
-                      //TODO: PUT ALL THESE CODE INTO "THEN"
-                      // var response = fakeData.searchList; // TODO: Change to real API data
+            utility.get_voice_by_text($scope.searchList[$scope.selected].name)
+                .then(function(sound_url){
+                    var sound = new Howl({
+                        src: [sound_url],
+                        autoplay: true,
+                        loop: false,
+                        onload: function() {
+                            stop_all_sounds();
+                            active_sounds.push(sound);
+                        },
+                        onend: function() {
+                            console.log('Finished!');
+                        },
+                      });
+                }, function(error){
 
-                      if (response !== null) {
-                          //var snd = new Audio("http://localhost:8001" + response);
-                          //snd.play();
-
-                          var sound = new Howl({
-                              src: ["http://localhost:8001" + response],
-                              autoplay: true,
-                              loop: false,
-                              onend: function() {
-                                console.log('Finished!');
-                              }
-                            });
-                      }
-
-                  }, function(error) {
-                  });
+                });
         }
     }
 
@@ -128,27 +131,23 @@ angular.module('myApp.search', ['ngRoute'])
         key.unbind('backspace');
 
         if($scope.searchList[$scope.selected]) {
-            httpUtil.get("http://localhost:8001/speak?sentence='"+$scope.searchList[$scope.selected].name+"'")
-                  .then(function(response) {
-                      //TODO: PUT ALL THESE CODE INTO "THEN"
-                      // var response = fakeData.searchList; // TODO: Change to real API data
+            utility.get_voice_by_text($scope.searchList[$scope.selected].name)
+                .then(function(sound_url){
+                    var sound = new Howl({
+                        src: [sound_url],
+                        autoplay: true,
+                        loop: false,
+                        onload: function() {
+                            stop_all_sounds();
+                            active_sounds.push(sound);
+                        },
+                        onend: function() {
+                            console.log('Finished!');
+                        },
+                      });
+                }, function(error){
 
-                      if (response !== null) {
-                          //var snd = new Audio("http://localhost:8001" + response);
-                          //snd.play();
-
-                          var sound = new Howl({
-                              src: ["http://localhost:8001" + response],
-                              autoplay: true,
-                              loop: false,
-                              onend: function() {
-                                console.log('Finished!');
-                              }
-                            });
-                      }
-
-                  }, function(error) {
-                  });
+                });
         }
 
         key('enter', function() {
@@ -156,7 +155,7 @@ angular.module('myApp.search', ['ngRoute'])
           $scope.focus();
           $scope.showResult = false;
           $scope.$apply();
-          navigation('play', {"id" : $scope.searchList[$scope.selected]});
+          navigation('play', {"id" : $scope.searchList[$scope.selected].name});
         });
 
         key('left', function() {
@@ -185,9 +184,6 @@ angular.module('myApp.search', ['ngRoute'])
 
         httpUtil.get("http://gameburning.com:5000/api/musicscores/?keyword="+$scope.searchString)
         .then(function(response) {
-            debugger
-            //TODO: PUT ALL THESE CODE INTO "THEN"
-            // var response = fakeData.searchList; // TODO: Change to real API data
             if (response !== null) {
                 $scope.searchList = response;
                 if($scope.searchList.length > 0) $scope.selected = 0;

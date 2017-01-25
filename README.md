@@ -4,20 +4,36 @@ Fur Elise is a project aimed at translating digital music sheets to speech for t
 
 #Deploy
 
+Environment: node - v6.4.0, npm  - v3.10.3
+
+Get Node Version Manager: 
+
 ```sh
-cd path-to-fur-elise/frontend
-npm install
+$ curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh -o install_nvm.sh
+$ bash install_nvm.sh
+$ source ~/.profile
+$ nvm install 6.4.0
+$ nvm use 6.4.0
+$ node -v   //output v6.4.0
+$ npm -v   //output v3.10.3
+```
 
-cd path-to-fur-elise/frontend/app
-bower install
+Run front-end and text-to-speech service
 
-cd path-to-fur-elise/text2speech
-npm install
-node index.js
+```sh
+$ cd path-to-fur-elise/frontend
+$ npm install
+
+$ cd path-to-fur-elise/frontend/app
+$bower install
+
+$ cd path-to-fur-elise/text2speech
+$ npm install
+$ node index.js
 
 // Open a new terminal
-cd path-to-fur-elise/frontend
-npm start 
+$ cd path-to-fur-elise/frontend
+$ npm start 
 // Web app will run at http://localhost:8000
 ```
 

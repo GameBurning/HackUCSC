@@ -9,7 +9,8 @@ angular.module('myApp.history', ['ngRoute'])
   });
 }])
 
-.controller('HistoryCtrl', ['$scope', 'httpUtil', 'fakeData', '$location','navigation', function($scope, httpUtil, fakeData, $location, navigation) {
+.controller('HistoryCtrl', ['$scope', 'httpUtil', 'fakeData', '$location','navigation', 'utility',
+function($scope, httpUtil, fakeData, $location, navigation, utility) {
     $scope.historyList = [];
     $scope.selected = null;
     $scope.showResult = false;
@@ -18,11 +19,22 @@ angular.module('myApp.history', ['ngRoute'])
     key.unbind('right');
     key.unbind('enter');
 
+    let active_sounds = [];
+    let stop_all_sounds = function() {
+        for(var i = 0; i < active_sounds.length; i++) {
+            active_sounds[i].stop();
+        }
+    }
+
     var sound = new Howl({
         src: ['/resources/sounds/history.wav'],
         preload: true,
         autoplay: true,
         rate : 1,
+        onload: function() {
+            stop_all_sounds();
+            active_sounds.push(sound);
+        },
         onend: function() {
             console.log('Finished!');
         },
@@ -64,27 +76,23 @@ angular.module('myApp.history', ['ngRoute'])
                 $scope.$apply();
             }
             setTimeout(function(){
-                httpUtil.get("http://localhost:8001/speak?sentence='"+$scope.historyList[$scope.selected]+"'")
-                      .then(function(response) {
-                          //TODO: PUT ALL THESE CODE INTO "THEN"
-                          // var response = fakeData.searchList; // TODO: Change to real API data
+                utility.get_voice_by_text($scope.historyList[$scope.selected].name)
+                    .then(function(sound_url){
+                        var sound = new Howl({
+                            src: [sound_url],
+                            autoplay: true,
+                            loop: false,
+                            onload: function() {
+                                stop_all_sounds();
+                                active_sounds.push(sound);
+                            },
+                            onend: function() {
+                                console.log('Finished!');
+                            },
+                          });
+                    }, function(error){
 
-                          if (response !== null) {
-                              //var snd = new Audio("http://localhost:8001" + response);
-                              //snd.play();
-
-                              var sound = new Howl({
-                                  src: ["http://localhost:8001" + response],
-                                  autoplay: true,
-                                  loop: false,
-                                  onend: function() {
-                                    console.log('Finished!');
-                                  }
-                                });
-                          }
-
-                      }, function(error) {
-                      });
+                    });
             },1500);
 
         }
@@ -96,27 +104,23 @@ angular.module('myApp.history', ['ngRoute'])
                 $scope.selected ++;
                 $scope.$apply();
             }
-            httpUtil.get("http://localhost:8001/speak?sentence='"+$scope.historyList[$scope.selected]+"'")
-                  .then(function(response) {
-                      //TODO: PUT ALL THESE CODE INTO "THEN"
-                      // var response = fakeData.searchList; // TODO: Change to real API data
+            utility.get_voice_by_text($scope.historyList[$scope.selected])
+                .then(function(sound_url){
+                    var sound = new Howl({
+                        src: [sound_url],
+                        autoplay: true,
+                        loop: false,
+                        onload: function() {
+                            stop_all_sounds();
+                            active_sounds.push(sound);
+                        },
+                        onend: function() {
+                            console.log('Finished!');
+                        },
+                      });
+                }, function(error){
 
-                      if (response !== null) {
-                          //var snd = new Audio("http://localhost:8001" + response);
-                          //snd.play();
-
-                          var sound = new Howl({
-                              src: ["http://localhost:8001" + response],
-                              autoplay: true,
-                              loop: false,
-                              onend: function() {
-                                console.log('Finished!');
-                              }
-                            });
-                      }
-
-                  }, function(error) {
-            });
+                });
         }
     }
 
