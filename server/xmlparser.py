@@ -251,3 +251,4 @@ def generateJson(scoreName):
 print(generateJson('Sweethearts'))
 #print(generateJson('Fur_Elise'))
 #print(generateJson('Autumn_Leaves'))
+#print(generateJson('Nyan_Cat'))
