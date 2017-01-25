@@ -9,7 +9,7 @@ angular.module('myApp.play', ['ngRoute'])
   });
 }])
 
-.controller('PlayCtrl', ['$scope', 'httpUtil','$location','fakeData','$q', function($scope, httpUtil, $location, fakeData, $q) {
+.controller('PlayCtrl', ['$scope', 'httpUtil','$location','fakeData','$q', 'utility', function($scope, httpUtil, $location, fakeData, $q, utility) {
     console.log($location.search());
     $scope.score_meta = null;
     $scope.score_content = null;
@@ -27,6 +27,14 @@ angular.module('myApp.play', ['ngRoute'])
     key.unbind('left');
     key.unbind('right');
     key.unbind('space');
+    key.unbind('enter');
+
+    let active_sounds = [];
+    let stop_all_sounds = function() {
+        for(var i = 0; i < active_sounds.length; i++) {
+            active_sounds[i].stop();
+        }
+    }
 
     $scope.like = function() {
         httpUtil.get("http://gameburning.com:5000/api/musicscores/" + score_id)
@@ -58,37 +66,44 @@ angular.module('myApp.play', ['ngRoute'])
         });
     }
 
-    //TODO: FIX BUG OF SCOPE NOT UPDATE VIEW
-    if($location.search()) {
+    if($location.search() && $location.search().id) {
         let score_id = $location.search().id;
-
-        httpUtil.get("http://gameburning.com:5000/api/musicscores/" + score_id)
-        .then(function(response) {
-
-            //TODO: PUT ALL THESE CODE INTO "THEN"
-            // var response = fakeData.searchList; // TODO: Change to real API data
-            if (response !== null) {
+        utility.get_score(score_id)
+            .then(function(response) {
                 $scope.score_meta = response.metaInfo;
+                let meta_info_text = [];
+                meta_info_text.push(score_id);
+                for(var prop in $scope.score_meta) {
+                    meta_info_text.push(prop + ". " +$scope.score_meta[prop]);
+                }
+                playSentencesList(meta_info_text);
+
                 $scope.score_content = response.scoreContent;
                 for (var prop in $scope.score_content) {
                     $scope.measures.push($scope.score_content[prop]);
                 }
                 $scope.size = $scope.measures.length;
                 $scope.start();
-            }
-        }, function(error) {
+            }, function(error) {
+                console.log(error);
+                var response = fakeData.musicScore; // TODO: Change to real API data
+                if (response !== null) {
+                    $scope.score_meta = response.metaInfo;
+                    let meta_info_text = [];
+                    meta_info_text.push(score_id);
+                    for(var prop in $scope.score_meta) {
+                        meta_info_text.push(prop + ". " +$scope.score_meta[prop]);
+                    }
+                    playSentencesList(meta_info_text);
 
-            var response = fakeData.musicScore; // TODO: Change to real API data
-            if (response !== null) {
-                $scope.score_meta = response.metaInfo;
-                $scope.score_content = response.scoreContent;
-                for (var prop in $scope.score_content) {
-                    $scope.measures.push($scope.score_content[prop]);
+                    $scope.score_content = response.scoreContent;
+                    for (var prop in $scope.score_content) {
+                        $scope.measures.push($scope.score_content[prop]);
+                    }
+                    $scope.size = $scope.measures.length;
+                    $scope.start();
                 }
-                $scope.size = $scope.measures.length;
-                $scope.start();
-            }
-        });
+            })
     }
 
     $scope.start = function() {
@@ -108,29 +123,20 @@ angular.module('myApp.play', ['ngRoute'])
 
         $scope.prevBlock();
 
-        setTimeout(function(){
-            httpUtil.get("http://localhost:8001/speak?sentence='sentence size, "+$scope.blockSize+"'")
-                  .then(function(response) {
-                      //TODO: PUT ALL THESE CODE INTO "THEN"
-                      // var response = fakeData.searchList; // TODO: Change to real API data
-
-                      if (response !== null) {
-                          //var snd = new Audio("http://localhost:8001" + response);
-                          //snd.play();
-
-                          var sound = new Howl({
-                              src: ["http://localhost:8001" + response],
-                              autoplay: true,
-                              loop: false,
-                              onend: function() {
-                                console.log('Finished!');
-                              }
-                            });
-                      }
-
-                  }, function(error) {
+        utility.get_voice_by_text("sentence size," + $scope.blockSize)
+            .then(function(sound_url){
+                var sound = new Howl({
+                    src: [sound_url],
+                    autoplay: true,
+                    loop: false,
+                    onload: function() {
+                        stop_all_sounds();
+                        active_sounds.push(sound);
+                    }
                   });
-        },1500);
+            }, function(error){
+
+            });
     }
 
     $scope.decreaseBlock = function() {
@@ -144,29 +150,20 @@ angular.module('myApp.play', ['ngRoute'])
 
         $scope.prevBlock();
 
-        setTimeout(function(){
-            httpUtil.get("http://localhost:8001/speak?sentence='sentence size, "+$scope.blockSize+"'")
-                  .then(function(response) {
-                      //TODO: PUT ALL THESE CODE INTO "THEN"
-                      // var response = fakeData.searchList; // TODO: Change to real API data
-
-                      if (response !== null) {
-                          //var snd = new Audio("http://localhost:8001" + response);
-                          //snd.play();
-
-                          var sound = new Howl({
-                              src: ["http://localhost:8001" + response],
-                              autoplay: true,
-                              loop: false,
-                              onend: function() {
-                                console.log('Finished!');
-                              }
-                            });
-                      }
-
-                  }, function(error) {
+        utility.get_voice_by_text("sentence size," + $scope.blockSize)
+            .then(function(sound_url){
+                var sound = new Howl({
+                    src: [sound_url],
+                    autoplay: true,
+                    loop: false,
+                    onload: function() {
+                        stop_all_sounds();
+                        active_sounds.push(sound);
+                    }
                   });
-        },1500);
+            }, function(error){
+
+            });
     }
 
     $scope.nextBlock = function() {
@@ -196,14 +193,64 @@ angular.module('myApp.play', ['ngRoute'])
 
     $scope.setLeftHand = function(){
         $scope.hand = "Left";
-        console.log($scope.hand);
+        console.log($scope.hand + "Hand");
         $scope.$apply();
     }
 
     $scope.setRightHand = function(){
         $scope.hand = "Right";
-        console.log($scope.hand);
+        console.log($scope.hand + "Hand");
         $scope.$apply();
+    }
+
+    // input : urls of voices
+    let play = function(str_or_list_to_play) {
+        let list = [];
+        if(typeof str_or_list_to_play == "string") {
+            if(str_or_list_to_play == "") return;
+            list = [str_or_list_to_play];
+        }
+        else {
+            if(str_or_list_to_play.length == 0) return;
+            else list = str_or_list_to_play;
+        }
+        var sound = new Howl({
+            src: [list[0]],
+            preload: true,
+            autoplay: true,
+            rate : 1,
+            onload: function() {
+                active_sounds.push(sound);
+            },
+            onend: function() {
+                console.log('Finished!');
+                list.splice(0, 1);
+                setTimeout(function(){ play(list); }, 500);
+            },
+          });
+        active_sounds.push(sound);
+    }
+
+    let playSentence = function(sentence) {
+        utility.get_voice_by_text(sentence)
+            .then(function(sound_url){
+                stop_all_sounds();
+                play(sound_url);
+            }, function(error){
+
+            });
+    }
+
+    // input : urls of voices
+    let playSentencesList = function(list) {
+        if(list.length == 0) return;
+        utility.get_voices_by_list(list)
+            .then(function(urls){
+                stop_all_sounds();
+                play(urls);
+            }, function(error){
+
+            });
     }
 
     key('f', function() {
@@ -212,17 +259,17 @@ angular.module('myApp.play', ['ngRoute'])
     });
 
     key('=', function() {
-      console.log('up key pressed');
+      console.log('= key pressed');
       $scope.increaseBlock();
     });
 
     key('-', function() {
-      console.log('down key pressed');
+      console.log('- key pressed');
       $scope.decreaseBlock();
     });
 
     key('+', function() {
-      console.log('up key pressed');
+      console.log('+ key pressed');
       $scope.increaseBlock();
     });
 
@@ -232,67 +279,37 @@ angular.module('myApp.play', ['ngRoute'])
     });
 
     key('down', function() {
-      console.log('up key pressed');
+      console.log('down key pressed');
       $scope.setLeftHand();
     });
 
     key('up', function() {
-      console.log('down key pressed');
+      console.log('up key pressed');
       $scope.setRightHand();
     });
 
     key('left', function() {
-      console.log('enter key pressed');
+      console.log('left key pressed');
       $scope.prevBlock();
     });
 
     key('right', function() {
-      console.log('enter key pressed');
+      console.log('right key pressed');
       $scope.nextBlock();
     });
 
-    var play = function(list) {
-        if(list.length == 0) return;
-        var sound = new Howl({
-            src: [list[0]],
-            preload: true,
-            autoplay: true,
-            rate : 1,
-            onend: function() {
-                console.log('Finished!');
-                list.splice(0, 1);
-                setTimeout(function(){ play(list); }, 500);
-            },
-          });
-
-    }
-
-    var playAList = function(list) {
-        if(list.length == 0) return;
-          let promises = [];
-          for(var i = 0; i < list.length; i++) {
-              promises.push(httpUtil.get("http://localhost:8001/speak?sentence='"+list[i]+"'"));
-          }
-          $q.all(promises)
-          .then(function(values) {
-                console.log(values);
-                for(var i = 0; i < values.length; i++) {
-                    values[i] = "http://localhost:8001" + values[i];
-                }
-                play(values);
-
-            });
-    }
-
-    key('space', function() {
+    key('space, enter', function() {
+      console.log('space/enter key pressed')
       let sentences = [];
       for(var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
-          sentences.push( $scope.measures[i+$scope.offset][$scope.hand] );
+          sentences.push("measure " + (i+$scope.offset+1));
+          let cutted = $scope.measures[i+$scope.offset][$scope.hand].split(',');
+          for(var j = 0 ; j < cutted.length; j++ ) {
+                sentences.push(cutted[j]);
+          }
       }
       console.log(sentences);
-
-      playAList(sentences);
-
+      playSentencesList(sentences);
     });
 
 }]);

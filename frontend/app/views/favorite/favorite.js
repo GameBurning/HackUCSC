@@ -9,7 +9,8 @@ angular.module('myApp.favorite', ['ngRoute'])
   });
 }])
 
-.controller('FavoriteCtrl', ['$scope', 'httpUtil', 'fakeData', '$location', 'navigation',function($scope, httpUtil, fakeData, $location, navigation) {
+.controller('FavoriteCtrl', ['$scope', 'httpUtil', 'fakeData', '$location', 'navigation','utility',
+function($scope, httpUtil, fakeData, $location, navigation,utility) {
     $scope.favoriteList = [];
     $scope.selected = null;
     $scope.showResult = false;
@@ -17,6 +18,13 @@ angular.module('myApp.favorite', ['ngRoute'])
     key.unbind('left');
     key.unbind('right');
     key.unbind('enter');
+
+    let active_sounds = [];
+    let stop_all_sounds = function() {
+        for(var i = 0; i < active_sounds.length; i++) {
+            active_sounds[i].stop();
+        }
+    }
 
     var sound = new Howl({
         src: ['/resources/sounds/viewFavorites.wav'],
@@ -38,27 +46,16 @@ angular.module('myApp.favorite', ['ngRoute'])
             if($scope.favoriteList.length > 0) $scope.selected = 0;
             $scope.showResult = true;
             setTimeout(function(){
-                httpUtil.get("http://localhost:8001/speak?sentence='"+$scope.favoriteList[$scope.selected]+"'")
-                      .then(function(response) {
-                          //TODO: PUT ALL THESE CODE INTO "THEN"
-                          // var response = fakeData.searchList; // TODO: Change to real API data
+                utility.get_voice_by_text($scope.favoriteList[$scope.selected].name)
+                    .then(function(sound_url){
+                        var sound = new Howl({
+                            src: [sound_url],
+                            autoplay: true,
+                            loop: false
+                          });
+                    }, function(error){
 
-                          if (response !== null) {
-                              //var snd = new Audio("http://localhost:8001" + response);
-                              //snd.play();
-
-                              var sound = new Howl({
-                                  src: ["http://localhost:8001" + response],
-                                  autoplay: true,
-                                  loop: false,
-                                  onend: function() {
-                                    console.log('Finished!');
-                                  }
-                                });
-                          }
-
-                      }, function(error) {
-                      });
+                    });
             },1500);
 
         }
@@ -86,27 +83,16 @@ angular.module('myApp.favorite', ['ngRoute'])
                 $scope.selected --;
                 $scope.$apply();
             }
-            httpUtil.get("http://localhost:8001/speak?sentence='"+$scope.favoriteList[$scope.selected]+"'")
-                  .then(function(response) {
-                      //TODO: PUT ALL THESE CODE INTO "THEN"
-                      // var response = fakeData.searchList; // TODO: Change to real API data
+            utility.get_voice_by_text($scope.favoriteList[$scope.selected].name)
+                .then(function(sound_url){
+                    var sound = new Howl({
+                        src: [sound_url],
+                        autoplay: true,
+                        loop: false
+                      });
+                }, function(error){
 
-                      if (response !== null) {
-                          //var snd = new Audio("http://localhost:8001" + response);
-                          //snd.play();
-
-                          var sound = new Howl({
-                              src: ["http://localhost:8001" + response],
-                              autoplay: true,
-                              loop: false,
-                              onend: function() {
-                                console.log('Finished!');
-                              }
-                            });
-                      }
-
-                  }, function(error) {
-            });
+                });
         }
     }
 
@@ -116,27 +102,16 @@ angular.module('myApp.favorite', ['ngRoute'])
                 $scope.selected ++;
                 $scope.$apply();
             }
-            httpUtil.get("http://localhost:8001/speak?sentence='"+$scope.favoriteList[$scope.selected]+"'")
-                  .then(function(response) {
-                      //TODO: PUT ALL THESE CODE INTO "THEN"
-                      // var response = fakeData.searchList; // TODO: Change to real API data
+            utility.get_voice_by_text($scope.favoriteList[$scope.selected].name)
+                .then(function(sound_url){
+                    var sound = new Howl({
+                        src: [sound_url],
+                        autoplay: true,
+                        loop: false
+                      });
+                }, function(error){
 
-                      if (response !== null) {
-                          //var snd = new Audio("http://localhost:8001" + response);
-                          //snd.play();
-
-                          var sound = new Howl({
-                              src: ["http://localhost:8001" + response],
-                              autoplay: true,
-                              loop: false,
-                              onend: function() {
-                                console.log('Finished!');
-                              }
-                            });
-                      }
-
-                  }, function(error) {
-            });
+                });
         }
     }
 
