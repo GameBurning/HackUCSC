@@ -1,7 +1,7 @@
 #coding:utf-8
 import xml.etree.ElementTree as ET
 import sys
-reload(sys)
+
 sys.setdefaultencoding('utf8')
 
 octave_dict = {'1': '大字二组','2': '大字一组','3': '大字组','4': '小字组',\
@@ -46,7 +46,7 @@ for page in _root.findall('part'):
 if p[0].attrib['id'] != "P1" or m[0][0].attrib["number"] != \
 "1" and m[0][0].attrib['number'] != '0':
     sys.exit("Not P1 or M1")
-print len(m[0])
+print(len(m[0]))
 
 #- Read Tempo -#
 _beatunit = m[0][0].find('direction/direction-type/metronome/beat-unit')
@@ -67,7 +67,7 @@ if _stafflayout == None:
     clef_num = 1
 else:
     clef_num = int(_stafflayout.text)
-print clef_num
+print(clef_num)
 
 #- Read Division -#
 divisions = _attrib.find('divisions').text
@@ -95,9 +95,9 @@ for m_page in m:
             _type = note.find('type').text
             #voice元素不知道有没有作用
             _staff = note.find('staff').text
-            note_text = octave_dict[_octave] + note_type[_type] + note_dict[_step]
-            m_text[int(_staff)-1].append(note_text)
-            whole_text.append(m_text)
+            # note_text = octave_dict[_octave] + note_type[_type] + note_dict[_step]
+            # m_text[int(_staff)-1].append(note_text)
+            # whole_text.append(m_text)
 
 comma = ", "
 read_heading = r_worktitle + comma + \
@@ -105,4 +105,4 @@ r_composer + comma + \
 r_tempo + comma + \
 r_key + comma + \
 r_beat
-print read_heading
+print(read_heading)
