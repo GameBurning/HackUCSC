@@ -1,6 +1,17 @@
 <div class = "favorite">
-    <p>This is the partial for view favorite.</p>
-    <div ng-repeat="item in favoriteList track by $index" ng-click="select($index)" ng-class = "{ highlight : selected == $index}">
-      {{item.name}}
+    
+    <p class="smallsearchbar">Favorite</p>
+
+    <div ng-if = "showResult == true && selected !== null" class="result">
+        <p class = "result-name">{{favoriteList[selected]}}</p>
     </div>
+
+    <button ng-if = "showResult == true && selected !== null && selected != 0" class="left-search" />
+    <button ng-if = "showResult == true && selected !== null && selected != favoriteList.length-1" class="right-search" />
+
+
+    <button href="#!/favorite" ng-click="nav('favorite')" class="favorite-search" />
+    <button href="#!/favorite" ng-click="nav('favorite')" class="shortcut-2">
+    <button href="#!/history" ng-click="nav('history')" class="history-search"/>
+    <button href="#!/favorite" ng-click="nav('history')" class="shortcut-3">
 </div>

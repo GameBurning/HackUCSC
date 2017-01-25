@@ -15,8 +15,8 @@ angular.module('myApp.play', ['ngRoute'])
     $scope.score_content = null;
     $scope.measures = [];
     $scope.display_list = [];
-    $scope.blockSize = {"size":4};
-    $scope.offset = {"offset":0};
+    $scope.blockSize = 4;
+    $scope.offset = 0;
     $scope.current_measure = 1;
     $scope.size = 0;
     $scope.start = 0;
@@ -27,6 +27,36 @@ angular.module('myApp.play', ['ngRoute'])
     key.unbind('left');
     key.unbind('right');
     key.unbind('space');
+
+    $scope.like = function() {
+        httpUtil.get("http://gameburning.com:5000/api/musicscores/" + score_id)
+        .then(function(response) {
+
+            //TODO: PUT ALL THESE CODE INTO "THEN"
+            // var response = fakeData.searchList; // TODO: Change to real API data
+            if (response !== null) {
+                $scope.score_meta = response.metaInfo;
+                $scope.score_content = response.scoreContent;
+                for (var prop in $scope.score_content) {
+                    $scope.measures.push($scope.score_content[prop]);
+                }
+                $scope.size = $scope.measures.length;
+                $scope.start();
+            }
+        }, function(error) {
+
+            var response = fakeData.musicScore; // TODO: Change to real API data
+            if (response !== null) {
+                $scope.score_meta = response.metaInfo;
+                $scope.score_content = response.scoreContent;
+                for (var prop in $scope.score_content) {
+                    $scope.measures.push($scope.score_content[prop]);
+                }
+                $scope.size = $scope.measures.length;
+                $scope.start();
+            }
+        });
+    }
 
     //TODO: FIX BUG OF SCOPE NOT UPDATE VIEW
     if($location.search()) {
@@ -62,56 +92,104 @@ angular.module('myApp.play', ['ngRoute'])
     }
 
     $scope.start = function() {
-        for(var i = 0; i < $scope.blockSize.size && i + $scope.offset.offset < $scope.size; i++) {
-            $scope.display_list.push("Measure No."+(i+$scope.offset.offset+1));
+        for(var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
+            $scope.display_list.push("Measure No."+(i+$scope.offset+1));
         }
     }
 
     $scope.increaseBlock = function() {
+        if($scope.blockSize == $scope.size || $scope.size == 0) return;
+        let oldblockSize = $scope.blockSize;
+        let newblockSize = $scope.blockSize + 1;
+        let newOffset = (($scope.offset / oldblockSize) > 0? ($scope.offset / oldblockSize)-1: ($scope.offset / oldblockSize)) * newblockSize;
 
-        if($scope.blockSize.size == $scope.size) return;
-        let oldblockSize = $scope.blockSize.size;
-        let newblockSize = $scope.blockSize.size + 1;
-        let newOffset = (($scope.offset.offset / oldblockSize) > 0? ($scope.offset.offset / oldblockSize)-1: ($scope.offset.offset / oldblockSize)) * newblockSize;
+        $scope.blockSize = newblockSize;
+        $scope.offset = newOffset;
 
-        $scope.blockSize.size = newblockSize;
-        $scope.offset.offset = newOffset;
         $scope.prevBlock();
+
+        setTimeout(function(){
+            httpUtil.get("http://localhost:8001/speak?sentence='sentence size, "+$scope.blockSize+"'")
+                  .then(function(response) {
+                      //TODO: PUT ALL THESE CODE INTO "THEN"
+                      // var response = fakeData.searchList; // TODO: Change to real API data
+
+                      if (response !== null) {
+                          //var snd = new Audio("http://localhost:8001" + response);
+                          //snd.play();
+
+                          var sound = new Howl({
+                              src: ["http://localhost:8001" + response],
+                              autoplay: true,
+                              loop: false,
+                              onend: function() {
+                                console.log('Finished!');
+                              }
+                            });
+                      }
+
+                  }, function(error) {
+                  });
+        },1500);
     }
 
     $scope.decreaseBlock = function() {
-        if($scope.blockSize.size == 1) return;
-        let oldblockSize = $scope.blockSize.size;
-        let newblockSize = $scope.blockSize.size - 1;
-        let newOffset = (($scope.offset.offset / oldblockSize) < $scope.size-1? ($scope.offset.offset / oldblockSize)+1: ($scope.offset.offset / oldblockSize)) * newblockSize;
+        if($scope.blockSize == 1) return;
+        let oldblockSize = $scope.blockSize;
+        let newblockSize = $scope.blockSize - 1;
+        let newOffset = (($scope.offset / oldblockSize) < $scope.size-1? ($scope.offset / oldblockSize)+1: ($scope.offset / oldblockSize)) * newblockSize;
 
-        $scope.blockSize.size = newblockSize;
-        $scope.offset.offset = newOffset;
+        $scope.blockSize = newblockSize;
+        $scope.offset = newOffset;
 
         $scope.prevBlock();
+
+        setTimeout(function(){
+            httpUtil.get("http://localhost:8001/speak?sentence='sentence size, "+$scope.blockSize+"'")
+                  .then(function(response) {
+                      //TODO: PUT ALL THESE CODE INTO "THEN"
+                      // var response = fakeData.searchList; // TODO: Change to real API data
+
+                      if (response !== null) {
+                          //var snd = new Audio("http://localhost:8001" + response);
+                          //snd.play();
+
+                          var sound = new Howl({
+                              src: ["http://localhost:8001" + response],
+                              autoplay: true,
+                              loop: false,
+                              onend: function() {
+                                console.log('Finished!');
+                              }
+                            });
+                      }
+
+                  }, function(error) {
+                  });
+        },1500);
     }
 
     $scope.nextBlock = function() {
-        if($scope.offset.offset + $scope.blockSize.size < $scope.size) {
-            $scope.offset.offset += $scope.blockSize.size;
+        if($scope.offset + $scope.blockSize < $scope.size) {
+            $scope.offset += $scope.blockSize;
         }
         $scope.display_list = [];
-        for(var i = 0; i < $scope.blockSize.size && i + $scope.offset.offset < $scope.size; i++) {
-            $scope.display_list.push("Measure No."+(i+$scope.offset.offset+1));
+        for(var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
+            $scope.display_list.push("Measure No."+(i+$scope.offset+1));
         }
         $scope.$apply();
     }
 
     $scope.prevBlock = function() {
-        if($scope.offset.offset - $scope.blockSize.size > 0) {
-            $scope.offset.offset -= $scope.blockSize.size;
+        if($scope.offset - $scope.blockSize > 0) {
+            $scope.offset -= $scope.blockSize;
         }
         else {
-            $scope.offset.offset = 0;
+            $scope.offset = 0;
         }
         $scope.display_list = [];
-        for(var i = 0; i < $scope.blockSize.size && i + $scope.offset.offset < $scope.size; i++) {
-            $scope.display_list.push("Measure No."+(i+$scope.offset.offset+1));
+        for(var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
+            $scope.display_list.push("Measure No."+(i+$scope.offset+1));
         }
         $scope.$apply();
     }
@@ -119,12 +197,19 @@ angular.module('myApp.play', ['ngRoute'])
     $scope.setLeftHand = function(){
         $scope.hand = "Left";
         console.log($scope.hand);
+        $scope.$apply();
     }
 
     $scope.setRightHand = function(){
         $scope.hand = "Right";
         console.log($scope.hand);
+        $scope.$apply();
     }
+
+    key('f', function() {
+      console.log('F key pressed');
+      $scope.like();
+    });
 
     key('=', function() {
       console.log('up key pressed');
@@ -172,10 +257,11 @@ angular.module('myApp.play', ['ngRoute'])
             src: [list[0]],
             preload: true,
             autoplay: true,
+            rate : 1,
             onend: function() {
                 console.log('Finished!');
                 list.splice(0, 1);
-                setTimeout(function(){ play(list); }, 300);
+                setTimeout(function(){ play(list); }, 500);
             },
           });
 
@@ -193,87 +279,19 @@ angular.module('myApp.play', ['ngRoute'])
                 for(var i = 0; i < values.length; i++) {
                     values[i] = "http://localhost:8001" + values[i];
                 }
-
                 play(values);
 
             });
-
-        // httpUtil.get("http://localhost:8001/speak?sentence='"+list[0]+"'")
-        // .then(function(response) {
-        //     //TODO: PUT ALL THESE CODE INTO "THEN"
-        //     // var response = fakeData.searchList; // TODO: Change to real API data
-        //
-        //     if (response !== null) {
-        //         //var snd = new Audio("http://localhost:8001" + response);
-        //         //snd.play();
-        //
-        //         var sound = new Howl({
-        //             src: ["http://localhost:8001" + response],
-        //             autoplay: true,
-        //             loop: false,
-        //             volume: 0.5,
-        //             onend: function() {
-        //                 list.splice(0, 1);
-        //                 playAList(list);
-        //             }
-        //           });
-        //     }
-        //
-        // }, function(error) {
-        //     debugger
-        //     var response = fakeData.searchList; // TODO: Change to real API data
-        //
-        //     if (response !== null) {
-        //         $scope.searchList = response;
-        //         if($scope.searchList.length > 0) $scope.selected = 0;
-        //     }
-        //
-        // });
     }
 
     key('space', function() {
       let sentences = [];
-      for(var i = 0; i < $scope.blockSize.size && i + $scope.offset.offset < $scope.size; i++) {
-          sentences.push( $scope.measures[i+$scope.offset.offset][$scope.hand] );
+      for(var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
+          sentences.push( $scope.measures[i+$scope.offset][$scope.hand] );
       }
       console.log(sentences);
 
       playAList(sentences);
-
-      //
-    //   for(var i = 0; i < 1; i++) {
-    //       httpUtil.get("http://localhost:8001/speak?sentence='"+sentences[i]+"'")
-    //       .then(function(response) {
-    //           //TODO: PUT ALL THESE CODE INTO "THEN"
-    //           // var response = fakeData.searchList; // TODO: Change to real API data
-      //
-    //           if (response !== null) {
-    //               //var snd = new Audio("http://localhost:8001" + response);
-    //               //snd.play();
-      //
-    //               var sound = new Howl({
-    //                   src: ["http://localhost:8001" + response],
-    //                   autoplay: true,
-    //                   loop: false,
-    //                   volume: 0.5,
-    //                   onend: function() {
-    //                     console.log('Finished!');
-    //                   }
-    //                 });
-      //
-    //           }
-      //
-    //       }, function(error) {
-    //           debugger
-    //           var response = fakeData.searchList; // TODO: Change to real API data
-      //
-    //           if (response !== null) {
-    //               $scope.searchList = response;
-    //               if($scope.searchList.length > 0) $scope.selected = 0;
-    //           }
-      //
-    //       });
-    //   }
 
     });
 

@@ -37,7 +37,7 @@ octave_shift = "the following set of notes need to be shifted up by one octave"
 
 def generateJson(scoreName):
     #- Read XML File -#
-    tree = ET.parse('test/testCases/{}.xml'.format(scoreName))
+    tree = ET.parse('server/test/testCases/{}.xml'.format(scoreName))
     _root = tree.getroot()
 
     #- Read title -#
@@ -207,7 +207,7 @@ def generateJson(scoreName):
 
         whole_text.append(m_text)
 
-    comma = " . "
+    comma = " , "
     read_heading = r_worktitle + comma + \
     r_composer + comma + \
     r_tempo + comma + \
@@ -246,9 +246,13 @@ def generateJson(scoreName):
         'scoreContent':scoreContent
     }
 
-    return json.dumps(scoreInfo,indent=4, separators=('.', ': '))
+    return json.dumps(scoreInfo,indent=4, separators=(',', ': '))
 
-print(generateJson('Sweethearts'))
+#print(generateJson('Sweethearts'))
 #print(generateJson('Fur_Elise'))
+<<<<<<< HEAD
 #print(generateJson('Autumn_Leaves'))
 #print(generateJson('Nyan_Cat'))
+=======
+print(generateJson('Autumn_Leaves'))
+>>>>>>> 04b2505e55e685c2b70bdabce950fcb841190ffa

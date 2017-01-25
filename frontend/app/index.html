@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html style="height:100%">
 <!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
@@ -15,31 +15,22 @@
   <link rel="stylesheet" href="views/history/history.css">
   <link rel="stylesheet" href="views/play/play.css">
   <link rel="stylesheet" href="views/search/search.css">
+  <link rel="stylesheet" href="app.css">
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
-    <div id = "nav" ng-controller="mainCtrl">
-        <h1>Navigation</h1>
-        <ul class="menu">
-            <li><a href="#!/search" ng-click = "nav('search')">search</a></li>
-            <li><a href="#!/favorite"  ng-click = "nav('favorite')">favorite</a></li>
-            <li><a href="#!/history"  ng-click = "nav('history')">history</a></li>
-        </ul>
-    </div>
-
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
   <div ng-view></div>
-
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/keymaster/keymaster.js"></script>
-  <script src="bower_components/howler.js/dist/howler.js"></script>
+  <script src="bower_components/howler/dist/howler.js"></script>
   <script src="app.js"></script>
   <script src="mainCtrl.js"></script>
 

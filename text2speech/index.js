@@ -1,11 +1,14 @@
 var fs = require('fs');
 var express = require('express');
+var cors = require('cors')
 var _ = require('lodash');
 var app = express();
 var randomstring = require("randomstring");
 
 // use:  http://localhost:8001/speak?sentence=good day Jamie
 // use:  http://localhost:8001/voice/ffdsafdsafdsafsadrjenqw.wav
+
+app.use(cors());
 
 var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 var text_to_speech = new TextToSpeechV1 ({
@@ -18,7 +21,6 @@ let hash_table = {};
 let filePath = "./voiceStore";
 
 app.get('/speak', function(req, res){
-
 	var sentence = req.query.sentence;
 	console.log(req.query);
 
@@ -39,8 +41,7 @@ app.get('/speak', function(req, res){
 
 		var query = {
 	      text: sentence,
-	      "language": "en-US",
-		  "gender": "male",
+	      voice: 'en-US_AllisonVoice',
 	      accept: 'audio/wav'
 	    };
 
