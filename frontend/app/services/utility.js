@@ -2,6 +2,8 @@ angular.module('myApp')
   .service('utility', ['httpUtil', '$q', 'config', function(httpUtil, $q, config) {
     var self = this;
 
+    self.registered_keys = ['up','down','left','right','space','enter','-','_','+','=','f'];
+
     self.get_voice_by_text = function(text) {
         var deferred = $q.defer();
         httpUtil.get( config.api.text_to_speech + "/speak?sentence='"+ text +"'")

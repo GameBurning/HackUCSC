@@ -17,6 +17,14 @@ angular.module('myApp.search', ['ngRoute'])
     $scope.searchList = [];
     $scope.selected = null;
 
+    let clearKeys = function() {
+        for(var i = 0 ; i < utility.registered_keys.length; i++) {
+            key.unbind(utility.registered_keys[i]);
+        }
+    }
+
+    clearKeys();
+
     let active_sounds = [];
     let stop_all_sounds = function() {
         for(var i = 0; i < active_sounds.length; i++) {
@@ -52,11 +60,7 @@ angular.module('myApp.search', ['ngRoute'])
       $scope.showResult = false;
       $scope.setFocus();
 
-      key.unbind('left');
-      key.unbind('right');
-      key.unbind('esc');
-      key.unbind('backspace');
-
+      clearKeys();
     };
 
     $scope.blur = function () {
@@ -124,11 +128,7 @@ angular.module('myApp.search', ['ngRoute'])
         $scope.showResult = true;
         $scope.blur();
 
-        key.unbind('enter');
-        key.unbind('left');
-        key.unbind('right');
-        key.unbind('esc');
-        key.unbind('backspace');
+        clearKeys();
 
         if($scope.searchList[$scope.selected]) {
             utility.get_voice_by_text($scope.searchList[$scope.selected].name)
