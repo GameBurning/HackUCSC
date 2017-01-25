@@ -182,20 +182,20 @@ angular.module('myApp.search', ['ngRoute'])
           $scope.$apply();
         });
 
-        httpUtil.get("http://gameburning.com:5000/api/musicscores/?keyword="+$scope.searchString)
-        .then(function(response) {
-            if (response !== null) {
-                $scope.searchList = response;
-                if($scope.searchList.length > 0) $scope.selected = 0;
-            }
-        }, function(error) {
-            var response = fakeData.searchList; // TODO: Change to real API data
-            if (response !== null) {
-                $scope.searchList = response;
-                if($scope.searchList.length > 0) $scope.selected = 0;
-            }
-        });
 
+        utility.search_score($scope.searchString)
+            .then(function(response) {
+                if (response !== null) {
+                    $scope.searchList = response;
+                    if($scope.searchList.length > 0) $scope.selected = 0;
+                }
+            }, function(error) {
+                var response = fakeData.searchList; // TODO: Change to real API data
+                if (response !== null) {
+                    $scope.searchList = response;
+                    if($scope.searchList.length > 0) $scope.selected = 0;
+                }
+            });
     }
 
     $scope.getKey = function(event) {
