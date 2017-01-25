@@ -279,42 +279,9 @@ angular.module('myApp.play', ['ngRoute'])
                 for(var i = 0; i < values.length; i++) {
                     values[i] = "http://localhost:8001" + values[i];
                 }
-
                 play(values);
 
             });
-
-        // httpUtil.get("http://localhost:8001/speak?sentence='"+list[0]+"'")
-        // .then(function(response) {
-        //     //TODO: PUT ALL THESE CODE INTO "THEN"
-        //     // var response = fakeData.searchList; // TODO: Change to real API data
-        //
-        //     if (response !== null) {
-        //         //var snd = new Audio("http://localhost:8001" + response);
-        //         //snd.play();
-        //
-        //         var sound = new Howl({
-        //             src: ["http://localhost:8001" + response],
-        //             autoplay: true,
-        //             loop: false,
-        //             volume: 0.5,
-        //             onend: function() {
-        //                 list.splice(0, 1);
-        //                 playAList(list);
-        //             }
-        //           });
-        //     }
-        //
-        // }, function(error) {
-        //     debugger
-        //     var response = fakeData.searchList; // TODO: Change to real API data
-        //
-        //     if (response !== null) {
-        //         $scope.searchList = response;
-        //         if($scope.searchList.length > 0) $scope.selected = 0;
-        //     }
-        //
-        // });
     }
 
     key('space', function() {
@@ -325,41 +292,6 @@ angular.module('myApp.play', ['ngRoute'])
       console.log(sentences);
 
       playAList(sentences);
-
-      //
-    //   for(var i = 0; i < 1; i++) {
-    //       httpUtil.get("http://localhost:8001/speak?sentence='"+sentences[i]+"'")
-    //       .then(function(response) {
-    //           //TODO: PUT ALL THESE CODE INTO "THEN"
-    //           // var response = fakeData.searchList; // TODO: Change to real API data
-      //
-    //           if (response !== null) {
-    //               //var snd = new Audio("http://localhost:8001" + response);
-    //               //snd.play();
-      //
-    //               var sound = new Howl({
-    //                   src: ["http://localhost:8001" + response],
-    //                   autoplay: true,
-    //                   loop: false,
-    //                   volume: 0.5,
-    //                   onend: function() {
-    //                     console.log('Finished!');
-    //                   }
-    //                 });
-      //
-    //           }
-      //
-    //       }, function(error) {
-    //           debugger
-    //           var response = fakeData.searchList; // TODO: Change to real API data
-      //
-    //           if (response !== null) {
-    //               $scope.searchList = response;
-    //               if($scope.searchList.length > 0) $scope.selected = 0;
-    //           }
-      //
-    //       });
-    //   }
 
     });
 
