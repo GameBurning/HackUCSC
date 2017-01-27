@@ -17,7 +17,7 @@ to run the server
 
 ```$ ps ax | grep gunicorn```
 
-to find the <pid> of gunicorn
+to find the \<pid\> of gunicorn
 
 ```$ kill <pid>```
 
