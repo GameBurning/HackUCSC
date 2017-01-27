@@ -9,8 +9,10 @@ angular.module('myApp.play', ['ngRoute'])
   });
 }])
 
-.controller('PlayCtrl', ['$scope', 'httpUtil','$location','fakeData','$q', 'utility', function($scope, httpUtil, $location, fakeData, $q, utility) {
+.controller('PlayCtrl', ['$scope', 'httpUtil','$location','fakeData','$q', 'utility', 'display',
+function($scope, httpUtil, $location, fakeData, $q, utility, display) {
     console.log($location.search());
+    $scope.show = display.show;
     $scope.score_meta = null;
     $scope.score_content = null;
     $scope.measures = [];

@@ -10,7 +10,9 @@ angular.module('myApp')
             self.active_sounds[i].stop();
         }
     }
-    
+
+    self.language = "en-US";
+
     self.get_voice_by_text = function(text) {
         var deferred = $q.defer();
         httpUtil.get( config.api.text_to_speech + "/speak?sentence='"+ text +"'")

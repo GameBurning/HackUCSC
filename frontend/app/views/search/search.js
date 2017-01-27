@@ -9,13 +9,14 @@ angular.module('myApp.search', ['ngRoute'])
   });
 }])
 
-.controller('SearchCtrl', ['$scope', 'httpUtil', 'navigation', 'fakeData', 'utility',
-    function($scope, httpUtil, navigation, fakeData, utility) {
+.controller('SearchCtrl', ['$scope', 'httpUtil', 'navigation', 'fakeData', 'utility', 'display',
+    function($scope, httpUtil, navigation, fakeData, utility, display) {
     $scope.shouldFocus = true;
     $scope.showResult = false;
     $scope.searchString = "";
     $scope.searchList = [];
     $scope.selected = null;
+    $scope.show = display.show;
 
     let clearKeys = function() {
         for(var i = 0 ; i < utility.registered_keys.length; i++) {

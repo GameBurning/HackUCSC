@@ -1,34 +1,34 @@
 <div class="play">
     <div class="scroll-cards">
         <div class="measure-card" ng-if="offset >= blockSize">
-            <div class="measure-treble">Treble</div>
+            <div class="measure-treble">{{show("Treble")}}</div>
             <div class="measure-number">
-                <p class="measure-number-txt">Sentence</p>
+                <p class="measure-number-txt">{{show("Sentence")}}</p>
                 <p class="measure-number-txt">{{(offset/blockSize)}}</p>
             </div>
-            <div class="measure-bass">Bass</div>
+            <div class="measure-bass">{{show("Bass")}}</div>
         </div>
         <div class="measure-card">
-            <div ng-class="{'measure-selected-bass': hand == 'Right', 'measure-bass': hand == 'Left'}">Treble</div>
+            <div ng-class="{'measure-selected-bass': hand == 'Right', 'measure-bass': hand == 'Left'}">{{show("Treble")}}</div>
             <div class="measure-selected">
-                <p class="measure-selected-txt">Sentence</p>
+                <p class="measure-selected-txt">{{show("Sentence")}}</p>
                 <p class="measure-selected-txt">{{ (offset/blockSize) + 1}}</p>
             </div>
-            <div ng-class="{'measure-selected-bass': hand == 'Left', 'measure-bass': hand == 'Right'}">Bass</div>
+            <div ng-class="{'measure-selected-bass': hand == 'Left', 'measure-bass': hand == 'Right'}">{{show("Bass")}}</div>
         </div>
         <div class="measure-card" ng-if=" offset + blockSize < size">
-            <div class="measure-treble">Treble</div>
+            <div class="measure-treble">{{show("Treble")}}</div>
             <div class="measure-number">
-                <p class="measure-number-txt">Sentence</p>
+                <p class="measure-number-txt">{{show("Sentence")}}</p>
                 <p class="measure-number-txt">{{(offset/blockSize) + 2}}</p>
             </div>
-            <div class="measure-bass">Bass</div>
+            <div class="measure-bass">{{show("Bass")}}</div>
         </div>
     </div>
     <div id="light_beam"></div>
 
-    <div class="favorite-txt">Add to favorite</div>
-    <div class="blocksize-txt">Sentence Size {{blockSize}}</div>
+    <div class="favorite-txt">{{show("Add to favorite")}}</div>
+    <div class="blocksize-txt">{{show("Sentence Size") + blockSize}}</div>
 
     <button class="play-keys" />
     <button ng-click="like()" class="favorite-add" />
