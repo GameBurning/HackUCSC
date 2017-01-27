@@ -30,13 +30,6 @@ angular.module('myApp.play', ['ngRoute'])
 
     clearKeys();
 
-    let active_sounds = [];
-    let stop_all_sounds = function() {
-        for(var i = 0; i < active_sounds.length; i++) {
-            active_sounds[i].stop();
-        }
-    }
-
     $scope.like = function() {
 
     }
@@ -105,8 +98,8 @@ angular.module('myApp.play', ['ngRoute'])
                     autoplay: true,
                     loop: false,
                     onload: function() {
-                        stop_all_sounds();
-                        active_sounds.push(sound);
+                        utility.stop_all_sounds();
+                        utility.active_sounds.push(sound);
                     }
                   });
             }, function(error){
@@ -132,8 +125,8 @@ angular.module('myApp.play', ['ngRoute'])
                     autoplay: true,
                     loop: false,
                     onload: function() {
-                        stop_all_sounds();
-                        active_sounds.push(sound);
+                        utility.stop_all_sounds();
+                        utility.active_sounds.push(sound);
                     }
                   });
             }, function(error){
@@ -195,7 +188,7 @@ angular.module('myApp.play', ['ngRoute'])
             autoplay: true,
             rate : 1,
             onload: function() {
-                active_sounds.push(sound);
+                utility.active_sounds.push(sound);
             },
             onend: function() {
                 console.log('Finished!');
@@ -203,13 +196,13 @@ angular.module('myApp.play', ['ngRoute'])
                 setTimeout(function(){ play(list); }, 500);
             },
           });
-        active_sounds.push(sound);
+        utility.active_sounds.push(sound);
     }
 
     let playSentence = function(sentence) {
         utility.get_voice_by_text(sentence)
             .then(function(sound_url){
-                stop_all_sounds();
+                utility.stop_all_sounds();
                 play(sound_url);
             }, function(error){
 
@@ -221,7 +214,7 @@ angular.module('myApp.play', ['ngRoute'])
         if(list.length == 0) return;
         utility.get_voices_by_list(list)
             .then(function(urls){
-                stop_all_sounds();
+                utility.stop_all_sounds();
                 play(urls);
             }, function(error){
 

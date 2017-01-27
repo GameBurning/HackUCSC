@@ -20,15 +20,8 @@ function($scope, httpUtil, fakeData, $location, navigation, utility) {
             key.unbind(utility.registered_keys[i]);
         }
     }
-    
-    clearKeys();
 
-    let active_sounds = [];
-    let stop_all_sounds = function() {
-        for(var i = 0; i < active_sounds.length; i++) {
-            active_sounds[i].stop();
-        }
-    }
+    clearKeys();
 
     var sound = new Howl({
         src: ['/resources/sounds/history.wav'],
@@ -36,8 +29,8 @@ function($scope, httpUtil, fakeData, $location, navigation, utility) {
         autoplay: true,
         rate : 1,
         onload: function() {
-            stop_all_sounds();
-            active_sounds.push(sound);
+            utility.stop_all_sounds();
+            utility.active_sounds.push(sound);
         },
         onend: function() {
             console.log('Finished!');
@@ -87,8 +80,8 @@ function($scope, httpUtil, fakeData, $location, navigation, utility) {
                             autoplay: true,
                             loop: false,
                             onload: function() {
-                                stop_all_sounds();
-                                active_sounds.push(sound);
+                                utility.stop_all_sounds();
+                                utility.active_sounds.push(sound);
                             },
                             onend: function() {
                                 console.log('Finished!');
@@ -115,8 +108,8 @@ function($scope, httpUtil, fakeData, $location, navigation, utility) {
                         autoplay: true,
                         loop: false,
                         onload: function() {
-                            stop_all_sounds();
-                            active_sounds.push(sound);
+                            utility.stop_all_sounds();
+                            utility.active_sounds.push(sound);
                         },
                         onend: function() {
                             console.log('Finished!');

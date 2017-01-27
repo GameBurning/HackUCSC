@@ -25,21 +25,14 @@ angular.module('myApp.search', ['ngRoute'])
 
     clearKeys();
 
-    let active_sounds = [];
-    let stop_all_sounds = function() {
-        for(var i = 0; i < active_sounds.length; i++) {
-            active_sounds[i].stop();
-        }
-    }
-
     var sound = new Howl({
         src: ['/resources/sounds/search.wav'],
         preload: true,
         autoplay: true,
         rate : 1,
         onload: function() {
-            stop_all_sounds();
-            active_sounds.push(sound);
+            utility.stop_all_sounds();
+            utility.active_sounds.push(sound);
         },
         onend: function() {
             console.log('Finished!');
@@ -84,8 +77,8 @@ angular.module('myApp.search', ['ngRoute'])
                         autoplay: true,
                         loop: false,
                         onload: function() {
-                            stop_all_sounds();
-                            active_sounds.push(sound);
+                            utility.stop_all_sounds();
+                            utility.active_sounds.push(sound);
                         },
                         onend: function() {
                             console.log('Finished!');
@@ -110,8 +103,8 @@ angular.module('myApp.search', ['ngRoute'])
                         autoplay: true,
                         loop: false,
                         onload: function() {
-                            stop_all_sounds();
-                            active_sounds.push(sound);
+                            utility.stop_all_sounds();
+                            utility.active_sounds.push(sound);
                         },
                         onend: function() {
                             console.log('Finished!');
@@ -138,8 +131,8 @@ angular.module('myApp.search', ['ngRoute'])
                         autoplay: true,
                         loop: false,
                         onload: function() {
-                            stop_all_sounds();
-                            active_sounds.push(sound);
+                            utility.stop_all_sounds();
+                            utility.active_sounds.push(sound);
                         },
                         onend: function() {
                             console.log('Finished!');

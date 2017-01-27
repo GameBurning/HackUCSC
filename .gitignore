@@ -3,3 +3,4 @@
 */.DS_Store
 frontend/app/bower_components
 text2speech/node_modules
+**/*.wav

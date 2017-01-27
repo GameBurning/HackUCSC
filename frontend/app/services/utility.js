@@ -3,7 +3,14 @@ angular.module('myApp')
     var self = this;
 
     self.registered_keys = ['up','down','left','right','space','enter','-','_','+','=','f'];
+    self.active_sounds = [];
 
+    self.stop_all_sounds = function() {
+        for(var i = 0; i < self.active_sounds.length; i++) {
+            self.active_sounds[i].stop();
+        }
+    }
+    
     self.get_voice_by_text = function(text) {
         var deferred = $q.defer();
         httpUtil.get( config.api.text_to_speech + "/speak?sentence='"+ text +"'")

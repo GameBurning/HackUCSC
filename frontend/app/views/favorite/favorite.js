@@ -23,13 +23,6 @@ function($scope, httpUtil, fakeData, $location, navigation,utility) {
 
     clearKeys();
 
-    let active_sounds = [];
-    let stop_all_sounds = function() {
-        for(var i = 0; i < active_sounds.length; i++) {
-            active_sounds[i].stop();
-        }
-    }
-
     var sound = new Howl({
         src: ['/resources/sounds/viewFavorites.wav'],
         preload: true,
