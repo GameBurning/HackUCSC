@@ -14,7 +14,11 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     $routeProvider.otherwise({redirectTo: '/search'});
 }])
 
-.run( ['$rootScope','$location','navigation',function($rootScope, $location, navigation) {
+.run( ['$rootScope','$location','navigation', 'utility',
+ function($rootScope, $location, navigation, utility) {
+    var lang = window.navigator.userLanguage || window.navigator.language;
+    utility.language = lang;
+    alert(utility.language);
 
     key('ctrl+1', function() {
       console.log('ctrl + 1 key pressed');

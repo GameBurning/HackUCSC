@@ -8,10 +8,10 @@
 
     <div ng-if = "showResult == true && selected !== null" class="result">
         <p class = "result-name">{{searchList[selected].name}}</p>
-        <p class = "result-author">{{searchList[selected].composer}}</p>
-        <p class = "result-difficulty">{{"Difficulty : "+searchList[selected].hardness}}</p>
+        <p class = "result-author">{{show("Composer") +" : "+ searchList[selected].composer}}</p>
+        <p class = "result-difficulty">{{ show("Difficulty") + " : " + searchList[selected].hardness}}</p>
     </div>
-    
+
     <button ng-if = "showResult == true && selected !== null && selected != 0" class="left-search" />
     <button ng-if = "showResult == true && selected !== null && selected != searchList.length-1" class="right-search" />
 

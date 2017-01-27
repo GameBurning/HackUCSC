@@ -9,11 +9,12 @@ angular.module('myApp.favorite', ['ngRoute'])
   });
 }])
 
-.controller('FavoriteCtrl', ['$scope', 'httpUtil', 'fakeData', '$location', 'navigation','utility',
-function($scope, httpUtil, fakeData, $location, navigation,utility) {
+.controller('FavoriteCtrl', ['$scope', 'httpUtil', 'fakeData', '$location', 'navigation','utility', 'display',
+function($scope, httpUtil, fakeData, $location, navigation, utility, display) {
     $scope.favoriteList = [];
     $scope.selected = null;
     $scope.showResult = false;
+    $scope.show = display.show;
 
     let clearKeys = function() {
         for(var i = 0 ; i < utility.registered_keys.length; i++) {

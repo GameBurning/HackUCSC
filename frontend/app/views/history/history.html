@@ -1,6 +1,6 @@
 <div class = "history">
 
-    <p class="smallsearchbar">History</p>
+    <p class="smallsearchbar">{{show("History")}}</p>
 
     <div ng-if = "showResult == true && selected !== null" class="result">
         <p class = "result-name">{{historyList[selected]}}</p>
@@ -13,5 +13,5 @@
     <button href="#!/favorite" ng-click="nav('favorite')" class="shortcut-2">
     <button href="#!/history" ng-click="nav('history')" class="history-search"/>
     <button href="#!/favorite" ng-click="nav('history')" class="shortcut-3">
-        
+
 </div>
