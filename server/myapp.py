@@ -1,10 +1,12 @@
 from flask import Flask, request
-from server.xmlparser import *
+from flask_cors import CORS, cross_origin
+from xmlparser import *
 from os import listdir
 import json
 app = Flask(__name__)
+CORS(app)
 
-scoreNames = [m.split('.xml')[0] for m in listdir('server/test/testCases/')]
+scoreNames = [m.split('.xml')[0] for m in listdir('test/testCases/')]
 
 fav_list = []
 hist_list = []
