@@ -6,7 +6,7 @@ import json
 app = Flask(__name__)
 CORS(app)
 
-scoreNames = [m.split('.xml')[0] for m in listdir('test/testCases/')]
+scoreNames = [m.split('.xml')[0] for m in listdir('static/sheetMusic/')]
 
 fav_list = []
 hist_list = []
