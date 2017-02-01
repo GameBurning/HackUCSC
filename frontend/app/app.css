@@ -1,8 +1,9 @@
 /* app css stylesheet */
+
 html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background: rgb(35,35,35);
-    overflow:hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: rgb(35, 35, 35);
+  overflow: hidden;
 }

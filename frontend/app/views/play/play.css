@@ -1,205 +1,206 @@
 .play #light_beam {
-    transform: translate(320px, -691px) rotate(-10deg);
-	width: 0;
-	height: 0;
-	border-bottom: 1999px solid rgb(96,96,96);
-	border-left: 1000px solid transparent;
-    opacity: 0.9;
+  transform: translate(320px, -691px) rotate(-10deg);
+  width: 0;
+  height: 0;
+  border-bottom: 1999px solid rgb(96, 96, 96);
+  border-left: 1000px solid transparent;
+  opacity: 0.9;
 }
+
 .play .favorite-search {
-    position: absolute;
-    left: 87%;
-    top: 20%;
+  position: absolute;
+  left: 87%;
+  top: 20%;
   width: 7vw;
   height: 7vw;
   border: none;
-  outline:none;
-  background:url("/resources/Favorite.png");
+  outline: none;
+  background: url("/resources/Favorite.png");
   background-repeat: round;
 }
 
 .play .size-minus {
-    position: absolute;
-    left: 86%;
-    top: 20%;
-    margin-top: 17.5vw;
-    margin-left: -8vw;
-    width: 3vw;
-    height: 3vw;
-    border: none;
-    outline:none;
-    background:url("/resources/Minus.png");
-    background-repeat: round;
+  position: absolute;
+  left: 86%;
+  top: 20%;
+  margin-top: 17.5vw;
+  margin-left: -8vw;
+  width: 3vw;
+  height: 3vw;
+  border: none;
+  outline: none;
+  background: url("/resources/Minus.png");
+  background-repeat: round;
 }
 
 .play .size-plus {
-    position: absolute;
-    left: 86%;
-    top: 20%;
-    margin-top: 17.5vw;
-    margin-left: 8vw;
-    width: 3vw;
-    height: 3vw;
-    border: none;
-    outline:none;
-    background:url("/resources/Plus.png");
-    background-repeat: round;
+  position: absolute;
+  left: 86%;
+  top: 20%;
+  margin-top: 17.5vw;
+  margin-left: 8vw;
+  width: 3vw;
+  height: 3vw;
+  border: none;
+  outline: none;
+  background: url("/resources/Plus.png");
+  background-repeat: round;
 }
 
 .play .favorite-add {
-    position: absolute;
-    left: 87%;
-    top: 20%;
-    width: 3vw;
-    height: 3vw;
-    border: none;
-    outline:none;
-    margin-left: -5vw;
-    margin-top: 3vw;
-    background:url("/resources/PressF.png");
-    background-repeat: round;
+  position: absolute;
+  left: 87%;
+  top: 20%;
+  width: 3vw;
+  height: 3vw;
+  border: none;
+  outline: none;
+  margin-left: -5vw;
+  margin-top: 3vw;
+  background: url("/resources/PressF.png");
+  background-repeat: round;
 }
 
 .play .favorite-txt {
-    position: absolute;
-    left: 87%;
-    top: 20%;
-    margin-top: 10vw;
-    margin-left: -3vw;
-    color: white;
+  position: absolute;
+  left: 87%;
+  top: 20%;
+  margin-top: 10vw;
+  margin-left: -3vw;
+  color: white;
 }
 
 .play .blocksize-txt {
-    position: absolute;
-    left: 86%;
-    top: 20%;
-    margin-top: 18vw;
-    margin-left: -3vw;
-    color: white;
+  position: absolute;
+  left: 86%;
+  top: 20%;
+  margin-top: 18vw;
+  margin-left: -3vw;
+  color: white;
 }
 
 .play .play-keys {
-    position: absolute;
-    left: 76%;
-    top: 74%;
+  position: absolute;
+  left: 76%;
+  top: 74%;
   width: 18vw;
   height: 7vw;
   border: none;
-  outline:none;
-  background:url("/resources/Arrows.png");
+  outline: none;
+  background: url("/resources/Arrows.png");
   background-repeat: round;
 }
 
 .play .measure-card {
-    float:left;
-    width: 20vw;
-    height: 100%;
-    margin: 5vw;
-    display: inline-block;
-    transition-duration: 2s;
+  float: left;
+  width: 20vw;
+  height: 100%;
+  margin: 5vw;
+  display: inline-block;
+  transition-duration: 2s;
 }
 
 .play .scroll-cards {
-    position: absolute;
-    overflow: hidden;
-    left: 0%;
-    top: 26%;
-    width: 100%;
-    height: 40vw;
-    color: rgb(174,174,174);
+  position: absolute;
+  overflow: hidden;
+  left: 0%;
+  top: 26%;
+  width: 100%;
+  height: 40vw;
+  color: rgb(174, 174, 174);
 }
 
 .play .measure-treble {
-    height: 5vw;
-    font-size: 2vw;
-    text-align: center;
-    border-color: white;
-    border: solid;
-    background: rgb(106,106,106);
-    border-radius: 1vw;
-    margin-bottom: 1vw;
+  height: 5vw;
+  font-size: 2vw;
+  text-align: center;
+  border-color: white;
+  border: solid;
+  background: rgb(106, 106, 106);
+  border-radius: 1vw;
+  margin-bottom: 1vw;
 }
 
 .play .measure-selected-treble {
-    color: black;
-    height: 5vw;
-    font-size: 2vw;
-    text-align: center;
-    border-color: black;
-    border: solid;
-    background: white;
-    border-radius: 1vw;
+  color: black;
+  height: 5vw;
+  font-size: 2vw;
+  text-align: center;
+  border-color: black;
+  border: solid;
+  background: white;
+  border-radius: 1vw;
 }
 
 .play .bright {
-    color: black;
-    background: white;
-    height: 8vw;
-    font-size: 2.6vw;
-    border-color: white;
-    align-content: center;
-    border: solid;
-    border-radius: 1vw;
-    padding: 1vw;
-    margin-bottom: 1vw;
+  color: black;
+  background: white;
+  height: 8vw;
+  font-size: 2.6vw;
+  border-color: white;
+  align-content: center;
+  border: solid;
+  border-radius: 1vw;
+  padding: 1vw;
+  margin-bottom: 1vw;
 }
 
 .measure-selected-txt {
-    color: black;
-    background: white;
-    margin: 0px;
-    text-align: center;
+  color: black;
+  background: white;
+  margin: 0px;
+  text-align: center;
 }
 
 .measure-selected {
-    background: white;
-    height: 8vw;
-    font-size: 2.6vw;
-    border-color: white;
-    align-content: center;
-    border: solid;
-    border-radius: 1vw;
-    padding: 1vw;
-    margin-top: 1vw;
-    margin-bottom: 1vw;
+  background: white;
+  height: 8vw;
+  font-size: 2.6vw;
+  border-color: white;
+  align-content: center;
+  border: solid;
+  border-radius: 1vw;
+  padding: 1vw;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
 }
 
 .play .measure-number {
-    height: 8vw;
-    font-size: 2.6vw;
-    border-color: white;
-    align-content: center;
-    border: solid;
-    background: rgb(106,106,106);
-    border-radius: 1vw;
-    padding: 1vw;
-    margin-bottom: 1vw;
-    margin-top: 1vw;
+  height: 8vw;
+  font-size: 2.6vw;
+  border-color: white;
+  align-content: center;
+  border: solid;
+  background: rgb(106, 106, 106);
+  border-radius: 1vw;
+  padding: 1vw;
+  margin-bottom: 1vw;
+  margin-top: 1vw;
 }
 
 .play .measure-number-txt {
-    margin: 0px;
-    text-align: center;
+  margin: 0px;
+  text-align: center;
 }
 
 .play .measure-bass {
-    height: 5vw;
-    font-size: 2vw;
-    border-color: white;
-    color: rgb(174,174,174);
-    border: solid;
-    background: rgb(106,106,106);
-    border-radius: 1vw;
-    text-align: center;
+  height: 5vw;
+  font-size: 2vw;
+  border-color: white;
+  color: rgb(174, 174, 174);
+  border: solid;
+  background: rgb(106, 106, 106);
+  border-radius: 1vw;
+  text-align: center;
 }
 
 .play .measure-selected-bass {
-    height: 5vw;
-    font-size: 2vw;
-    border-color: white;
-    border: solid;
-    background: white;
-    color: black;
-    border-radius: 1vw;
-    text-align: center;
+  height: 5vw;
+  font-size: 2vw;
+  border-color: white;
+  border: solid;
+  background: white;
+  color: black;
+  border-radius: 1vw;
+  text-align: center;
 }
