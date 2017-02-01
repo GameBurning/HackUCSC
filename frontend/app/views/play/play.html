@@ -28,7 +28,9 @@
     <div id="light_beam"></div>
 
     <div class="favorite-txt">{{show("Add to favorite")}}</div>
-    <div class="blocksize-txt">{{show("Sentence Size") + blockSize}}</div>
+    <div class="blocksize-txt">{{show("Sentence Size") + " " + blockSize}}</div>
+    <button ng-click="decreaseBlock()" class="size-minus" />
+    <button ng-click="increaseBlock()" class="size-plus" />
 
     <button class="play-keys" />
     <button ng-click="like()" class="favorite-add" />
