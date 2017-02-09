@@ -46,14 +46,14 @@ app.get('/speak', function(req, res){
 	    };
 
 	    // Pipe the synthesized text to a file.
-	    text_to_speech.synthesize(query).pipe(fs.createWriteStream(filePath+'/'+next_id+'.wav'));
+	    text_to_speech.synthesize(query, function(){
+            res.send('/voice/'+next_id + '.wav');
+            hash_table[sentence] = next_id;
 
-	    res.send('/voice/'+next_id + '.wav');
-	    hash_table[sentence] = next_id;
+            console.log(hash_table);
 
-	    console.log(hash_table);
-
-	    next_id = randomstring.generate(36);
+            next_id = randomstring.generate(36);
+        }).pipe(fs.createWriteStream(filePath+'/'+next_id+'.wav'));
 	    return;
 	}
 
