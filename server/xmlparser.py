@@ -1,41 +1,18 @@
 import xml.etree.ElementTree as ET
 import json
+from . import i18n
 
 #TODO: First repeat and sencond repeat have diffrent ending
 
-fifthkey_dict = {
-'-1':'F major. B-flat',\
-'-2':'B-flat major. Key signature: B-flat; E-flat',\
-'-3':'E-flat major. Key signature: A-flat; B-flat; E-flat',\
-'-4':'A-flat major. Key signature: A-flat; B-flat; D-flat; E-flat',\
-'-5':'D-flat major. Key signature: A-flat; B-flat; D-flat; E-flat; G-flat',\
-'-6':'G-flat major. Key signature: A-flat; B-flat; C-flat; D-flat; E-flat; G-flat',\
-'-7':'C-flat major. Key signature: A-flat; B-flat; C-flat; D-flat; E-flat; F-flat; G-flat',\
-'0':'C major. Key signature: none',\
-'1':'G major. Key signature: F-sharp',\
-'2':'D major. Key signature: C-sharp; F-sharp',\
-'3':'A major. Key signature: C-sharp; F-sharp; G-sharp',\
-'4':'E major. Key signature: C-sharp; D-sharp; F-sharp; G-sharp',\
-'5':'B major. Key signature: A-sharp; C-sharp; D-sharp; F-sharp; G-sharp',\
-'6':'F-sharp major. Key signature: A-sharp; C-sharp; D-sharp; E-sharp; F-sharp; G-sharp',\
-'7':'C-sharp major. Key signature: A-sharp; B-sharp; C-sharp; D-sharp; E-sharp; F-sharp; G-sharp'\
-}
+tclass = i18n()
+_ = tclass.get_text()
 
-dynamic_dict = {
-'p':'soft',
-'pp':'very soft',
-'ppp':'very very soft',
-'f':'loud',
-'ff':'very loud',
-'fff':'very very loud',
-'fz':'accented note',
-'mf':'half strong',
-'mp':'half soft'
-}
 
-octave_shift = "the following set of notes need to be shifted up by one octave"
+def set_language(language):
+    tclass.set_language(language)
 
-def generateJson(scoreName):
+
+def generate_json(scoreName):
     #- Read XML File -#
     tree = ET.parse('test/testCases/{}.xml'.format(scoreName))
     _root = tree.getroot()
@@ -45,9 +22,9 @@ def generateJson(scoreName):
     #r_worktitle = "MusicTitle"
     r_worktitle = ""
     if _work != None:
-        r_worktitle += _work.find('work-title').text
+        r_worktitle += _(_work.find('work-title').text)
     else:
-        r_worktitle += _root.find('movement-title').text
+        r_worktitle += _(_root.find('movement-title').text)
 
     identification = _root.find('identification')
     #- Get Composer name -#
@@ -93,11 +70,11 @@ def generateJson(scoreName):
     #- Read Division -#
     divisions = _attrib.find('divisions').text
     key = _attrib.find('key/fifths').text
-    r_key = fifthkey_dict[key]
+    r_key = _(key, "key")
     beats = _attrib.find('time/beats').text
     beat_type = _attrib.find('time/beat-type').text
     #r_beat = "Time Signature :" + beats + " " + beat_type
-    r_beat = beats + " " + beat_type
+    r_beat = _(beats) + " " + _(beat_type)
 
     sign = []
     for clef in _attrib.findall('clef'):
@@ -250,4 +227,4 @@ def generateJson(scoreName):
 
 if __name__ == "__main__":
     #print(generateJson('Sweethearts'))
-    print(generateJson('Fur_Elise'))
+    print(generate_json('Fur_Elise'))
