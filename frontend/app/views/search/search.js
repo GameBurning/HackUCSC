@@ -124,25 +124,38 @@ angular.module('myApp.search', ['ngRoute'])
 
         clearKeys();
 
-        if($scope.searchList[$scope.selected]) {
-            utility.get_voice_by_text($scope.searchList[$scope.selected].name)
-                .then(function(sound_url){
-                    var sound = new Howl({
-                        src: [sound_url],
-                        autoplay: true,
-                        loop: false,
-                        onload: function() {
-                            utility.stop_all_sounds();
-                            utility.active_sounds.push(sound);
-                        },
-                        onend: function() {
-                            console.log('Finished!');
-                        },
-                      });
-                }, function(error){
+        utility.search_score($scope.searchString)
+            .then(function(response) {
+                if (response !== null) {
+                    $scope.searchList = response;
+                    if($scope.searchList.length > 0) {
+                        $scope.selected = 0;
+                        utility.get_voice_by_text($scope.searchList[$scope.selected].name)
+                            .then(function(sound_url){
+                                var sound = new Howl({
+                                    src: [sound_url],
+                                    autoplay: true,
+                                    loop: false,
+                                    onload: function() {
+                                        utility.stop_all_sounds();
+                                        utility.active_sounds.push(sound);
+                                    },
+                                    onend: function() {
+                                        console.log('Finished!');
+                                    },
+                                  });
+                            }, function(error){
 
-                });
-        }
+                            });
+                    }
+                }
+            }, function(error) {
+                var response = fakeData.searchList; // TODO: Change to real API data
+                if (response !== null) {
+                    $scope.searchList = response;
+                    if($scope.searchList.length > 0) $scope.selected = 0;
+                }
+            });
 
         key('enter', function() {
           console.log('enter key pressed');
@@ -175,21 +188,6 @@ angular.module('myApp.search', ['ngRoute'])
           $scope.showResult = false;
           $scope.$apply();
         });
-
-
-        utility.search_score($scope.searchString)
-            .then(function(response) {
-                if (response !== null) {
-                    $scope.searchList = response;
-                    if($scope.searchList.length > 0) $scope.selected = 0;
-                }
-            }, function(error) {
-                var response = fakeData.searchList; // TODO: Change to real API data
-                if (response !== null) {
-                    $scope.searchList = response;
-                    if($scope.searchList.length > 0) $scope.selected = 0;
-                }
-            });
     }
 
     $scope.getKey = function(event) {
