@@ -1,10 +1,15 @@
+
 .play #light_beam {
-  transform: translate(320px, -691px) rotate(-10deg);
-  width: 0;
-  height: 0;
-  border-bottom: 1999px solid rgb(96, 96, 96);
-  border-left: 1000px solid transparent;
-  opacity: 0.9;
+  position: absolute;
+  top: -50vh;
+  left: 45vw;
+  width: 0vw;
+  height: 0vw;
+  position: absolute;
+  bottom: 0;
+  border-bottom: 200vh solid rgba(96, 96, 96,0.9);
+  border-left: 55vw solid transparent;
+  border-right: 0vw solid transparent;
 }
 
 .play .favorite-search {
