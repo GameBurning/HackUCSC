@@ -1,4 +1,3 @@
-
 .play #light_beam {
   position: absolute;
   top: -50vh;
@@ -7,7 +6,7 @@
   height: 0vw;
   position: absolute;
   bottom: 0;
-  border-bottom: 200vh solid rgba(96, 96, 96,0.9);
+  border-bottom: 200vh solid rgba(96, 96, 96, 0.9);
   border-left: 55vw solid transparent;
   border-right: 0vw solid transparent;
 }
@@ -67,6 +66,7 @@
 }
 
 .play .favorite-txt {
+  font-size: 1.4vw;
   position: absolute;
   left: 87%;
   top: 20%;
@@ -76,11 +76,12 @@
 }
 
 .play .blocksize-txt {
+  font-size: 1.4vw;
   position: absolute;
   left: 86%;
   top: 20%;
-  margin-top: 18vw;
-  margin-left: -3vw;
+  margin-top: 18.3vw;
+  margin-left: -3.5vw;
   color: white;
 }
 
