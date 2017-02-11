@@ -166,10 +166,21 @@
 
 @keyframes changePos {
   from {
-    transform: translate(-1100px, -1450px) rotate(130deg);
+    -ms-transform: rotate(-20deg); /* IE 9 */
+    -ms-transform-origin: 10vw -30vw; /* IE 9 */
+    -webkit-transform: rotate(-20deg); /* Chrome, Safari, Opera */
+    -webkit-transform-origin: 10vw -30vw; /* Chrome, Safari, Opera */
+    transform: rotate(-40deg);
+    transform-origin: -40vw 10vh;
+
   }
   to {
-    transform: translate(-1100px, -1450px) rotate(123deg);
+      -ms-transform: rotate(-30deg); /* IE 9 */
+      -ms-transform-origin: 10vw -30vw; /* IE 9 */
+      -webkit-transform: rotate(-30deg); /* Chrome, Safari, Opera */
+      -webkit-transform-origin: 10vw -30vw; /* Chrome, Safari, Opera */
+      transform: rotate(-47deg);
+      transform-origin: -40vw 10vh;
   }
 }
 
@@ -180,21 +191,15 @@
   animation-direction: alternate;
   transform-origin: 100% 100%;
   transition: all 1s;
+
+  position: absolute;
+  top: 10vh;
+  left: -40vw;
+  width: 0vw;
+  height: 0vw;
   position: absolute;
   bottom: 0;
-  left: 500px;
-  width: 0;
-  height: 0;
-  border-top: 400px solid yellow;
-  border-left: 100px solid transparent;
-  border-right: 100px solid transparent;
-  position: absolute;
-  bottom: 0;
-  left: 495px;
-  top: 0;
-  width: 0;
-  height: 0;
-  border-top: 1480px solid rgb(96, 96, 96);
-  border-left: 120px solid transparent;
-  border-right: 160px solid transparent;
+  border-bottom: 220vw solid rgb(96, 96, 96);
+  border-left: 20vw solid transparent;
+  border-right: 23vw solid transparent;
 }
