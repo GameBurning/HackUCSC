@@ -30,11 +30,19 @@ $bower install
 $ cd path-to-fur-elise/text2speech
 $ npm install
 $ node index.js
+// only for deploy start:
+$ forever start -c "npm start" ./
+// only for deploy stop
+$ forever stop -c "npm start" ./
 
 // Open a new terminal
 $ cd path-to-fur-elise/frontend
 $ npm start 
 // Web app will run at http://localhost:8000
+// only for deploy start:
+$ forever start index.js
+// only for deploy stop:
+$ forever stop index.js
 ```
 
 #Use
