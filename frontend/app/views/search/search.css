@@ -1,208 +1,205 @@
 .search .result {
-    background-color: white;
-    width: 50vw;
-    height: 16vw;
-    border-radius: 3vw;
-    font-weight: bold;
-    font-family: Avenir Next;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 25vw;
+  background-color: white;
+  width: 50vw;
+  height: 16vw;
+  border-radius: 3vw;
+  font-weight: bold;
+  font-family: Avenir Next;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 25vw;
 }
 
 .search .smallsearchsection {
-    margin: 0;
-    position: absolute;
-    top: 20vh;
-    left: 38vw;
-    transition: all 1s;
+  margin: 0;
+  position: absolute;
+  top: 20vh;
+  left: 38vw;
+  transition: all 1s;
 }
 
 .search .smallsearchbar {
-    position: absolute;
-    top: 18%;
-    left: 60%;
-    width: 24vw;
-    height: 6vw;
-    background-color: rgb(139,139,139);
-    font-weight: bold;
-    font-family: Avenir Next;
-    text-align: center;
-    border-radius: 1vw;
-    border-width: 0.7vw;
-    font-size: 2vw;
-    border-color: rgb(116,116,116);
-    color: white;
+  position: absolute;
+  top: 18%;
+  left: 60%;
+  width: 24vw;
+  height: 6vw;
+  background-color: rgb(139, 139, 139);
+  font-weight: bold;
+  font-family: Avenir Next;
+  text-align: center;
+  border-radius: 1vw;
+  border-width: 0.7vw;
+  font-size: 2vw;
+  border-color: rgb(116, 116, 116);
+  color: white;
 }
 
 .search .result-name {
-    font-size: 2vw;
+  font-size: 2vw;
 }
 
-.search{
-    width: 100%;
-    height: 100%;
+.search {
+  width: 100%;
+  height: 100%;
 }
 
-.search-section{
-    margin: 0;
-    position: absolute;
-    top: 26%;
-    left: 25vw;
+.search-section {
+  margin: 0;
+  position: absolute;
+  top: 26%;
+  left: 25vw;
 }
 
 .search-bar {
-    display: block;
-    width: 50vw;
-    height: 8vw;
-    font-size: 4vw;
-    font-weight: bold;
-    font-family: Avenir Next;
-    text-align: center;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+  display: block;
+  width: 50vw;
+  height: 8vw;
+  font-size: 4vw;
+  font-weight: bold;
+  font-family: Avenir Next;
+  text-align: center;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 .elise-search {
-    margin-left: -8%;
-    display: block;
-    width: 14vw;
+  margin-left: -8%;
+  display: block;
+  width: 14vw;
 }
 
-.navigator {
-
-}
+.navigator {}
 
 .favorite-search {
-    position: absolute;
-    left: 90%;
-    top: 5%;
+  position: absolute;
+  left: 90%;
+  top: 5%;
   width: 7vw;
   height: 7vw;
   border: none;
-  outline:none;
-  background:url("/resources/Favorite.png");
+  outline: none;
+  background: url("/resources/Favorite.png");
   background-repeat: round;
 }
 
 .history-search {
-    position: absolute;
-    left: 90%;
-    top: 70%;
-
+  position: absolute;
+  left: 90%;
+  top: 70%;
   width: 7vw;
   height: 9vw;
   border: none;
-  outline:none;
-  background:url("/resources/History.png");
+  outline: none;
+  background: url("/resources/History.png");
   background-repeat: round;
 }
 
 .shortcut-2 {
-    position: absolute;
-    left: 89.2%;
-    top: 10%;
-    margin-top: 6vw;
-    width: 8vw;
-    height: 2.6vw;
-    border: none;
-    outline:none;
-    background:url("/resources/Group-2.png");
-    background-repeat: round;
+  position: absolute;
+  left: 89.2%;
+  top: 10%;
+  margin-top: 6vw;
+  width: 8vw;
+  height: 2.6vw;
+  border: none;
+  outline: none;
+  background: url("/resources/Group-2.png");
+  background-repeat: round;
 }
 
 .shortcut-3 {
-    position: absolute;
-    left: 88.7%;
-    top: 80%;
-    margin-top: 6vw;
-    width: 8vw;
-    height: 2.6vw;
-    border: none;
-    outline:none;
-    background:url("/resources/Group-3.png");
-    background-repeat: round;
+  position: absolute;
+  left: 88.7%;
+  top: 80%;
+  margin-top: 6vw;
+  width: 8vw;
+  height: 2.6vw;
+  border: none;
+  outline: none;
+  background: url("/resources/Group-3.png");
+  background-repeat: round;
 }
 
-
 .result-author {
-    color: rgb(129,129,129);
-    font-size: 1.8vw;
+  color: rgb(129, 129, 129);
+  font-size: 1.8vw;
 }
 
 .result-difficulty {
-    color: rgb(129,129,129);
-    font-size: 1.8vw;
+  color: rgb(129, 129, 129);
+  font-size: 1.8vw;
 }
 
 .left-search {
-    position: absolute;
-    background:url("/resources/Left.png");
-    background-repeat: round;
-    border: none;
-    outline:none;
-    width: 3vw;
-    height: 8vw;
-    top: 50%;
-    margin-top: 4vw;
-    margin-left: 2vw;
-    left: 25vw;
+  position: absolute;
+  background: url("/resources/Left.png");
+  background-repeat: round;
+  border: none;
+  outline: none;
+  width: 3vw;
+  height: 8vw;
+  top: 50%;
+  margin-top: 4vw;
+  margin-left: 2vw;
+  left: 25vw;
 }
 
 .right-search {
-    position: absolute;
-    background:url("/resources/Right.png");
-    background-repeat: round;
-    border: none;
-    outline:none;
-    width: 3vw;
-    height: 8vw;
-    top: 50%;
-    margin-top: 4vw;
-    margin-left: 3vw;
-    left: 67vw;
+  position: absolute;
+  background: url("/resources/Right.png");
+  background-repeat: round;
+  border: none;
+  outline: none;
+  width: 3vw;
+  height: 8vw;
+  top: 50%;
+  margin-top: 4vw;
+  margin-left: 3vw;
+  left: 67vw;
 }
 
 @keyframes changePos {
   from {
-    transform: translate(-1100px, -1450px) rotate(130deg);
-  }
+    -ms-transform: rotate(-20deg); /* IE 9 */
+    -ms-transform-origin: 10vw -30vw; /* IE 9 */
+    -webkit-transform: rotate(-20deg); /* Chrome, Safari, Opera */
+    -webkit-transform-origin: 10vw -30vw; /* Chrome, Safari, Opera */
+    transform: rotate(-40deg);
+    transform-origin: -40vw 10vh;
 
+  }
   to {
-    transform: translate(-1100px, -1450px) rotate(123deg);
+      -ms-transform: rotate(-30deg); /* IE 9 */
+      -ms-transform-origin: 10vw -30vw; /* IE 9 */
+      -webkit-transform: rotate(-30deg); /* Chrome, Safari, Opera */
+      -webkit-transform-origin: 10vw -30vw; /* Chrome, Safari, Opera */
+      transform: rotate(-47deg);
+      transform-origin: -40vw 10vh;
   }
 }
 
-
 .search #light_beam {
-    animation-duration: 8s;
-    animation-name: changePos;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+  animation-duration: 8s;
+  animation-name: changePos;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  transform-origin: 100% 100%;
+  transition: all 1s;
 
-
-    transform-origin: 100% 100%;
-    transition: all 1s;
-    position: absolute;
-    bottom: 0;
-    left: 500px;
-    width: 0;
-    height: 0;
-    border-top: 400px solid yellow;
-    border-left: 100px solid transparent;
-    border-right: 100px solid transparent;
-    position: absolute;
-    bottom: 0;
-    left: 495px;
-    top: 0;
-    width: 0;
-    height: 0;
-    border-top: 1480px solid rgb(96,96,96);
-    border-left: 120px solid transparent;
-    border-right: 160px solid transparent;
+  position: absolute;
+  top: 10vh;
+  left: -40vw;
+  width: 0vw;
+  height: 0vw;
+  position: absolute;
+  bottom: 0;
+  border-bottom: 220vw solid rgb(96, 96, 96);
+  border-left: 20vw solid transparent;
+  border-right: 23vw solid transparent;
 }
