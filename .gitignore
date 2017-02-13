@@ -4,3 +4,5 @@
 frontend/app/bower_components
 text2speech/node_modules
 **/*.wav
+**/nohup.out
+**/npm-debug.log

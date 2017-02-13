@@ -18,7 +18,6 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
  function($rootScope, $location, navigation, utility) {
     var lang = window.navigator.userLanguage || window.navigator.language;
     utility.language = lang;
-    alert(utility.language);
 
     key('ctrl+1', function() {
       console.log('ctrl + 1 key pressed');
