@@ -2,7 +2,7 @@
 
 Fur Elise is a project aimed at translating digital music sheets to speech for the visually impaired.
 
-#Deploy
+#Run
 
 Environment: node - v6.4.0, npm  - v3.10.3
 
@@ -30,23 +30,37 @@ $bower install
 $ cd path-to-fur-elise/text2speech
 $ npm install
 $ node index.js
-// only for deploy start:
-$ forever start -c "npm start" ./
-// only for deploy stop
-$ forever stop -c "npm start" ./
 
 // Open a new terminal
 $ cd path-to-fur-elise/frontend
 $ npm start 
+
 // Web app will run at http://localhost:8000
-// only for deploy start:
+```
+#Deploy in Google Cloud
+
+```sh
+$ [sudo] npm install forever -g
+
+// To start & stop frontend:
+
+$ cd path-to-fur-elise/frontend/app
+
+$ forever start -c "npm start" ./
+
+$ forever stop -c "npm start" ./
+
+// To start & stop text2speech:
+
+$ cd path-to-fur-elise/text2speech
+
 $ forever start index.js
-// only for deploy stop:
+
 $ forever stop index.js
+
 ```
 
 #Use
-
 This web app is designed to be friendly to visually impaired. All interactions can be done by **keyboard**. However you can still use mouse as you want.
 
 * **Enter** - **confirm** input or **select**
