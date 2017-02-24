@@ -1,16 +1,14 @@
 import xml.etree.ElementTree as ET
 import json
-from . import i18n
+from i18n import *
 
 #TODO: First repeat and sencond repeat have diffrent ending
 
 tclass = i18n()
-_ = tclass.get_text()
-
+_ = tclass.get_text
 
 def set_language(language):
     tclass.set_language(language)
-
 
 def generate_json(scoreName):
     #- Read XML File -#

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 class i18n(object):
     __musical_text = {
         "english": {
