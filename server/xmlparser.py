@@ -171,7 +171,7 @@ def generate_json(scoreName):
                     m_text[int(_staff) - 1].append(element.find('direction-type')[0].text)
                 elif element[0][0].tag == 'dynamics':
                     # print(element[0][0][0].tag)
-                    m_text[int(_staff) - 1].append(dynamic_dict[element[0][0][0].tag])
+                    m_text[int(_staff) - 1].append(_.getText(element[0][0][0].tag, ))
                 elif element[0][0].tag == 'octave-shift':
                     m_text[int(_staff) - 1].append(octave_shift)
                 elif element[0][0].tag == 'wedge' and element[0][0].attrib['type']!="stop":

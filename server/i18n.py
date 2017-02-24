@@ -36,7 +36,8 @@ class i18n(object):
         },
         "chinese": {
             "key": dict(zip(['-5', '-4', '-3', '-2', '-1', '0', '1', '2', '3', '4', '5'],
-                           ['5个降号', '4个降号', '3个降号', '2个降号', '1个降号', '没有升降号', '1个升号',
+                           ['5个降号', '4个降号', '3个降号', '2个降号'
+                            , '1个降号', '没有升降号', '1个升号',
                             '2个升号', '3个升号', '4个升号', '5个升号'])),
             "dynamic": {
                 'p': '弱',
@@ -62,9 +63,9 @@ class i18n(object):
             print('only support English and Chinese')
         self.__language = lang
 
-    def get_text(self, keyword, _type="default"):
+    def get_text(self, keyword, t="default"):
         # if the keyword is not found, return itself
         if self.__language is None:
             print("language not set")
             return False
-        return self.__musical_text[self.language][_type].get(keyword, keyword)
+        return self.__musical_text[self.language][t].get(keyword, keyword)
