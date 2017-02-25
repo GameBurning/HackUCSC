@@ -9,7 +9,7 @@ angular.module('myApp')
 
     //RealServer
 
-    //   http://gameburning.com:5000/api/musicscores
+    //http://gameburning.com:5000/api/musicscores
 
     var csrfcookie = function() {
       var cookieValue = null,
