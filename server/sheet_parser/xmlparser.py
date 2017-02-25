@@ -4,12 +4,10 @@
 import json
 import xml.etree.ElementTree as ET
 # from enum import Enum
-from sheet_parser import i18n
+import i18n
 
 # TODO: First repeat and second repeat have different endings
 
-trans_class = i18n.I18N()
-_ = trans_class.get_text
 
 
 class XmlParser:
@@ -17,17 +15,20 @@ class XmlParser:
     # class MetaData(Enum):
     #     tempo = 0
 
+
     def __init__(self, path_to_sheet_folder, language="English"):
+        self.trans_class = i18n.I18N()
+        self._ = self.trans_class.get_text
         self.language = language
         self.path = path_to_sheet_folder
         # results
         self.metadata = {}
         self.body = {}
-        trans_class.set_language(self.language)
+        self.trans_class.set_language(self.language)
 
     def set_language(self, language):
         self.language = language
-        trans_class.set_language(self.language)
+        self.trans_class.set_language(self.language)
 
     def read_title_and_composer(self, _root):
         # Read title
@@ -35,9 +36,9 @@ class XmlParser:
         self.metadata["title"] = ""
 
         if _work is not None:
-            self.metadata["title"] += _(_work.find('work-title').text)
+            self.metadata["title"] += self._(_work.find('work-title').text)
         else:
-            self.metadata["title"] += _(_root.find('movement-title').text)
+            self.metadata["title"] += self._(_root.find('movement-title').text)
 
         identification = _root.find('identification')
 
@@ -53,7 +54,7 @@ class XmlParser:
     def read_tempo(self, _m):
         # - Read Tempo - #
         _beat_unit = _m[0].find('direction/direction-type/metronome/beat-unit')
-        beat_unit = _("not defined")
+        beat_unit = self._("not defined")
         if _beat_unit is not None:
             beat_unit = _beat_unit.text
         _per_minute = _m[0].find('direction/direction-type/metronome/per-minute')
@@ -76,11 +77,11 @@ class XmlParser:
         # Read Division
         self.metadata["divisions"] = _attrib.find('divisions').text
         key = _attrib.find('key/fifths').text
-        self.metadata["key"] = _(key, "key")
+        self.metadata["key"] = self._(key, "key")
         beats = _attrib.find('time/beats').text
         beat_type = _attrib.find('time/beat-type').text
         # r_beat = "Time Signature :" + beats + " " + beat_type
-        self.metadata["beat"] = _(beats) + " " + _(beat_type)
+        self.metadata["beat"] = self._(beats) + " " + self._(beat_type)
 
     def generate_json(self, score_name):
         # - Read XML File - #
@@ -112,7 +113,7 @@ class XmlParser:
 
             backups = m_single.findall('backup')
             if len(backups) > 1:
-                m_text[0].append(_('first musical line'))
+                m_text[0].append(self._('first musical line'))
 
             for element in m_single:
                 if element.tag == "note":
@@ -123,7 +124,7 @@ class XmlParser:
                             if note.find('type') is not None:
                                 _type = note.find('type').text
                             _staff = note.find('staff').text
-                            note_text = _(_type, 'duration') + _(" rest")
+                            note_text = self._(_type, 'duration') + self._(" rest")
                             m_text[int(_staff)-1].append(note_text)
 
                     else:
@@ -134,7 +135,7 @@ class XmlParser:
                         _staff = note.find('staff').text
 
                         if note.find('accidental') is not None:
-                            _step = _(note.find('accidental').text, "accidental") + _step
+                            _step = self._(note.find('accidental').text, "accidental") + _step
 
                         if note.find('chord') is not None:
 
@@ -143,16 +144,17 @@ class XmlParser:
                             if note.find('notations/arpeggiate') is not None:
                                 if 'arpeggiated' not in m_text[int(_staff) - 1][-1]:
                                     m_text[int(_staff) - 1][-1] = 'arpeggiated ' + m_text[int(_staff) - 1][-1]
-                            note_text = " " + _(_step,"step") + _(_octave, "octave")
+                            note_text = " " + self._(_step,"step") + self._(_octave, "octave")
                             m_text[int(_staff) - 1][-1] += note_text
 
                         else:
-                            note_text = _(_type, "duration") + " " + _(_step, "step") + " " + _(_octave, "octave")
+                            note_text = self._(_type, "duration") + " " + self._(_step, "step") + " " + \
+                                        self._(_octave, "octave")
                             if note.find('dot') is not None:
-                                note_text = _("dotted ") + note_text
+                                note_text = self._("dotted ") + note_text
                             if note.find('grace') is not None:
                                 if note.find('grace').attrib['slash'] == "yes":
-                                    note_text = _("grace note ") + note_text
+                                    note_text = self._("grace note ") + note_text
 
                             if note.find('tie') is not None:
                                 note_text = "tied note " + note_text
@@ -190,9 +192,9 @@ class XmlParser:
                         m_text[int(_staff) - 1].append(element.find('direction-type')[0].text)
                     elif element[0][0].tag == 'dynamics':
                         # print(element[0][0][0].tag)
-                        m_text[int(_staff) - 1].append(_(element[0][0][0].tag, 'dynamics'))
+                        m_text[int(_staff) - 1].append(self._(element[0][0][0].tag, 'dynamics'))
                     elif element[0][0].tag == 'octave-shift':
-                        m_text[int(_staff) - 1].append(_('octave_shift', 'others'))
+                        m_text[int(_staff) - 1].append(self._('octave_shift', 'others'))
                     elif element[0][0].tag == 'wedge' and element[0][0].attrib['type']!="stop":
                         m_text[int(_staff) - 1].append(element[0][0].attrib['type'])
 
