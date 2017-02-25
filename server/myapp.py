@@ -20,16 +20,6 @@ def api_fav():
         return json.dumps(fav_list)
     else:
         return json.dumps(fav_list)
-
-
-@app.route('/api/musicscores/<scorename>')
-def api_score(scorename):
-    if scorename not in hist_list:
-        hist_list.append(scorename)
-    else:
-        del(hist_list[hist_list.index(scorename)])
-        hist_list.append(scorename)
-    return xmlparser.generateJson(scorename)
     
 
 @app.route('/api/musicscores/history/')
@@ -51,6 +41,13 @@ def api_search():
         return json.dumps(rList)
     if 'language' in request.args:
         xmlparser.set_language(request.args['language'].lower())
+    if 'title' in request.args:
+        if request.args['title'] not in hist_list:
+            hist_list.append(request.args['title'])
+        else:
+            del (hist_list[hist_list.index(request.args['title'])])
+            hist_list.append(request.args['title'])
+        return xmlparser.generateJson(request.args['title'])
     else:
         return json.dumps(scoreNames)
 

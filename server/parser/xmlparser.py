@@ -97,10 +97,6 @@ class XmlParser:
             for measure in page.findall('measure'):
                 m.append(measure)
 
-        # sign = []
-        # for clef in _attrib.findall('clef'):
-        #     sign.append(clef.find('sign').text)
-
         self.read_title_and_composer(root)
         self.read_tempo(m)
         self.read_attributes(m)
@@ -117,7 +113,7 @@ class XmlParser:
 
             backups = m_single.findall('backup')
             if len(backups) > 1:
-                m_text[0].append('first musical line')
+                m_text[0].append(_('first musical line'))
 
             for element in m_single:
                 if element.tag == "note":
@@ -128,7 +124,7 @@ class XmlParser:
                             if note.find('type') is not None:
                                 _type = note.find('type').text
                             _staff = note.find('staff').text
-                            note_text = _type + " rest"
+                            note_text = _(_type, 'duration') + _(" rest")
                             m_text[int(_staff)-1].append(note_text)
 
                     else:
@@ -139,7 +135,7 @@ class XmlParser:
                         _staff = note.find('staff').text
 
                         if note.find('accidental') is not None:
-                            _step = note.find('accidental').text + " " + _step
+                            _step = _(note.find('accidental').text, "accidental") + _step
 
                         if note.find('chord') is not None:
 
@@ -148,16 +144,16 @@ class XmlParser:
                             if note.find('notations/arpeggiate') is not None:
                                 if 'arpeggiated' not in m_text[int(_staff) - 1][-1]:
                                     m_text[int(_staff) - 1][-1] = 'arpeggiated ' + m_text[int(_staff) - 1][-1]
-                            note_text = " " + _step + _octave
+                            note_text = " " + _(_step,"step") + _(_octave, "octave")
                             m_text[int(_staff) - 1][-1] += note_text
 
                         else:
-                            note_text = _type + " " + _step + " " + _octave
+                            note_text = _(_type, "duration") + " " + _(_step, "step") + " " + _(_octave, "octave")
                             if note.find('dot') is not None:
-                                note_text = "dotted " + note_text
+                                note_text = _("dotted ") + note_text
                             if note.find('grace') is not None:
                                 if note.find('grace').attrib['slash'] == "yes":
-                                    note_text = "grace note " + note_text
+                                    note_text = _("grace note ") + note_text
 
                             if note.find('tie') is not None:
                                 note_text = "tied note " + note_text
