@@ -25,7 +25,7 @@ class XmlParser:
         self.body = {}
         trans_class.set_language(self.language)
 
-    def change_language(self, language):
+    def set_language(self, language):
         self.language = language
         trans_class.set_language(self.language)
 
