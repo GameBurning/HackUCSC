@@ -12,7 +12,8 @@ angular.module('myApp')
               "Sentence" : "乐句",
               "Favorite" : "收藏夹",
               "History" : "历史记录",
-              "Composer" : "作曲家"
+              "Composer" : "作曲家",
+              "sentence size" : "小节数"
           },
           "en" : {
               "Difficulty" : "Difficulty",
@@ -23,7 +24,8 @@ angular.module('myApp')
               "Sentence" : "Sentence",
               "Favorite" : "Favorite",
               "History" : "History",
-              "Composer" : "Composer"
+              "Composer" : "Composer",
+              "sentence size" : "sentence size"
           }
       };
 
