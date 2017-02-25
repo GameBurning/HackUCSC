@@ -35,17 +35,17 @@ def api_fav_zh():
         return json.dumps(fav_list)
 
 
-@app.route('/api/languge/english/musicscores/history/')
+@app.route('/api/language/english/musicscores/history/')
 def api_hist():
     return json.dumps(hist_list)
 
 
-@app.route('/api/languge/chinese/musicscores/history/')
+@app.route('/api/language/chinese/musicscores/history/')
 def api_hist():
     return json.dumps(hist_list)
 
 
-@app.route('/api/languge/chinese/musicscores/')
+@app.route('/api/language/chinese/musicscores/')
 def api_search():
     if 'keyword' in request.args:
         rList = []
@@ -68,7 +68,7 @@ def api_search():
         return json.dumps(scoreNames)
 
 
-@app.route('/api/languge/english/musicscores/')
+@app.route('/api/language/english/musicscores/')
 def api_search():
     if 'keyword' in request.args:
         rList = []
