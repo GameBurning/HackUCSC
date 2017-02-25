@@ -14,10 +14,20 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     $routeProvider.otherwise({redirectTo: '/search'});
 }])
 
-.run( ['$rootScope','$location','navigation', 'utility',
+.run( ['$rootScope','$location','navigation', 'utility', 'config',
  function($rootScope, $location, navigation, utility) {
     var lang = window.navigator.userLanguage || window.navigator.language;
     utility.language = lang;
+
+    if(lang.indexOf("zh") != -1) {
+        config.api.music_score = config.api.music_score_chinese;
+    }
+    else if(lang.indexOf("en") != -1) {
+        config.api.music_score = config.api.music_score_english;
+    }
+    else {
+        config.api.music_score = config.api.music_score_english;
+    }
 
     key('ctrl+1', function() {
       console.log('ctrl + 1 key pressed');
