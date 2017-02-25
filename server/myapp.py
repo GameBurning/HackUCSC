@@ -11,24 +11,41 @@ scoreNames = [m.split('.xml')[0] for m in listdir('static/sheetMusic/')]
 fav_list = []
 hist_list = []
 
-myparser = xmlparser.XmlParser('test/testCases')
+parser_zh = xmlparser.XmlParser('test/testCases', "Chinese")
+parser_en = xmlparser.XmlParser('test/testCases')
 
-@app.route('/api/musicscores/favorite/')
-def api_fav():
+
+@app.route('/api/language/english/musicscores/favorite/')
+def api_fav_en():
     if 'name' in request.args:
         if request.args['name'] not in fav_list:
             fav_list.append(request.args['name'])
         return json.dumps(fav_list)
     else:
         return json.dumps(fav_list)
-    
 
-@app.route('/api/musicscores/history/')
+
+@app.route('/api/language/chinese/musicscores/favorite/')
+def api_fav_zh():
+    if 'name' in request.args:
+        if request.args['name'] not in fav_list:
+            fav_list.append(request.args['name'])
+        return json.dumps(fav_list)
+    else:
+        return json.dumps(fav_list)
+
+
+@app.route('/api/languge/english/musicscores/history/')
 def api_hist():
     return json.dumps(hist_list)
 
 
-@app.route('/api/musicscores/')
+@app.route('/api/languge/chinese/musicscores/history/')
+def api_hist():
+    return json.dumps(hist_list)
+
+
+@app.route('/api/languge/chinese/musicscores/')
 def api_search():
     if 'keyword' in request.args:
         rList = []
@@ -40,15 +57,36 @@ def api_search():
                 newDict['composer'] = "Not implemented yet"
                 rList.append(newDict)
         return json.dumps(rList)
-    if 'language' in request.args:
-        myparser.set_language(request.args['language'].lower())
     if 'title' in request.args:
         if request.args['title'] not in hist_list:
             hist_list.append(request.args['title'])
         else:
             del (hist_list[hist_list.index(request.args['title'])])
             hist_list.append(request.args['title'])
-        return myparser.generate_json(request.args['title'])
+        return parser_zh.generate_json(request.args['title'])
+    else:
+        return json.dumps(scoreNames)
+
+
+@app.route('/api/languge/english/musicscores/')
+def api_search():
+    if 'keyword' in request.args:
+        rList = []
+        for m in scoreNames:
+            if request.args['keyword'].lower() in m.lower():
+                newDict = {}
+                newDict['name'] = m
+                newDict['hardness'] = "Not implemented yet"
+                newDict['composer'] = "Not implemented yet"
+                rList.append(newDict)
+        return json.dumps(rList)
+    if 'title' in request.args:
+        if request.args['title'] not in hist_list:
+            hist_list.append(request.args['title'])
+        else:
+            del (hist_list[hist_list.index(request.args['title'])])
+            hist_list.append(request.args['title'])
+        return parser_en.generate_json(request.args['title'])
     else:
         return json.dumps(scoreNames)
 
