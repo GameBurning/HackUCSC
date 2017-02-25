@@ -1,15 +1,6 @@
 angular.module('myApp')
   .service('httpUtil', ['$http', '$q', function($http, $q) {
     var self = this;
-    // Digital Ocean
-    // var server_base = "http://jamiewang.me:8000/"
-
-    //Localhost
-    // var server_base = "http://localhost:8000/"
-
-    //RealServer
-
-    //http://gameburning.com:5000/api/musicscores
 
     var csrfcookie = function() {
       var cookieValue = null,

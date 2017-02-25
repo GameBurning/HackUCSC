@@ -15,7 +15,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 }])
 
 .run( ['$rootScope','$location','navigation', 'utility', 'config',
- function($rootScope, $location, navigation, utility) {
+ function($rootScope, $location, navigation, utility, config) {
     var lang = window.navigator.userLanguage || window.navigator.language;
     utility.language = lang;
 
