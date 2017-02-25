@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
-from parser import xmlparser
+from sheet_parser import xmlparser
 from os import listdir
 import json
 app = Flask(__name__)
@@ -11,6 +11,7 @@ scoreNames = [m.split('.xml')[0] for m in listdir('static/sheetMusic/')]
 fav_list = []
 hist_list = []
 
+myparser = xmlparser.XmlParser('test/testCases')
 
 @app.route('/api/musicscores/favorite/')
 def api_fav():
@@ -40,14 +41,14 @@ def api_search():
                 rList.append(newDict)
         return json.dumps(rList)
     if 'language' in request.args:
-        xmlparser.set_language(request.args['language'].lower())
+        myparser.set_language(request.args['language'].lower())
     if 'title' in request.args:
         if request.args['title'] not in hist_list:
             hist_list.append(request.args['title'])
         else:
             del (hist_list[hist_list.index(request.args['title'])])
             hist_list.append(request.args['title'])
-        return xmlparser.generateJson(request.args['title'])
+        return myparser.generateJson(request.args['title'])
     else:
         return json.dumps(scoreNames)
 

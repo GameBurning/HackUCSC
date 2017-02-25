@@ -4,11 +4,11 @@
 import json
 import xml.etree.ElementTree as ET
 # from enum import Enum
-from parser.i18n import *
+from sheet_parser import i18n
 
 # TODO: First repeat and second repeat have different endings
 
-trans_class = I18N()
+trans_class = i18n.I18N()
 _ = trans_class.get_text
 
 
