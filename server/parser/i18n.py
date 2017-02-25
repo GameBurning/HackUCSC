@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-class i18n(object):
+
+
+class I18N(object):
     __musical_text = {
         "english": {
             "key": {
@@ -20,7 +22,7 @@ class i18n(object):
                 '6': 'F-sharp major. Key signature: A-sharp; C-sharp; D-sharp; E-sharp; F-sharp; G-sharp',
                 '7': 'C-sharp major. Key signature: A-sharp; B-sharp; C-sharp; D-sharp; E-sharp; F-sharp; G-sharp'
             },
-            "dynamic": {
+            "dynamics": {
                 'p': 'soft',
                 'pp': 'very soft',
                 'ppp': 'very very soft',
@@ -31,17 +33,18 @@ class i18n(object):
                 'mf': 'half strong',
                 'mp': 'half soft'
             },
-            "other": {
+            "others": {
                 "octave_shift": "the following set of notes need to be shifted up by one octave"
 
             }
         },
         "chinese": {
             "key": dict(zip(['-5', '-4', '-3', '-2', '-1', '0', '1', '2', '3', '4', '5'],
-                           ['5个降号', '4个降号', '3个降号', '2个降号'
-                            , '1个降号', '没有升降号', '1个升号',
-                            '2个升号', '3个升号', '4个升号', '5个升号'])),
-            "dynamic": {
+                    ['5个降号', '4个降号', '3个降号', '2个降号'
+                    , '1个降号', '没有升降号', '1个升号',
+                    '2个升号', '3个升号', '4个升号', '5个升号'])),
+
+            "dynamics": {
                 'p': '弱',
                 'pp': '很弱',
                 'ppp': '最弱',
@@ -52,8 +55,12 @@ class i18n(object):
                 'mf': '中强',
                 'mp': '中弱'
             },
+            "octave": dict(zip(['C','D','E','F','G','A','B'], ['多','来','米','发','缩','拉','西'])),
+            "duration": dict(zip(['64th', '32th', '16th', '8th', '4th', 'half', 'whole'],
+                             ['64分音符','32分音符','16分音符','8分音符','4分音符','2分音符','全音符'])),
             "other": {
-                "octave_shift": "以下的一组音符需要升高八度"
+                "octave_shift": "以下的一组音符需要升高八度",
+                "not defined": "未定义",
             }
         }
     }
@@ -61,13 +68,16 @@ class i18n(object):
 
     def set_language(self, lang):
         lang = lang.lower()
-        if lang != "english" or lang != "chinese":
+        print(lang)
+        if lang != "english" and lang != "chinese":
             print('only support English and Chinese')
         self.__language = lang
 
-    def get_text(self, keyword, t="default"):
+    def get_text(self, keyword, t="others"):
         # if the keyword is not found, return itself
         if self.__language is None:
             print("language not set")
             return False
-        return self.__musical_text[self.language][t].get(keyword, keyword)
+        if t not in self.__musical_text[self.__language]:
+            return keyword
+        return self.__musical_text[self.__language][t].get(keyword, keyword)
