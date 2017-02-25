@@ -3,6 +3,8 @@
 */.DS_Store
 frontend/app/bower_components
 text2speech/node_modules
-**/*.wav
 **/nohup.out
 **/npm-debug.log
+text2speech/voiceStore/*.wav
+text2speech/voiceStore/*.mp3
+
