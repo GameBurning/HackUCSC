@@ -93,7 +93,7 @@ function($scope, httpUtil, $location, fakeData, $q, utility, display) {
 
         $scope.prevBlock();
 
-        utility.get_voice_by_text("sentence size," + $scope.blockSize)
+        utility.get_voice_by_text(display.show("sentence size") + "," + $scope.blockSize)
             .then(function(sound_url){
                 var sound = new Howl({
                     src: [sound_url],
@@ -120,7 +120,7 @@ function($scope, httpUtil, $location, fakeData, $q, utility, display) {
 
         $scope.prevBlock();
 
-        utility.get_voice_by_text("sentence size," + $scope.blockSize)
+        utility.get_voice_by_text(display.show("sentence size") + "," + $scope.blockSize)
             .then(function(sound_url){
                 var sound = new Howl({
                     src: [sound_url],
