@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 import json
 import xml.etree.ElementTree as ET
 # from enum import Enum
-from server.parser.i18n import *
+from parser.i18n import *
 
 # TODO: First repeat and second repeat have different endings
 

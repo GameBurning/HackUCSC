@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
-from server.parser import xmlparser
+from parser import xmlparser
 from os import listdir
 import json
 app = Flask(__name__)
