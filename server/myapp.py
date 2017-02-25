@@ -48,7 +48,7 @@ def api_search():
         else:
             del (hist_list[hist_list.index(request.args['title'])])
             hist_list.append(request.args['title'])
-        return myparser.generateJson(request.args['title'])
+        return myparser.generate_json(request.args['title'])
     else:
         return json.dumps(scoreNames)
 
