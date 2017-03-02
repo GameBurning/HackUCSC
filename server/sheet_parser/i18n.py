@@ -33,7 +33,7 @@ class I18N(object):
                 'mf': 'half strong',
                 'mp': 'half soft'
             },
-            "others": {
+            "other": {
                 "octave_shift": "the following set of notes need to be shifted up by one octave",
                 " 拍": "",
             },

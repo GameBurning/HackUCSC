@@ -53,12 +53,19 @@ def api_search_zh():
     if 'keyword' in request.args:
         rList = []
         for m in scoreNames:
-            if request.args['keyword'].lower() in m.lower():
-                newDict = {}
-                newDict['name'] = m
-                newDict['hardness'] = "Not implemented yet"
-                newDict['composer'] = "Not implemented yet"
-                rList.append(newDict)
+            if isinstance(request.args['keyword'], str) and isinstance(m.lower(), str):
+                if request.args['keyword'].lower() in m.lower():
+                    newDict = {}
+                    newDict['name'] = m
+                    # newDict['composer'] = "Not implemented yet"
+                    rList.append(newDict)
+            elif isinstance(request.args['keyword'], unicode) or isinstance(m.lower(), unicode):
+                if request.args['keyword'] in m:
+                    newDict = {}
+                    newDict['name'] = m
+                    # newDict['hardness'] = "Not implemented yet"
+                    rList.append(newDict)
+
         return json.dumps(rList)
     if 'title' in request.args:
         if request.args['title'] not in hist_list:
