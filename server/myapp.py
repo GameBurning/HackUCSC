@@ -9,13 +9,14 @@ import json
 app = Flask(__name__)
 CORS(app)
 
-scoreNames = [m.split('.xml')[0] for m in listdir('static/sheet_music/')]
+dir_name = 'static/sheet_music/'
+scoreNames = [m.split('.xml')[0] for m in listdir(dir_name)]
 
 fav_list = []
 hist_list = []
 
-parser_zh = xmlparser.XmlParser('test/testCases', "Chinese")
-parser_en = xmlparser.XmlParser('test/testCases')
+parser_zh = xmlparser.XmlParser(dir_name, "Chinese")
+parser_en = xmlparser.XmlParser(dir_name)
 
 
 @app.route('/api/language/english/musicscores/favorite/')
