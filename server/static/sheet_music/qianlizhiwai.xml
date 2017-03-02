@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 3.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
 <score-partwise>
-  <movement-title>qianlizhiwai</movement-title>
+  <movement-title>千里之外</movement-title>
   <identification>
-    <creator type="composer">zhoujielun</creator>
+    <creator type="composer">周杰伦</creator>
     <encoding>
       <software>MuseScore 2.0.3.1</software>
       <encoding-date>2017-03-02</encoding-date>
@@ -39,10 +39,10 @@
     <lyric-font font-family="FreeSerif" font-size="11"/>
     </defaults>
   <credit page="1">
-    <credit-words default-x="595.276" default-y="1627.09" justify="center" valign="top" font-size="24">qianlizhiwai</credit-words>
+    <credit-words default-x="595.276" default-y="1627.09" justify="center" valign="top" font-size="24">千里之外</credit-words>
     </credit>
   <credit page="1">
-    <credit-words default-x="1133.86" default-y="1527.09" justify="right" valign="bottom" font-size="12">zhoujielun</credit-words>
+    <credit-words default-x="1133.86" default-y="1527.09" justify="right" valign="bottom" font-size="12">周杰伦</credit-words>
     </credit>
   <part-list>
     <score-part id="P1">
