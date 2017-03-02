@@ -9,7 +9,6 @@ import i18n
 # TODO: First repeat and second repeat have different endings
 
 
-
 class XmlParser:
     # TODO : Implement Enum instead of dictionary keyword
     # class MetaData(Enum):
@@ -84,7 +83,7 @@ class XmlParser:
         beats = _attrib.find('time/beats').text
         beat_type = _attrib.find('time/beat-type').text
         # r_beat = "Time Signature :" + beats + " " + beat_type
-        self.metadata["beat"] = self._(beats) + " " + self._(beat_type)
+        self.metadata["beat"] = self._(beats) + " " + self._(beat_type) + " " + self._(" 拍")
 
     def generate_json(self, score_name):
         # - Read XML File - #
@@ -207,11 +206,11 @@ class XmlParser:
 
         comma = " , "
 
-        metaInfo = {'title': self.metadata["title"],
-                    'composer': self.metadata["composer"],
-                    'tempo': self.metadata["tempo"],
-                    'key': self.metadata["key"],
-                    'beat': self.metadata["beat"]
+        metaInfo = {self._('title','meta'): self._(self.metadata["title"],'title'),
+                    self._('composer','meta'): self._(self.metadata["composer"],'composer'),
+                    self._('tempo','meta'): self._(self.metadata["tempo"]),
+                    self._('key','meta'): self.metadata["key"],
+                    self._('beat','meta'): self.metadata["beat"]
                     }
 
         score_content = {}

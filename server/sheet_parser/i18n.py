@@ -13,7 +13,7 @@ class I18N(object):
                 '-5': 'D-flat major. Key signature: A-flat; B-flat; D-flat; E-flat; G-flat',
                 '-6': 'G-flat major. Key signature: A-flat; B-flat; C-flat; D-flat; E-flat; G-flat',
                 '-7': 'C-flat major. Key signature: A-flat; B-flat; C-flat; D-flat; E-flat; F-flat; G-flat',
-                '0': 'C major. Key signature: none',
+                '0': 'C major. Key signature: None',
                 '1': 'G major. Key signature: F-sharp',
                 '2': 'D major. Key signature: C-sharp; F-sharp',
                 '3': 'A major. Key signature: C-sharp; F-sharp; G-sharp',
@@ -34,9 +34,10 @@ class I18N(object):
                 'mp': 'half soft'
             },
             "others": {
-                "octave_shift": "the following set of notes need to be shifted up by one octave"
+                "octave_shift": "the following set of notes need to be shifted up by one octave",
+                " 拍": "",
+            },
 
-            }
         },
         "chinese": {
             "key": dict(zip(['-5', '-4', '-3', '-2', '-1', '0', '1', '2', '3', '4', '5'],
@@ -56,15 +57,32 @@ class I18N(object):
                 'mp': '中弱'
             },
 
+            "meta": {
+                'tempo': "拍子",
+                'composer': '作曲',
+                'title': '标题',
+                'key': "调号",
+                'beat': '节拍'
+            },
+
             "wedge":{
                 'crescendo': ' 渐强 ',
                 'diminuendo' : ' 渐弱 '
             },
 
             "accidental": {
-                "sharp": "升",
-                "natural": "还原",
-                "flat": "降"
+                "sharp": "升 ",
+                "natural": "还原 ",
+                "flat": "降 "
+            },
+
+
+            "title":{
+                "Für Elise": "致爱丽丝",
+            },
+
+            "composer":{
+                "Beethoven": "贝多芬",
             },
 
             "step": dict(zip(['C','D','E','F','G','A','B'], ['多', '来', '咪', '发', '缩', '拉', '西'])),
