@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from sheet_parser import xmlparser
