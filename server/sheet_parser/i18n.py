@@ -79,10 +79,12 @@ class I18N(object):
 
             "title":{
                 "Für Elise": "致爱丽丝",
+                "qianlizhiwai" : "千里之外"
             },
 
             "composer":{
                 "Beethoven": "贝多芬",
+                "zhoujielun": "周杰伦"
             },
 
             "step": dict(zip(['C','D','E','F','G','A','B'], ['多', '来', '咪', '发', '缩', '拉', '西'])),
