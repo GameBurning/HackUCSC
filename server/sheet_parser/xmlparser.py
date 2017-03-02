@@ -60,7 +60,10 @@ class XmlParser:
         _per_minute = _m[0].find('direction/direction-type/metronome/per-minute')
 
         if _per_minute is not None:
-            beat_unit = _per_minute.text + " " + beat_unit + " notes" + " per minute"
+            if self.trans_class.get_language() == 'english':
+                beat_unit = _per_minute.text + " " + beat_unit + " notes" + " per minute"
+            else:
+                beat_unit = "每分钟 " + _per_minute.text + " 拍"
 
         self.metadata["tempo"] = beat_unit
 
@@ -124,7 +127,7 @@ class XmlParser:
                             if note.find('type') is not None:
                                 _type = note.find('type').text
                             _staff = note.find('staff').text
-                            note_text = self._(_type, 'duration') + self._(" rest")
+                            note_text = self._(_type, 'duration') + self._("rest")
                             m_text[int(_staff)-1].append(note_text)
 
                     else:
@@ -135,15 +138,14 @@ class XmlParser:
                         _staff = note.find('staff').text
 
                         if note.find('accidental') is not None:
-                            _step = self._(note.find('accidental').text, "accidental") + _step
+                            _step = self._(note.find('accidental').text, "accidental") + self._(_step, "step")
 
                         if note.find('chord') is not None:
-
                             # if "chord" not in m_text[int(_staff) - 1][-1]:
                             #     m_text[int(_staff) - 1][-1] = "chord " + m_text[int(_staff) - 1][-1]
                             if note.find('notations/arpeggiate') is not None:
                                 if 'arpeggiated' not in m_text[int(_staff) - 1][-1]:
-                                    m_text[int(_staff) - 1][-1] = 'arpeggiated ' + m_text[int(_staff) - 1][-1]
+                                    m_text[int(_staff) - 1][-1] = self._('arpeggiated ') + m_text[int(_staff) - 1][-1]
                             note_text = " " + self._(_step,"step") + self._(_octave, "octave")
                             m_text[int(_staff) - 1][-1] += note_text
 
@@ -157,7 +159,7 @@ class XmlParser:
                                     note_text = self._("grace note ") + note_text
 
                             if note.find('tie') is not None:
-                                note_text = "tied note " + note_text
+                                note_text = self._("tied note ") + note_text
 
                             if note.find('notations') is not None:
                                 is_tuplet = False
@@ -174,17 +176,15 @@ class XmlParser:
                                 if ssset != set():
                                     if ssset == set(['start']):
                                         if is_tuplet:
-                                            note_text = "start tuplet " + note_text
+                                            note_text = self._("start tuplet ") + note_text
                                         else:
-                                            note_text = "start slur " + note_text
+                                            note_text = self._("start slur ") + note_text
                                     if ssset == set(['stop']):
                                         if is_tuplet:
-                                            note_text = note_text + " stop tuplet "
+                                            note_text = note_text + self._(" stop tuplet ")
                                         else:
-                                            note_text = note_text + " stop slur "
-
+                                            note_text = note_text + self._(" stop slur ")
                             m_text[int(_staff) - 1].append(note_text)
-
 
                 elif element.tag == "direction":
                     _staff = element.find('staff').text
@@ -196,11 +196,11 @@ class XmlParser:
                     elif element[0][0].tag == 'octave-shift':
                         m_text[int(_staff) - 1].append(self._('octave_shift', 'others'))
                     elif element[0][0].tag == 'wedge' and element[0][0].attrib['type']!="stop":
-                        m_text[int(_staff) - 1].append(element[0][0].attrib['type'])
+                        m_text[int(_staff) - 1].append(self._(element[0][0].attrib['type'], 'wedge'))
 
                 elif element.tag == "backup":
                     if first_time_backup_to_staff1 and m_text[0][0] == 'first musical line':
-                        m_text[0].append('second musical line')
+                        m_text[0].append(self._('second musical line'))
                         first_time_backup_to_staff1 = False
 
             whole_text.append(m_text)
