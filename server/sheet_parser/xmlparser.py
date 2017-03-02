@@ -248,4 +248,4 @@ class XmlParser:
 if __name__ == "__main__":
     #print(generateJson('Sweethearts'))
     parser = XmlParser('../test/testCases', 'chinese')
-    print(parser.generate_json('Fur_Elise'))
+    print(parser.generate_json('千里之外'))

@@ -121,7 +121,7 @@ class I18N(object):
     def get_language(self):
         return self.__language
 
-    def get_text(self, keyword, t="others"):
+    def get_text(self, keyword, t="other"):
         # if the keyword is not found, return itself
         if self.__language is None:
             print("language not set")
