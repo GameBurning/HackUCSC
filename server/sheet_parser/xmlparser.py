@@ -159,7 +159,7 @@ class XmlParser:
                                         self._(_octave, "octave")
                             else:
                                 note_text = self._(_type, "duration") + " " + self._(_octave, "octave") + \
-                                            + self._(_step, "step") + " "
+                                        self._(_step, "step") + " "
 
                             if note.find('dot') is not None:
                                 note_text = self._("dotted ") + note_text
