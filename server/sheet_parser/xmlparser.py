@@ -126,7 +126,7 @@ class XmlParser:
                             if note.find('type') is not None:
                                 _type = note.find('type').text
                             _staff = note.find('staff').text
-                            note_text = self._(_type, 'duration') + self._("rest")
+                            note_text = self._(_type, 'duration') + self._(" rest")
                             m_text[int(_staff)-1].append(note_text)
 
                     else:
@@ -145,12 +145,22 @@ class XmlParser:
                             if note.find('notations/arpeggiate') is not None:
                                 if 'arpeggiated' not in m_text[int(_staff) - 1][-1]:
                                     m_text[int(_staff) - 1][-1] = self._('arpeggiated ') + m_text[int(_staff) - 1][-1]
-                            note_text = " " + self._(_step,"step") + self._(_octave, "octave")
+
+                            if self.trans_class.get_language() == "english":
+                                note_text = " " + self._(_step,"step") + self._(_octave, "octave")
+                            else:
+                                note_text = " " + self._(_octave, "octave") + self._(_step, "step")
+
                             m_text[int(_staff) - 1][-1] += note_text
 
                         else:
-                            note_text = self._(_type, "duration") + " " + self._(_step, "step") + " " + \
+                            if self.trans_class.get_language() == "english":
+                                note_text = self._(_type, "duration") + " " + self._(_step, "step") + " " + \
                                         self._(_octave, "octave")
+                            else:
+                                note_text = self._(_type, "duration") + " " + self._(_octave, "octave") + \
+                                            + self._(_step, "step") + " "
+
                             if note.find('dot') is not None:
                                 note_text = self._("dotted ") + note_text
                             if note.find('grace') is not None:
@@ -183,6 +193,7 @@ class XmlParser:
                                             note_text = note_text + self._(" stop tuplet ")
                                         else:
                                             note_text = note_text + self._(" stop slur ")
+
                             m_text[int(_staff) - 1].append(note_text)
 
                 elif element.tag == "direction":

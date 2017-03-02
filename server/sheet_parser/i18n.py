@@ -95,7 +95,7 @@ class I18N(object):
                 "second musical line": "第二行乐句",
                 "not defined": "未定义",
                 "first musical line": "第一行 ",
-                "rest": " 休止符",
+                " rest": " 休止符",
                 "doted": "附点 ",
                 "grace note ": "装饰音 ",
                 "start slur ": " 开始连音 ",
