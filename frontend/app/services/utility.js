@@ -58,7 +58,7 @@ angular.module('myApp')
 
     self.get_score = function(score_id) {
         var deferred = $q.defer();
-        httpUtil.get(config.api.music_score + "/musicscores/" + score_id)
+        httpUtil.get(config.api.music_score + "/musicscores/?title=" + score_id)
         .then(function(response) {
             if (response !== null) {
                 deferred.resolve(response);
