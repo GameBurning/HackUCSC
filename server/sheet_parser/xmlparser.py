@@ -217,12 +217,12 @@ class XmlParser:
 
         comma = " , "
 
-        metaInfo = {self._('title','meta'): self._(self.metadata["title"],'title'),
-                    self._('composer','meta'): self._(self.metadata["composer"],'composer'),
-                    self._('tempo','meta'): self._(self.metadata["tempo"]),
-                    self._('key','meta'): self.metadata["key"],
-                    self._('beat','meta'): self.metadata["beat"]
-                    }
+        metaInfo = [{self._('title','meta'): self._(self.metadata["title"],'title')},
+                    {self._('composer','meta'): self._(self.metadata["composer"],'composer')},
+                    {self._('tempo','meta'): self._(self.metadata["tempo"])},
+                    {self._('key','meta'): self.metadata["key"]},
+                    {self._('beat','meta'): self.metadata["beat"]}
+                    ]
 
         score_content = {}
 
