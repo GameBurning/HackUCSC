@@ -43,9 +43,10 @@ function($scope, httpUtil, $location, fakeData, $q, utility, display) {
             .then(function(response) {
                 $scope.score_meta = response.metaInfo;
                 let meta_info_text = [];
-                meta_info_text.push(score_id);
-                for(var prop in $scope.score_meta) {
-                    meta_info_text.push(prop + ". " +$scope.score_meta[prop]);
+                for(var i = 0; i < $scope.score_meta.length; i++) {
+                    for(var prop in $scope.score_meta[i]) {
+                        meta_info_text.push(prop + ". " +$scope.score_meta[i][prop]);
+                    }
                 }
                 playSentencesList(meta_info_text);
 

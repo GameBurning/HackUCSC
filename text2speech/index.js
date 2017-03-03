@@ -31,7 +31,7 @@ let filePath = "./voiceStore";
 var locked = false;
 
 function english_audio_fetch(sentence, hash_key, res) {
-    console.log(" in english_audio_fetch() ");
+    // console.log(" in english_audio_fetch() ");
     var query = {
         text: sentence,
         voice: 'en-US_AllisonVoice',
@@ -45,10 +45,10 @@ function english_audio_fetch(sentence, hash_key, res) {
 
     stream.on('finish', function () {
         locked = false;
-        console.log("unlocked");
+        // console.log("unlocked");
         res.send('/voice/' + next_id + '.wav');
         hash_table[hash_key] = next_id;
-        console.log(" got synthesize ");
+        // console.log(" got synthesize ");
         next_id = randomstring.generate(36);
     });
 
@@ -91,7 +91,7 @@ function chinese_audio_fetch(sentence, hash_key, res) {
 
     var stream = request(options, function(error, response, body) {
         if (error) {
-            console.log("NET WORK CONNECTION ERR");
+            // console.log("NET WORK CONNECTION ERR");
         } else {
             try {
                 body = JSON.parse(body);
@@ -103,7 +103,7 @@ function chinese_audio_fetch(sentence, hash_key, res) {
                     })
                 }
                 else {
-                    console.log("UNKNOW ERROR: " + body);
+                    // console.log("UNKNOW ERROR: " + body);
                 }
             } catch(e) {
                 // It is not valid JSON, then it is correct response
@@ -114,11 +114,11 @@ function chinese_audio_fetch(sentence, hash_key, res) {
 
     stream.on('finish', function () {
         locked = false;
-        console.log("unlocked");
+        // console.log("unlocked");
 
-        console.log("Got MP3 FILE");
+        // console.log("Got MP3 FILE");
         hash_table[hash_key] = next_id;
-        console.log(hash_table);
+        // console.log(hash_table);
 
         res.send('/voice/' + next_id + '.mp3');
 
@@ -138,7 +138,7 @@ app.get('/speak', function(req, res) {
         language = "zh";
     }
 
-    console.log(req.query);
+    // console.log(req.query);
 
     if (!sentence || sentence.length > 1024) {
         res.send('');
@@ -146,19 +146,21 @@ app.get('/speak', function(req, res) {
     }
 
     var hash_key = language + " " + sentence;
-    console.log(sentence);
+    // console.log(sentence);
 
     if (_.has(hash_table, hash_key)) {
         if(hash_key.indexOf("zh") != -1) res.send('/voice/' + hash_table[hash_key] + '.mp3');
         if(hash_key.indexOf("en") != -1) res.send('/voice/' + hash_table[hash_key] + '.wav');
         return;
     } else {
-        console.log("using API - hash_key:" + hash_key);
+        // console.log("using API - hash_key:" + hash_key);
 
         if (language == "en") {
             //English
             let interval = setInterval(function() {
-                if(locked) console.log("waiting");
+                if(locked) {
+                    // console.log("waiting");
+                }
                 else {
                     clearInterval(interval);
                     locked = true;
@@ -169,11 +171,13 @@ app.get('/speak', function(req, res) {
         } else if (language == "zh") {
             //Chinese
             while(locked) {
-                console.log("waiting");
+                // console.log("waiting");
             }
 
             let interval = setInterval(function() {
-                if(locked) console.log("wait");
+                if(locked) {
+                    // console.log("wait");
+                }
                 else {
                     clearInterval(interval);
                     locked = true;
