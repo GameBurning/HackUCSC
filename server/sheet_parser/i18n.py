@@ -78,7 +78,7 @@ class I18N(object):
 
 
             "title":{
-                "Für Elise": "致爱丽丝",
+                "For Elise": "致爱丽丝",
                 "qianlizhiwai" : "千里之外"
             },
 
