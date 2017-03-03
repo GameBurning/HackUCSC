@@ -12,12 +12,13 @@ angular.module('myApp.play', ['ngRoute'])
 .controller('PlayCtrl', ['$scope', 'httpUtil','$location','fakeData','$q', 'utility', 'display',
 function($scope, httpUtil, $location, fakeData, $q, utility, display) {
     console.log($location.search());
+    let lang = utility.language;
     $scope.show = display.show;
     $scope.score_meta = null;
     $scope.score_content = null;
     $scope.measures = [];
     $scope.display_list = [];
-    $scope.blockSize = 4;
+    $scope.blockSize = 1;
     $scope.offset = 0;
     $scope.current_measure = 1;
     $scope.size = 0;
@@ -78,7 +79,12 @@ function($scope, httpUtil, $location, fakeData, $q, utility, display) {
 
     $scope.start = function() {
         for(var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
-            $scope.display_list.push("Measure No."+(i+$scope.offset+1));
+            if(lang.indexOf("zh") != -1) {
+                $scope.display_list.push("第 "+(i+$scope.offset+1)+" 小节");
+            }
+            else if(lang.indexOf("en") != -1) {
+                $scope.display_list.push("Measure No."+(i+$scope.offset+1));
+            }
         }
     }
 
@@ -142,7 +148,12 @@ function($scope, httpUtil, $location, fakeData, $q, utility, display) {
         }
         $scope.display_list = [];
         for(var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
-            $scope.display_list.push("Measure No."+(i+$scope.offset+1));
+            if(lang.indexOf("zh") != -1) {
+                $scope.display_list.push("第 "+(i+$scope.offset+1)+" 小节");
+            }
+            else if(lang.indexOf("en") != -1) {
+                $scope.display_list.push("Measure No."+(i+$scope.offset+1));
+            }
         }
         $scope.$apply();
     }
@@ -156,7 +167,12 @@ function($scope, httpUtil, $location, fakeData, $q, utility, display) {
         }
         $scope.display_list = [];
         for(var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
-            $scope.display_list.push("Measure No."+(i+$scope.offset+1));
+            if(lang.indexOf("zh") != -1) {
+                $scope.display_list.push("第 "+(i+$scope.offset+1)+" 小节");
+            }
+            else if(lang.indexOf("en") != -1) {
+                $scope.display_list.push("Measure No."+(i+$scope.offset+1));
+            }
         }
         $scope.$apply();
     }
@@ -176,6 +192,7 @@ function($scope, httpUtil, $location, fakeData, $q, utility, display) {
     // input : urls of voices
     let play = function(str_or_list_to_play) {
         let list = [];
+        debugger
         if(typeof str_or_list_to_play == "string") {
             if(str_or_list_to_play == "") return;
             list = [str_or_list_to_play];
@@ -217,9 +234,12 @@ function($scope, httpUtil, $location, fakeData, $q, utility, display) {
         utility.get_voices_by_list(list)
             .then(function(urls){
                 utility.stop_all_sounds();
+                console.log(urls);
+                debugger
                 play(urls);
             }, function(error){
-
+                debugger
+                console.log("getting voice list fail");
             });
     }
 
@@ -272,13 +292,18 @@ function($scope, httpUtil, $location, fakeData, $q, utility, display) {
       console.log('space/enter key pressed')
       let sentences = [];
       for(var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
-          sentences.push("measure " + (i+$scope.offset+1));
+          if(lang.indexOf("zh") != -1) {
+              sentences.push("第 "+(i+$scope.offset+1)+" 小节");
+          }
+          else if(lang.indexOf("en") != -1) {
+              sentences.push("measure " + (i+$scope.offset+1));
+          }
           let cutted = $scope.measures[i+$scope.offset][$scope.hand].split(',');
           for(var j = 0 ; j < cutted.length; j++ ) {
                 sentences.push(cutted[j]);
           }
       }
-      console.log(sentences);
+      debugger
       playSentencesList(sentences);
     });
 

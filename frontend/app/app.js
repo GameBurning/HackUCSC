@@ -18,7 +18,6 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
  function($rootScope, $location, navigation, utility, config) {
     var lang = window.navigator.userLanguage || window.navigator.language;
     utility.language = lang;
-    debugger
 
     if(lang.indexOf("zh") != -1) {
         config.api.music_score = config.api.music_score_chinese;

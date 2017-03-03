@@ -15,7 +15,7 @@ angular.module('myApp')
 
     self.get_voice_by_text = function(text) {
         var deferred = $q.defer();
-        httpUtil.get( config.api.text_to_speech + "/speak?"+"language='"+self.language+"'&sentence='"+ text +"'")
+        httpUtil.get( config.api.text_to_speech + "/speak?"+"language="+self.language+"&sentence="+ text)
             .then(function(response) {
               if (response !== null) {
                 deferred.resolve(config.api.text_to_speech + response);
@@ -27,6 +27,7 @@ angular.module('myApp')
                   })
               }
             }, function(error) {
+                alert("error");
                 deferred.reject({
                   err: error,
                   status: 0
@@ -39,10 +40,11 @@ angular.module('myApp')
         let promises = [];
         var deferred = $q.defer();
         for(var i = 0; i < list.length; i++) {
-            promises.push(httpUtil.get(config.api.text_to_speech + "/speak?"+"language='"+self.language+"&sentence='"+list[i]+"'"));
+            promises.push(httpUtil.get(config.api.text_to_speech + "/speak?"+"language="+self.language+"&sentence="+list[i]));
         }
         $q.all(promises)
             .then(function(values) {
+                
                   for(var i = 0; i < values.length; i++) {
                       values[i] = config.api.text_to_speech + values[i];
                   }
