@@ -28,7 +28,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     else {
         config.api.music_score = config.api.music_score_english;
     }
-    debugger
+
     key('ctrl+1', function() {
       console.log('ctrl + 1 key pressed');
       $rootScope.$apply(function() {
