@@ -28,8 +28,10 @@ let next_id = randomstring.generate(36);
 let hash_table = {};
 let filePath = "./voiceStore";
 
-function english_audio_fetch(sentence, hash_key, res) {
+var locked = false;
 
+function english_audio_fetch(sentence, hash_key, res) {
+    // console.log(" in english_audio_fetch() ");
     var query = {
         text: sentence,
         voice: 'en-US_AllisonVoice',
@@ -37,14 +39,19 @@ function english_audio_fetch(sentence, hash_key, res) {
     };
 
     // Pipe the synthesized text to a file.
-    ibm_text_to_speech.synthesize(query, function() {
+    let stream = ibm_text_to_speech.synthesize(query, function() {
+
+    }).pipe(fs.createWriteStream(filePath + '/' + next_id + '.wav'));
+
+    stream.on('finish', function () {
+        locked = false;
+        // console.log("unlocked");
         res.send('/voice/' + next_id + '.wav');
         hash_table[hash_key] = next_id;
-
-        console.log(hash_table);
-
+        // console.log(" got synthesize ");
         next_id = randomstring.generate(36);
-    }).pipe(fs.createWriteStream(filePath + '/' + next_id + '.wav'));
+    });
+
     return;
 }
 
@@ -59,9 +66,9 @@ function get_baidu_token(cb) {
     , function(error, response, body){
         var body = JSON.parse(body);
         if(!body.hasOwnProperty('error')) {
-            console.log("update Baidu token");
             bd_token = body.access_token;
             if(cb) cb();
+            console.log("Baidu token Ready");
         }
         else console.log("CANNOT GET TOKEN");
     })
@@ -82,9 +89,9 @@ function chinese_audio_fetch(sentence, hash_key, res) {
         }
     };
 
-    request(options, function(error, response, body) {
+    var stream = request(options, function(error, response, body) {
         if (error) {
-            console.log("NET WORK CONNECTION ERR");
+            // console.log("NET WORK CONNECTION ERR");
         } else {
             try {
                 body = JSON.parse(body);
@@ -96,22 +103,32 @@ function chinese_audio_fetch(sentence, hash_key, res) {
                     })
                 }
                 else {
-                    console.log("UNKNOW ERROR: " + body);
+                    // console.log("UNKNOW ERROR: " + body);
                 }
             } catch(e) {
-                console.log("Got MP3 FILE");
-                res.send('/voice/' + next_id + '.mp3');
-                hash_table[hash_key] = next_id;
-                console.log(hash_table);
-                next_id = randomstring.generate(36);
+                // It is not valid JSON, then it is correct response
             }
         }
     })
     .pipe(fs.createWriteStream(filePath + '/' + next_id + '.mp3'));
+
+    stream.on('finish', function () {
+        locked = false;
+        // console.log("unlocked");
+
+        // console.log("Got MP3 FILE");
+        hash_table[hash_key] = next_id;
+        // console.log(hash_table);
+
+        res.send('/voice/' + next_id + '.mp3');
+
+        next_id = randomstring.generate(36);
+    });
+
 }
 
 app.get('/speak', function(req, res) {
-    var sentence = req.query.sentence;
+    var sentence = req.query.sentence.trim();
     var language = req.query.language;
 
     // normalize language name
@@ -121,32 +138,53 @@ app.get('/speak', function(req, res) {
         language = "zh";
     }
 
-    console.log(req.query);
+    // console.log(req.query);
 
     if (!sentence || sentence.length > 1024) {
         res.send('');
         return;
     }
 
-    var hash_key = language + "_" + sentence;
+    var hash_key = language + " " + sentence;
+    // console.log(sentence);
 
     if (_.has(hash_table, hash_key)) {
-        console.log("using hash map");
-        console.log(hash_table);
-        if(hash_key.indexOf("zh_") != -1) res.send('/voice/' + hash_table[hash_key] + '.mp3');
-        if(hash_key.indexOf("en_") != -1) res.send('/voice/' + hash_table[hash_key] + '.wav');
+        if(hash_key.indexOf("zh") != -1) res.send('/voice/' + hash_table[hash_key] + '.mp3');
+        if(hash_key.indexOf("en") != -1) res.send('/voice/' + hash_table[hash_key] + '.wav');
         return;
     } else {
-        console.log("using API");
-        console.log("hash_key:" + hash_key);
+        // console.log("using API - hash_key:" + hash_key);
 
         if (language == "en") {
             //English
-            english_audio_fetch(sentence, hash_key, res);
+            let interval = setInterval(function() {
+                if(locked) {
+                    // console.log("waiting");
+                }
+                else {
+                    clearInterval(interval);
+                    locked = true;
+                    english_audio_fetch(sentence, hash_key, res);
+                }
+            }, 100);
+
         } else if (language == "zh") {
             //Chinese
-            console.log("Chinese");
-            chinese_audio_fetch(sentence, hash_key, res);
+            while(locked) {
+                // console.log("waiting");
+            }
+
+            let interval = setInterval(function() {
+                if(locked) {
+                    // console.log("wait");
+                }
+                else {
+                    clearInterval(interval);
+                    locked = true;
+                    chinese_audio_fetch(sentence, hash_key, res);
+                }
+            }, 100);
+
         }
     }
 
