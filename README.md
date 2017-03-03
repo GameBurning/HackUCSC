@@ -6,7 +6,7 @@ Fur Elise is a project aimed at translating digital music sheets to speech for t
 
 Environment: node - v6.4.0, npm  - v3.10.3
 
-Get Node Version Manager: 
+Get Node Version Manager:
 
 ```sh
 $ curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh -o install_nvm.sh
@@ -33,7 +33,7 @@ $ node index.js
 
 // Open a new terminal
 $ cd path-to-fur-elise/frontend
-$ npm start 
+$ npm start
 
 // Web app will run at http://localhost:8000
 ```
@@ -44,7 +44,7 @@ $ [sudo] npm install forever -g
 
 // To start & stop frontend:
 
-$ cd path-to-fur-elise/frontend/app
+$ cd path-to-fur-elise/frontend
 
 $ forever start -c "npm start" ./
 
