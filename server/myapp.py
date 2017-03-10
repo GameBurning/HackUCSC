@@ -18,7 +18,6 @@ hist_list = []
 parser_zh = xmlparser.XmlParser(dir_name, "Chinese")
 parser_en = xmlparser.XmlParser(dir_name)
 
-
 @app.route('/api/language/english/musicscores/favorite/')
 def api_fav_en():
     if 'name' in request.args:
