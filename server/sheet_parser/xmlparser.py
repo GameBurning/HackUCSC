@@ -87,7 +87,10 @@ class XmlParser:
 
     def generate_json(self, score_name):
         # - Read XML File - #
-        tree = ET.parse('{}/{}.xml'.format(self.path, score_name))
+        if score_name[-4:] == ".xml":
+            tree = ET.parse('{}/{}'.format(self.path, score_name))
+        else:
+            tree = ET.parse('{}/{}.xml'.format(self.path, score_name))
         root = tree.getroot()
 
         # Read Pages and measures
