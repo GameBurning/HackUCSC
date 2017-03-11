@@ -35,9 +35,9 @@ class XmlParser:
         self.metadata["title"] = ""
 
         if _work is not None:
-            self.metadata["title"] += self._(_work.find('work-title').text)
+            self.metadata["title"] += _work.find('work-title').text
         else:
-            self.metadata["title"] += self._(_root.find('movement-title').text)
+            self.metadata["title"] += _root.find('movement-title').text
 
         identification = _root.find('identification')
 
@@ -79,7 +79,7 @@ class XmlParser:
         # Read Division
         self.metadata["divisions"] = _attrib.find('divisions').text
         key = _attrib.find('key/fifths').text
-        self.metadata["key"] = self._(key, "key")
+        self.metadata["key"] = key
         beats = _attrib.find('time/beats').text
         beat_type = _attrib.find('time/beat-type').text
         # r_beat = "Time Signature :" + beats + " " + beat_type
@@ -220,11 +220,11 @@ class XmlParser:
 
         comma = " , "
 
-        metaInfo = [{self._('title','meta'): self._(self.metadata["title"],'title')},
-                    {self._('composer','meta'): self._(self.metadata["composer"],'composer')},
-                    {self._('tempo','meta'): self._(self.metadata["tempo"])},
-                    {self._('key','meta'): self.metadata["key"]},
-                    {self._('beat','meta'): self.metadata["beat"]}
+        metaInfo = [{self._('title', 'meta'): self._(self.metadata["title"], 'title')},
+                    {self._('composer', 'meta'): self._(self.metadata["composer"], 'composer')},
+                    {self._('tempo', 'meta'): self._(self.metadata["tempo"])},
+                    {self._('key', 'meta'): self._(self.metadata["key"], 'key')},
+                    {self._('beat', 'meta'): self.metadata["beat"]}
                     ]
 
         score_content = {}
