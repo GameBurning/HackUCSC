@@ -14,6 +14,7 @@ sheet_dir_path = '../static/sheet_music'
 
 def run():
     client = MongoClient()
+    client.drop_database('beta')
     db = client.beta
     xml_parser = XmlParser(sheet_dir_path, "chinese")
     mp3_files = os.listdir(sheet_dir_path)
