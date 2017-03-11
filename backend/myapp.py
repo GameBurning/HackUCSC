@@ -4,6 +4,7 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from sheet_parser import xmlparser
+from pymongo import MongoClient
 from os import listdir
 import json
 app = Flask(__name__)
@@ -17,6 +18,9 @@ hist_list = []
 
 parser_zh = xmlparser.XmlParser(dir_name, "Chinese")
 parser_en = xmlparser.XmlParser(dir_name)
+
+client = MongoClient()
+db = client.beta
 
 @app.route('/api/language/english/musicscores/favorite/')
 def api_fav_en():

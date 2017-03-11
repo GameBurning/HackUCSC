@@ -24,8 +24,10 @@ def run():
             for measure_num in score['scoreContent']:
                 #print(measure_num)
                 print(score['scoreContent'][measure_num])
-                left_mp3 = save_to_mp3(score['scoreContent'][measure_num]['Left'])
-                right_mp3 = save_to_mp3(score['scoreContent'][measure_num]['Right'])
+                #left_mp3 = save_to_mp3(score['scoreContent'][measure_num]['Left'])
+                #right_mp3 = save_to_mp3(score['scoreContent'][measure_num]['Right'])
+                left_mp3 = hashlib.md5(score['scoreContent'][measure_num]['Left'].encode('utf-16be')).hexdigest()
+                right_mp3 = hashlib.md5(score['scoreContent'][measure_num]['Right'].encode('utf-16be')).hexdigest()
                 score['scoreContent'][measure_num]['Right'] = {
                     "text" : score['scoreContent'][measure_num]['Right'],
                     "mp3" : right_mp3

@@ -242,7 +242,10 @@ class XmlParser:
 
         scoreInfo = {
             'metaInfo': metaInfo,
-            'scoreContent': score_content
+            'scoreContent': score_content,
+            'title': metaInfo[0].values()[0],
+            'composer': metaInfo[1].values()[0],
+            'key': metaInfo[3].values()[0]
         }
 
         #return json.dumps(scoreInfo, indent=4, separators=(',', ': '))
