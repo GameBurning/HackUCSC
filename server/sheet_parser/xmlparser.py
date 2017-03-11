@@ -85,7 +85,7 @@ class XmlParser:
         # r_beat = "Time Signature :" + beats + " " + beat_type
         self.metadata["beat"] = self._(beats) + " " + self._(beat_type) + " " + self._(" 拍")
 
-    def generate_json(self, score_name):
+    def generate_score(self, score_name):
         # - Read XML File - #
         if score_name[-4:] == ".xml":
             tree = ET.parse('{}/{}'.format(self.path, score_name))
@@ -241,14 +241,15 @@ class XmlParser:
             score_content[num]['Left'] = comma.join(m[1])
 
         scoreInfo = {
-            'metaInfo':metaInfo,
-            'scoreContent':score_content
+            'metaInfo': metaInfo,
+            'scoreContent': score_content
         }
 
-        return json.dumps(scoreInfo, indent=4, separators=(',', ': '))
+        #return json.dumps(scoreInfo, indent=4, separators=(',', ': '))
+        return scoreInfo
 
 
 if __name__ == "__main__":
     #print(generateJson('Sweethearts'))
     parser = XmlParser('../test/testCases', 'chinese')
-    print(parser.generate_json('千里之外'))
+    print(parser.generate_score('千里之外'))
