@@ -1,5 +1,5 @@
 .idea
-.pyc
+*.pyc
 .DS_Store
 **/.ropeproject
 */.DS_Store
