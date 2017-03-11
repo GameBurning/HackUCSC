@@ -11,15 +11,17 @@ import time
 import hashlib
 import os
 import xmlparser
+from server.definition import ROOT_DIR
 
 mp3_dir_path = os.path.expanduser('~/mp3files/')
-
+sheet_dir_path = os.path.join(ROOT_DIR, 'static/sheet_music')
 
 def run():
-    xml_parser = xmlparser.XmlParser(mp3_dir_path, "chinese")
-    mp3_files = os.listdir(mp3_dir_path)
+    xml_parser = xmlparser.XmlParser(sheet_dir_path, "chinese")
+    mp3_files = os.listdir(sheet_dir_path)
     for mp3_file in mp3_files:
-        print(xml_parser.generate_json(mp3_file))
+        if mp3_file[-4:] == ".xml":
+            print(xml_parser.generate_json(mp3_file))
 
 
 def save_to_mp3(text, cuid='3c:15:c2:d2:0a:02'):

@@ -29,7 +29,7 @@ class XmlParser:
         self.language = language
         self.trans_class.set_language(self.language)
 
-    def read_title_and_composer(self, _root):
+    def __read_title_and_composer(self, _root):
         # Read title
         _work = _root.find('work')
         self.metadata["title"] = ""
@@ -50,7 +50,7 @@ class XmlParser:
         else:
             self.metadata["composer"] = ""
 
-    def read_tempo(self, _m):
+    def __read_tempo(self, _m):
         # - Read Tempo - #
         _beat_unit = _m[0].find('direction/direction-type/metronome/beat-unit')
         beat_unit = self._("not defined")
@@ -66,7 +66,7 @@ class XmlParser:
 
         self.metadata["tempo"] = beat_unit
 
-    def read_attributes(self, _m):
+    def __read_attributes(self, _m):
         # Read Attributes
         _attrib = _m[0].find('attributes')
         _staff_layout = _attrib.find('staves')
@@ -102,9 +102,9 @@ class XmlParser:
             for measure in page.findall('measure'):
                 m.append(measure)
 
-        self.read_title_and_composer(root)
-        self.read_tempo(m)
-        self.read_attributes(m)
+        self.__read_title_and_composer(root)
+        self.__read_tempo(m)
+        self.__read_attributes(m)
 
         whole_text = []  # Division texts list
 
