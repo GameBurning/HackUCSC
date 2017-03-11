@@ -177,7 +177,7 @@ class XmlParser:
                                 is_tuplet = False
                                 ssset = set()
                                 if note.find('notations/articulations/staccato') is not None:
-                                    note_text = "staccato " + note_text
+                                    note_text = self._("staccato ") + note_text
 
                                 for slur in note.findall('notations/slur'):
                                     ssset.add(slur.attrib['type'])
