@@ -222,7 +222,7 @@ class XmlParser:
 
         metaInfo = [{self._('title', 'meta'): self._(self.metadata["title"], 'title')},
                     {self._('composer', 'meta'): self._(self.metadata["composer"], 'composer')},
-                    {self._('tempo', 'meta'): self._(self.metadata["tempo"])},
+                    {self._('tempo', 'meta'): self.metadata["tempo"]},
                     {self._('key', 'meta'): self._(self.metadata["key"], 'key')},
                     {self._('beat', 'meta'): self.metadata["beat"]}
                     ]
@@ -243,9 +243,9 @@ class XmlParser:
         scoreInfo = {
             'metaInfo': metaInfo,
             'scoreContent': score_content,
-            'title': list(metaInfo[0].values())[0],
-            'composer': list(metaInfo[1].values())[0],
-            'key': list(metaInfo[3].values())[0]
+            'title': self.metadata["title"],
+            'composer': self.metadata["composer"],
+            'key': self.metadata['key']
         }
 
         #return json.dumps(scoreInfo, indent=4, separators=(',', ': '))
