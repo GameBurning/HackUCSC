@@ -232,13 +232,13 @@ class XmlParser:
         num = 0
         for m in whole_text:
             num += 1
-            score_content[num] = {}
-            score_content[num]['Right'] = comma.join(m[0])
+            score_content[str(num)] = {}
+            score_content[str(num)]['Right'] = comma.join(m[0])
 
         num = 0
         for m in whole_text:
             num += 1
-            score_content[num]['Left'] = comma.join(m[1])
+            score_content[str(num)]['Left'] = comma.join(m[1])
 
         scoreInfo = {
             'metaInfo': metaInfo,
