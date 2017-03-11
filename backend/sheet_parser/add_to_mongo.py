@@ -4,16 +4,18 @@ import urllib
 import json
 import urllib.parse
 import hashlib
+from pymongo import MongoClient
 import os
-import xmlparser
-from server.definition import ROOT_DIR
+from xmlparser import XmlParser
 
 mp3_dir_path = os.path.expanduser('~/mp3files/')
-sheet_dir_path = os.path.join(ROOT_DIR, 'static/sheet_music')
+sheet_dir_path = '../static/sheet_music'
 
 
 def run():
-    xml_parser = xmlparser.XmlParser(sheet_dir_path, "chinese")
+    client = MongoClient()
+    db = client.beta
+    xml_parser = XmlParser(sheet_dir_path, "chinese")
     mp3_files = os.listdir(sheet_dir_path)
     for mp3_file in mp3_files:
         if mp3_file[-4:] == ".xml":
@@ -31,11 +33,10 @@ def run():
                     "text": score['scoreContent'][measure_num]['Left'],
                     "mp3": left_mp3
                 }
-                print(score)
                 #score['scoreContent']
                 # for hand in measure:
                 #     print(hand)
-            print(score)
+            result = db.score.insert_one(score)
 
 
 def save_to_mp3(text, cuid='3c:15:c2:d2:0a:02'):
