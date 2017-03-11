@@ -12,7 +12,7 @@ import hashlib
 import os
 import xmlparser
 
-mp3_dir_path = os.path.expanduser('~/mp3files/')
+mp3_dir_path = os.path.expanduser('~/mp3files')
 
 
 def run():
