@@ -30,11 +30,11 @@ def run():
                 right_mp3 = hashlib.md5(score['scoreContent'][measure_num]['Right'].encode('utf-16be')).hexdigest()
                 score['scoreContent'][measure_num]['Right'] = {
                     "text" : score['scoreContent'][measure_num]['Right'],
-                    "mp3" : right_mp3
+                    "mp3" : right_mp3 + '.mp3'
                 }
                 score['scoreContent'][measure_num]['Left'] = {
                     "text": score['scoreContent'][measure_num]['Left'],
-                    "mp3": left_mp3
+                    "mp3": left_mp3 + '.mp3'
                 }
                 #score['scoreContent']
                 # for hand in measure:
