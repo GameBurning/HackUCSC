@@ -21,6 +21,7 @@ parser_en = xmlparser.XmlParser(dir_name)
 
 client = MongoClient()
 db = client.beta
+scores = db.score
 
 @app.route('/api/language/english/musicscores/favorite/')
 def api_fav_en():
@@ -55,6 +56,7 @@ def api_hist_zh():
 @app.route('/api/language/chinese/musicscores/')
 def api_search_zh():
     if 'keyword' in request.args:
+        request.args['keyword']
         rList = []
         for m in scoreNames:
             if isinstance(request.args['keyword'], str) and isinstance(m.lower(), str):
@@ -95,12 +97,13 @@ def api_search_en():
                 rList.append(newDict)
         return json.dumps(rList)
     if 'title' in request.args:
-        if request.args['title'] not in hist_list:
-            hist_list.append(request.args['title'])
-        else:
-            del (hist_list[hist_list.index(request.args['title'])])
-            hist_list.append(request.args['title'])
-        return parser_en.generate_json(request.args['title'])
+        # if request.args['title'] not in hist_list:
+        #     hist_list.append(request.args['title'])
+        # else:
+        #     del (hist_list[hist_list.index(request.args['title'])])
+        #     hist_list.append(request.args['title'])
+        # return parser_en.generate_json(request.args['title'])
+        return scores.find_one({"title": request.args['title']})
     else:
         return json.dumps(scoreNames)
 
