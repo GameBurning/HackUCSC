@@ -16,6 +16,7 @@ $ nvm install 6.4.0
 $ nvm use 6.4.0
 $ node -v   //output v6.4.0
 $ npm -v   //output v3.10.3
+$ npm install bower -g
 
 $ cd path-to-fur-elise/frontend
 $ npm install
