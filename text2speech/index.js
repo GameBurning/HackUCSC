@@ -138,7 +138,7 @@ app.get('/speak', function(req, res) {
         language = "zh";
     }
 
-    // console.log(req.query);
+    console.log(req.query);
 
     if (!sentence || sentence.length > 1024) {
         res.send('');

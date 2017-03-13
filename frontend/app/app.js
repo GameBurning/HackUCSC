@@ -14,20 +14,15 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
     $routeProvider.otherwise({redirectTo: '/search'});
 }])
 
-.run( ['$rootScope','$location','navigation', 'utility', 'config',
- function($rootScope, $location, navigation, utility, config) {
-    var lang = window.navigator.userLanguage || window.navigator.language;
-    utility.language = lang;
+.run( ['$rootScope','$location','navigation', 'utility', 'config', '$http',
+ function($rootScope, $location, navigation, utility, config, $http) {
 
-    if(lang.indexOf("zh") != -1) {
-        config.api.music_score = config.api.music_score_chinese;
-    }
-    else if(lang.indexOf("en") != -1) {
-        config.api.music_score = config.api.music_score_english;
-    }
-    else {
-        config.api.music_score = config.api.music_score_english;
-    }
+    $http.get('config.json').success(function(configProfile) {
+        var lang = configProfile.language; // window.navigator.userLanguage || window.navigator.language;
+        utility.language = lang;
+        config.api.music_score = configProfile.api.music_score[lang] || config.api.music_score;
+        config.api.fetch_mp3 = configProfile.api.fetch_mp3 || config.api.fetch_mp3;
+    });
 
     key('ctrl+1', function() {
       console.log('ctrl + 1 key pressed');

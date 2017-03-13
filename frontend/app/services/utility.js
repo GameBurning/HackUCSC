@@ -11,7 +11,7 @@ angular.module('myApp')
         }
     }
 
-    self.language = "en-US";
+    self.language = "english";
 
     self.get_voice_by_text = function(text) {
         var deferred = $q.defer();
@@ -27,7 +27,6 @@ angular.module('myApp')
                   })
               }
             }, function(error) {
-                alert("error");
                 deferred.reject({
                   err: error,
                   status: 0
@@ -44,7 +43,7 @@ angular.module('myApp')
         }
         $q.all(promises)
             .then(function(values) {
-                
+
                   for(var i = 0; i < values.length; i++) {
                       values[i] = config.api.text_to_speech + values[i];
                   }
