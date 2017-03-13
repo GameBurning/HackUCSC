@@ -39,7 +39,7 @@ $ node index.js
 
 // Open a new terminal
 $ cd path-to-fur-elise/frontend
-$ npm run furelise-english or npm run furelise-chinese
+$ npm run english or npm run chinese
 
 // Web app will run at http://localhost:8000
 ```
@@ -53,9 +53,9 @@ $ [sudo] npm install forever -g
 
 $ cd path-to-fur-elise/frontend
 
-$ forever start -c "npm run furelise-english" ./
+$ forever start -c "npm run english" ./
 
-$ forever stop -c "npm run furelise-english" ./
+$ forever stop -c "npm run english" ./
 
 // To start & stop text2speech:
 
