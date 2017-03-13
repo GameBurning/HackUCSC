@@ -1,6 +1,9 @@
 .idea
+*.pyc
 .DS_Store
+**/.ropeproject
 */.DS_Store
+**/__pycache__
 frontend/app/bower_components
 text2speech/node_modules
 **/nohup.out
