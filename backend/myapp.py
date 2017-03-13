@@ -7,6 +7,7 @@ from sheet_parser import xmlparser
 from pymongo import MongoClient
 from os import listdir
 import json
+from bson import ObjectId
 app = Flask(__name__)
 CORS(app)
 
@@ -21,6 +22,14 @@ parser_en = xmlparser.XmlParser(dir_name)
 
 client = MongoClient()
 db = client.beta
+scores = db.score
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
+
 
 @app.route('/api/language/english/musicscores/favorite/')
 def api_fav_en():
@@ -55,6 +64,7 @@ def api_hist_zh():
 @app.route('/api/language/chinese/musicscores/')
 def api_search_zh():
     if 'keyword' in request.args:
+        request.args['keyword']
         rList = []
         for m in scoreNames:
             if isinstance(request.args['keyword'], str) and isinstance(m.lower(), str):
@@ -72,12 +82,16 @@ def api_search_zh():
 
         return json.dumps(rList)
     if 'title' in request.args:
-        if request.args['title'] not in hist_list:
-            hist_list.append(request.args['title'])
-        else:
-            del (hist_list[hist_list.index(request.args['title'])])
-            hist_list.append(request.args['title'])
-        return parser_zh.generate_json(request.args['title'])
+        #if request.args['title'] not in hist_list:
+        #    hist_list.append(request.args['title'])
+        #else:
+        #    del (hist_list[hist_list.index(request.args['title'])])
+        #    hist_list.append(request.args['title'])
+        #return parser_zh.generate_json(request.args['title'])
+
+        result = scores.find_one({"title":request.args['title']})
+        print(type(result))
+        return JSONEncoder().encode(result)
     else:
         return json.dumps(scoreNames)
 
@@ -95,14 +109,15 @@ def api_search_en():
                 rList.append(newDict)
         return json.dumps(rList)
     if 'title' in request.args:
-        if request.args['title'] not in hist_list:
-            hist_list.append(request.args['title'])
-        else:
-            del (hist_list[hist_list.index(request.args['title'])])
-            hist_list.append(request.args['title'])
-        return parser_en.generate_json(request.args['title'])
+        # if request.args['title'] not in hist_list:
+        #     hist_list.append(request.args['title'])
+        # else:
+        #     del (hist_list[hist_list.index(request.args['title'])])
+        #     hist_list.append(request.args['title'])
+        # return parser_en.generate_json(request.args['title'])
+        return scores.find_one({"title": request.args['title']})
     else:
         return json.dumps(scoreNames)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
