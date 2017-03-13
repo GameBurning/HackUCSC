@@ -269,8 +269,8 @@ angular.module('myApp.play', ['ngRoute'])
       });
 
       key('space, enter', function() {
-          debugger
         console.log('space/enter key pressed');
+        utility.stop_all_sounds();
         var sentences = [];
         for (var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
           sentences.push(config.api.fetch_mp3 + $scope.measures[i + $scope.offset][$scope.hand]['mp3']);
