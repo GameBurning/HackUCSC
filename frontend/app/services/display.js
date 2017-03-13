@@ -2,7 +2,7 @@ angular.module('myApp')
   .service('display', ['utility', function(utility) {
       var self = this;
 
-      let translate = {
+      var translate = {
           "chinese" : {
               "Difficulty" : "难度",
               "Sentence Size" : "乐句长度",

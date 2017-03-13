@@ -25,7 +25,7 @@ angular.module('myApp')
     var favoriteList = [
         "score_1",
         "score_2",
-        "score_3",
+        "score_3"
     ];
 
     var historyList = [
@@ -33,7 +33,7 @@ angular.module('myApp')
         "score_2",
         "score_3",
         "score_4",
-        "score_5",
+        "score_5"
     ];
 
     var musicScore = {
@@ -95,6 +95,6 @@ angular.module('myApp')
       favoriteList: favoriteList,
       historyList: historyList,
       searchList : searchList,
-      musicScore : musicScore,
+      musicScore : musicScore
     };
   });

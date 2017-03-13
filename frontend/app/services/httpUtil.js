@@ -37,7 +37,6 @@ angular.module('myApp')
         }
       }
       var deferred = $q.defer();
-
       $http.get(url)
         .success(function(data) {
           deferred.resolve(data);
@@ -125,29 +124,5 @@ angular.module('myApp')
       return deferred.promise;
     };
 
-    /**
-     * General purpose server http delete. Handles single server call
-     * for multiple function calls. Resolves all promises when data arrives.
-     * @param {string} url The server location of the service call.
-     * @param {Function} finishCallback A callback.
-     * @returns {*}
-     */
-    self.delete = function(url) {
-
-      var deferred = $q.defer();
-
-      $http.delete(url)
-        .success(function(data) {
-          deferred.resolve(data);
-        })
-        .error(function(err, status) {
-          deferred.reject({
-            err: err,
-            status: status
-          })
-        });
-
-      return deferred.promise;
-    };
 
   }]);

@@ -16,7 +16,7 @@ function($scope, httpUtil, fakeData, $location, navigation, utility, display) {
     $scope.showResult = false;
     $scope.show = display.show;
 
-    let clearKeys = function() {
+    var clearKeys = function() {
         for(var i = 0 ; i < utility.registered_keys.length; i++) {
             key.unbind(utility.registered_keys[i]);
         }
@@ -35,7 +35,7 @@ function($scope, httpUtil, fakeData, $location, navigation, utility, display) {
         },
         onend: function() {
             console.log('Finished!');
-        },
+        }
       });
 
     httpUtil.get("/")
@@ -86,7 +86,7 @@ function($scope, httpUtil, fakeData, $location, navigation, utility, display) {
                             },
                             onend: function() {
                                 console.log('Finished!');
-                            },
+                            }
                           });
                     }, function(error){
 
@@ -114,7 +114,7 @@ function($scope, httpUtil, fakeData, $location, navigation, utility, display) {
                         },
                         onend: function() {
                             console.log('Finished!');
-                        },
+                        }
                       });
                 }, function(error){
 

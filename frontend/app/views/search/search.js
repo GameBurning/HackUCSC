@@ -18,7 +18,7 @@ angular.module('myApp.search', ['ngRoute'])
     $scope.selected = null;
     $scope.show = display.show;
 
-    let clearKeys = function() {
+    var clearKeys = function() {
         for(var i = 0 ; i < utility.registered_keys.length; i++) {
             key.unbind(utility.registered_keys[i]);
         }
@@ -37,7 +37,7 @@ angular.module('myApp.search', ['ngRoute'])
         },
         onend: function() {
             console.log('Finished!');
-        },
+        }
       });
 
     $scope.setUnfocus = function() {
@@ -83,7 +83,7 @@ angular.module('myApp.search', ['ngRoute'])
                         },
                         onend: function() {
                             console.log('Finished!');
-                        },
+                        }
                       });
                 }, function(error){
 
@@ -109,7 +109,7 @@ angular.module('myApp.search', ['ngRoute'])
                         },
                         onend: function() {
                             console.log('Finished!');
-                        },
+                        }
                       });
                 }, function(error){
 
@@ -142,7 +142,7 @@ angular.module('myApp.search', ['ngRoute'])
                                     },
                                     onend: function() {
                                         console.log('Finished!');
-                                    },
+                                    }
                                   });
                             }, function(error){
 
