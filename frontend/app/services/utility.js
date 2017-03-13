@@ -36,7 +36,7 @@ angular.module('myApp')
     }
 
     self.get_voices_by_list = function(list) {
-        let promises = [];
+        var promises = [];
         var deferred = $q.defer();
         for(var i = 0; i < list.length; i++) {
             promises.push(httpUtil.get(config.api.text_to_speech + "/speak?"+"language="+self.language+"&sentence="+list[i]));
@@ -59,7 +59,7 @@ angular.module('myApp')
 
     self.get_score = function(score_id) {
         var deferred = $q.defer();
-        httpUtil.get(config.api.music_score + "/musicscores/?title=" + score_id)
+        httpUtil.get(config.api.music_score + "/musicscores/?title=" + encodeURI(score_id))
         .then(function(response) {
             if (response !== null) {
                 deferred.resolve(response);

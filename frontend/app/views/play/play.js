@@ -12,7 +12,7 @@ angular.module('myApp.play', ['ngRoute'])
   .controller('PlayCtrl', ['$scope', 'httpUtil', '$location', 'fakeData', '$q', 'utility', 'display', 'config',
     function($scope, httpUtil, $location, fakeData, $q, utility, display, config) {
       console.log($location.search());
-      let lang = utility.language;
+      var lang = utility.language;
       $scope.show = display.show;
       $scope.score_meta = null;
       $scope.score_content = null;
@@ -25,7 +25,7 @@ angular.module('myApp.play', ['ngRoute'])
       $scope.start = 0;
       $scope.hand = "Right";
 
-      let clearKeys = function() {
+      var clearKeys = function() {
         for (var i = 0; i < utility.registered_keys.length; i++) {
           key.unbind(utility.registered_keys[i]);
         }
@@ -38,11 +38,11 @@ angular.module('myApp.play', ['ngRoute'])
       }
 
       if ($location.search() && $location.search().id) {
-        let score_id = $location.search().id;
+        var score_id = $location.search().id;
         utility.get_score(score_id)
           .then(function(response) {
             $scope.score_meta = response.metaInfo;
-            let meta_info_text = [];
+            var meta_info_text = [];
             for (var i = 0; i < $scope.score_meta.length; i++) {
               for (var prop in $scope.score_meta[i]) {
                 meta_info_text.push(prop + ". " + $scope.score_meta[i][prop]);
@@ -57,7 +57,7 @@ angular.module('myApp.play', ['ngRoute'])
             $scope.size = $scope.measures.length;
             $scope.start();
           }, function(error) {
-            console.log(error);
+            console.log(JSON.stringify(error));
           })
       }
 
@@ -73,9 +73,9 @@ angular.module('myApp.play', ['ngRoute'])
 
       $scope.increaseBlock = function() {
         if ($scope.blockSize == $scope.size || $scope.size == 0) return;
-        let oldblockSize = $scope.blockSize;
-        let newblockSize = $scope.blockSize + 1;
-        let newOffset = (($scope.offset / oldblockSize) > 0 ? ($scope.offset / oldblockSize) - 1 : ($scope.offset / oldblockSize)) * newblockSize;
+        var oldblockSize = $scope.blockSize;
+        var newblockSize = $scope.blockSize + 1;
+        var newOffset = (($scope.offset / oldblockSize) > 0 ? ($scope.offset / oldblockSize) - 1 : ($scope.offset / oldblockSize)) * newblockSize;
 
         $scope.blockSize = newblockSize;
         $scope.offset = newOffset;
@@ -100,9 +100,9 @@ angular.module('myApp.play', ['ngRoute'])
 
       $scope.decreaseBlock = function() {
         if ($scope.blockSize == 1) return;
-        let oldblockSize = $scope.blockSize;
-        let newblockSize = $scope.blockSize - 1;
-        let newOffset = (($scope.offset / oldblockSize) < $scope.size - 1 ? ($scope.offset / oldblockSize) + 1 : ($scope.offset / oldblockSize)) * newblockSize;
+        var oldblockSize = $scope.blockSize;
+        var newblockSize = $scope.blockSize - 1;
+        var newOffset = (($scope.offset / oldblockSize) < $scope.size - 1 ? ($scope.offset / oldblockSize) + 1 : ($scope.offset / oldblockSize)) * newblockSize;
 
         $scope.blockSize = newblockSize;
         $scope.offset = newOffset;
@@ -170,8 +170,8 @@ angular.module('myApp.play', ['ngRoute'])
       }
 
       // input : urls of voices
-      let play = function(str_or_list_to_play) {
-        let list = [];
+      var play = function(str_or_list_to_play) {
+        var list = [];
         if (typeof str_or_list_to_play == "string") {
           if (str_or_list_to_play == "") return;
           list = [str_or_list_to_play];
@@ -193,14 +193,14 @@ angular.module('myApp.play', ['ngRoute'])
             setTimeout(function() {
               play(list);
             }, 500);
-          },
+          }
         });
         utility.active_sounds.push(sound);
       }
 
 
       // input : voice text
-      let playSentence = function(sentence) {
+      var playSentence = function(sentence) {
         utility.get_voice_by_text(sentence)
           .then(function(sound_url) {
             utility.stop_all_sounds();
@@ -211,7 +211,7 @@ angular.module('myApp.play', ['ngRoute'])
       }
 
       // input : list of voices text
-      let playSentencesList = function(list) {
+      var playSentencesList = function(list) {
         if (list.length == 0) return;
         utility.get_voices_by_list(list)
           .then(function(urls) {
@@ -269,8 +269,9 @@ angular.module('myApp.play', ['ngRoute'])
       });
 
       key('space, enter', function() {
+          debugger
         console.log('space/enter key pressed');
-        let sentences = [];
+        var sentences = [];
         for (var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
           sentences.push(config.api.fetch_mp3 + $scope.measures[i + $scope.offset][$scope.hand]['mp3']);
           console.log($scope.measures[i + $scope.offset][$scope.hand]['text']);
