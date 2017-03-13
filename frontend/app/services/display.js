@@ -3,7 +3,7 @@ angular.module('myApp')
       var self = this;
 
       let translate = {
-          "zh" : {
+          "chinese" : {
               "Difficulty" : "难度",
               "Sentence Size" : "乐句长度",
               "Add to favorite" : "添加到收藏夹",
@@ -15,7 +15,7 @@ angular.module('myApp')
               "Composer" : "作曲家",
               "sentence size" : "小节数"
           },
-          "en" : {
+          "english" : {
               "Difficulty" : "Difficulty",
               "Sentence Size" : "Sentence Size",
               "Add to favorite" : "Add to favorite",
@@ -30,13 +30,13 @@ angular.module('myApp')
       };
 
       self.show = function(text) {
-          if(utility.language.indexOf("en") != -1) {
-              if(translate['en'].hasOwnProperty(text))
-                return translate["en"][text];
+          if(utility.language == "english") {
+              if(translate['english'].hasOwnProperty(text))
+                return translate["english"][text];
           }
-          else if(utility.language.indexOf("zh") != -1) {
-              if(translate['zh'].hasOwnProperty(text))
-                return translate["zh"][text];
+          else if(utility.language == "chinese") {
+              if(translate['chinese'].hasOwnProperty(text))
+                return translate["chinese"][text];
           }
       }
   }]);

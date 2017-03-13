@@ -1,0 +1,16 @@
+{
+    "language": "chinese",
+    "language_options": [
+        "chinese",
+        "english"
+    ],
+    "api": {
+        "text_to_speech": "http://localhost:8001",
+        "music_score": {
+            "english": "http://duyuepu.com:5000/api/language/english",
+            "chinese": "http://duyuepu.com:5000/api/language/chinese"
+        },
+        "fetch_mp3": "http://duyuepu.com:5099/static/",
+        "user": "http://duyuepu.com:5000/api"
+    }
+}

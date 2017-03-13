@@ -16,39 +16,45 @@ $ nvm install 6.4.0
 $ nvm use 6.4.0
 $ node -v   //output v6.4.0
 $ npm -v   //output v3.10.3
+
+$ cd path-to-fur-elise/frontend
+$ npm install
+
+$ cd path-to-fur-elise/frontend/app
+$ bower install
+
+$ cd path-to-fur-elise/text2speech
+$ npm install
+
+
 ```
 
 Run front-end and text-to-speech service
 
 ```sh
-$ cd path-to-fur-elise/frontend
-$ npm install
-
-$ cd path-to-fur-elise/frontend/app
-$bower install
-
 $ cd path-to-fur-elise/text2speech
 $ npm install
 $ node index.js
 
 // Open a new terminal
 $ cd path-to-fur-elise/frontend
-$ npm start
+$ npm run furelise-english or npm run furelise-chinese
 
 // Web app will run at http://localhost:8000
 ```
 #Deploy in Google Cloud
 
 ```sh
+
 $ [sudo] npm install forever -g
 
 // To start & stop frontend:
 
 $ cd path-to-fur-elise/frontend
 
-$ forever start -c "npm start" ./
+$ forever start -c "npm run furelise-english" ./
 
-$ forever stop -c "npm start" ./
+$ forever stop -c "npm run furelise-english" ./
 
 // To start & stop text2speech:
 

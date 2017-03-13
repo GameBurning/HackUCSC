@@ -28,7 +28,7 @@ def api_score(scorename):
         del(hist_list[hist_list.index(scorename)])
         hist_list.append(scorename)
     return generateJson(scorename)
-    
+
 
 @app.route('/api/musicscores/history/')
 def api_hist():
