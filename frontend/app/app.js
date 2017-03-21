@@ -14,7 +14,6 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
 .run( ['$rootScope','$location','navigation', 'utility', 'config', '$http',
  function($rootScope, $location, navigation, utility, config, $http) {
-
     $http.get('config.json').success(function(configProfile) {
         var lang = configProfile.language; // window.navigator.userLanguage || window.navigator.language;
         utility.language = lang;

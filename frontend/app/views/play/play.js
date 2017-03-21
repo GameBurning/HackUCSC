@@ -82,20 +82,20 @@ angular.module('myApp.play', ['ngRoute'])
 
         $scope.prevBlock();
 
-        utility.get_voice_by_text(display.show("sentence size") + "," + $scope.blockSize)
-          .then(function(sound_url) {
-            var sound = new Howl({
-              src: [sound_url],
-              autoplay: true,
-              loop: false,
-              onload: function() {
-                utility.stop_all_sounds();
-                utility.active_sounds.push(sound);
-              }
-            });
-          }, function(error) {
-
-          });
+        // utility.get_voice_by_text(display.show("sentence size") + "," + $scope.blockSize)
+        //   .then(function(sound_url) {
+        //     var sound = new Howl({
+        //       src: [sound_url],
+        //       autoplay: true,
+        //       loop: false,
+        //       onload: function() {
+        //         utility.stop_all_sounds();
+        //         utility.active_sounds.push(sound);
+        //       }
+        //     });
+        //   }, function(error) {
+        //
+        //   });
       }
 
       $scope.decreaseBlock = function() {
@@ -109,20 +109,20 @@ angular.module('myApp.play', ['ngRoute'])
 
         $scope.prevBlock();
 
-        utility.get_voice_by_text(display.show("sentence size") + "," + $scope.blockSize)
-          .then(function(sound_url) {
-            var sound = new Howl({
-              src: [sound_url],
-              autoplay: true,
-              loop: false,
-              onload: function() {
-                utility.stop_all_sounds();
-                utility.active_sounds.push(sound);
-              }
-            });
-          }, function(error) {
-
-          });
+        // utility.get_voice_by_text(display.show("sentence size") + "," + $scope.blockSize)
+        //   .then(function(sound_url) {
+        //     var sound = new Howl({
+        //       src: [sound_url],
+        //       autoplay: true,
+        //       loop: false,
+        //       onload: function() {
+        //         utility.stop_all_sounds();
+        //         utility.active_sounds.push(sound);
+        //       }
+        //     });
+        //   }, function(error) {
+        //
+        //   });
       }
 
       $scope.nextBlock = function() {
@@ -201,26 +201,26 @@ angular.module('myApp.play', ['ngRoute'])
 
       // input : voice text
       var playSentence = function(sentence) {
-        utility.get_voice_by_text(sentence)
-          .then(function(sound_url) {
-            utility.stop_all_sounds();
-            play(sound_url);
-          }, function(error) {
-
-          });
+        // utility.get_voice_by_text(sentence)
+        //   .then(function(sound_url) {
+        //     utility.stop_all_sounds();
+        //     play(sound_url);
+        //   }, function(error) {
+        //
+        //   });
       }
 
       // input : list of voices text
       var playSentencesList = function(list) {
-        if (list.length == 0) return;
-        utility.get_voices_by_list(list)
-          .then(function(urls) {
-            utility.stop_all_sounds();
-            console.log(urls);
-            play(urls);
-          }, function(error) {
-            console.log("getting voice list fail");
-          });
+        // if (list.length == 0) return;
+        // utility.get_voices_by_list(list)
+        //   .then(function(urls) {
+        //     utility.stop_all_sounds();
+        //     console.log(urls);
+        //     play(urls);
+        //   }, function(error) {
+        //     console.log("getting voice list fail");
+        //   });
       }
 
       key('f', function() {
