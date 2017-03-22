@@ -11,7 +11,6 @@ from xmlparser import XmlParser
 mp3_dir_path = os.path.expanduser('~/mp3files/')
 sheet_dir_path = '../static/sheet_music'
 
-
 def run():
     client = MongoClient()
     client.drop_database('beta')
@@ -21,13 +20,38 @@ def run():
     for mp3_file in mp3_files:
         if mp3_file[-4:] == ".xml":
             score = xml_parser.generate_score(mp3_file)
+            meta_text = ""
+            for i in score['metaInfo']:
+                for k in i.keys():
+                    meta_text += k + " : " + i[k]
+            meta_mp3 = save_to_mp3(meta_text)
+            score['metaInfo'] = {
+                "text" : score['metaInfo'],
+                'mp3' : meta_mp3 + '.mp3'
+            }
+            score['title'] = {
+                "text": score['title'],
+                'mp3': save_to_mp3(score['title']) + '.mp3'
+            }
+            score['composer'] = {
+                "text": score['composer'],
+                'mp3': save_to_mp3(score['composer']) + '.mp3'
+            }
+            score['key'] = {
+                "text": score['key'],
+                'mp3': save_to_mp3(score['key']) + '.mp3'
+            }
             for measure_num in score['scoreContent']:
-                #print(measure_num)
+                # print(measure_num)
                 print(score['scoreContent'][measure_num])
-                left_mp3 = save_to_mp3('第{}小节'.format(measure_num) + ',左手部分,' + score['scoreContent'][measure_num]['Left'])
-                right_mp3 = save_to_mp3('第{}小节'.format(measure_num) + ',右手部分,' + score['scoreContent'][measure_num]['Right'])
-                left_mp3 = hashlib.md5(score['scoreContent'][measure_num]['Left'].encode('utf-16be')).hexdigest()
-                right_mp3 = hashlib.md5(score['scoreContent'][measure_num]['Right'].encode('utf-16be')).hexdigest()
+
+                if Update_Mp3:
+                    left_mp3 = save_to_mp3('第{}小节'.format(measure_num) + ',左手部分,' + score['scoreContent'][measure_num]['Left'])
+                    right_mp3 = save_to_mp3('第{}小节'.format(measure_num) + ',右手部分,' + score['scoreContent'][measure_num]['Right'])
+                else:
+                    left_mp3 = hashlib.md5('第{}小节'.format(measure_num) + ',左手部分,' + score['scoreContent'][measure_num]['Left'].encode('utf-16be')).hexdigest()
+                    right_mp3 = hashlib.md5('第{}小节'.format(measure_num) + ',右手部分,' + score['scoreContent'][measure_num]['Right'].encode('utf-16be')).hexdigest()
+
                 score['scoreContent'][measure_num]['Right'] = {
                     "text" : score['scoreContent'][measure_num]['Right'],
                     "mp3" : right_mp3 + '.mp3'
