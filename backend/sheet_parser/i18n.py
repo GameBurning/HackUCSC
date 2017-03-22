@@ -98,7 +98,7 @@ class I18N(object):
                 "not defined": "未定义",
                 "first musical line": "第一行 ",
                 " rest": " 休止符",
-                "dotted": "附点 ",
+                "dotted ": "附点 ",
                 "grace note ": "装饰音 ",
                 "start slur ": " 开始连音 ",
                 "arpeggiated ": "琶音 ",
@@ -107,7 +107,8 @@ class I18N(object):
                 " stop tuplet ": " 结束三连音",
                 "tied note ": "连结音符 ",
                 " note": "",
-                " perminute": " 每分钟"
+                " perminute": " 每分钟",
+                "staccato ": "断音 ",
             }
         }
     }
