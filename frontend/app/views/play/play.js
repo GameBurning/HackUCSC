@@ -157,15 +157,33 @@ angular.module('myApp.play', ['ngRoute'])
         $scope.$apply();
       }
 
+      $scope.handFeekback = function() {
+          var sound = new Howl({
+              src: ['/resources/sounds/'+$scope.hand+'.mp3'],
+              preload: true,
+              autoplay: true,
+              rate : 1,
+              onload: function() {
+                  utility.stop_all_sounds();
+                  utility.active_sounds.push(sound);
+              },
+              onend: function() {
+                  console.log('Finished!');
+              }
+            });
+      }
+
       $scope.setLeftHand = function() {
         $scope.hand = "Left";
         console.log($scope.hand + "Hand");
+        $scope.handFeekback();
         $scope.$apply();
       }
 
       $scope.setRightHand = function() {
         $scope.hand = "Right";
         console.log($scope.hand + "Hand");
+        $scope.handFeekback();
         $scope.$apply();
       }
 
