@@ -12,11 +12,7 @@ angular.module('myApp.play', ['ngRoute'])
   .controller('PlayCtrl', ['$scope', 'httpUtil', '$location', 'fakeData', '$q', 'utility', 'display', 'config',
     function($scope, httpUtil, $location, fakeData, $q, utility, display, config) {
       console.log($location.search());
-
-      while(config.ready == false) {
-          debugger
-      }
-
+      
       var lang = utility.language;
       $scope.show = display.show;
       $scope.score_meta = null;
