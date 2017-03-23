@@ -89,7 +89,7 @@ def api_search_zh():
         #    hist_list.append(request.args['title'])
         #return parser_zh.generate_json(request.args['title'])
 
-        result = scores.find_one({"title":request.args['title']})
+        result = scores.find_one({"title_id":request.args['title']})
         print(type(result))
         return JSONEncoder().encode(result)
     else:
@@ -115,7 +115,7 @@ def api_search_en():
         #     del (hist_list[hist_list.index(request.args['title'])])
         #     hist_list.append(request.args['title'])
         # return parser_en.generate_json(request.args['title'])
-        return scores.find_one({"title": request.args['title']})
+        return scores.find_one({"title_id": request.args['title']})
     else:
         return json.dumps(scoreNames)
 

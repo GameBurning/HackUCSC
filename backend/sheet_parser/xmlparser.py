@@ -4,7 +4,7 @@
 import json
 import xml.etree.ElementTree as ET
 # from enum import Enum
-import backend.sheet_parser.i18n as i18n
+import i18n as i18n
 
 # TODO: First repeat and second repeat have different endings
 

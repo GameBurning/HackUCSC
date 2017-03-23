@@ -20,7 +20,7 @@ def run():
     xml_parser = XmlParser(sheet_dir_path, "chinese")
     if Update_Index:
         for i in range(1000):
-            index_test = "第{}乐句".format(i)
+            index_test = "第{}越剧".format(i)
             save_to_mp3(index_test, filename=str(i)+"_zh")
         save_to_mp3("左手部分",filename="left_zh")
         save_to_mp3("右手部分",filename="right_zh")
@@ -39,6 +39,7 @@ def run():
                 "text" : score['metaInfo'],
                 'mp3' : meta_mp3 + '.mp3'
             }
+            score['title_id'] = score['title']
             score['title'] = {
                 "text": score['title'],
                 'mp3': save_to_mp3(score['title']) + '.mp3'
@@ -56,30 +57,31 @@ def run():
                 # print(score['scoreContent'][measure_num])
 
                 if Update_Mp3:
-                    left_mp3 = save_to_mp3('第{}小节'.format(measure_num)\
+                    left_mp3 = save_to_mp3('第{}小节 '.format(measure_num)\
                                 +score['scoreContent'][measure_num]['Left'])
-                    right_mp3 = save_to_mp3('第{}小节'.format(measure_num)\
+                    right_mp3 = save_to_mp3('第{}小节 '.format(measure_num)\
                                 +score['scoreContent'][measure_num]['Right'])
                 else:
-                    left_mp3 = hashlib.md5('第{}小节'.format(measure_num)\
+                    left_mp3 = hashlib.md5(('第{}小节 '.format(measure_num)\
                                 + score['scoreContent'][measure_num]['Left']\
-                                           .encode('utf-16be')).hexdigest()
-                    right_mp3 = hashlib.md5('第{}小节'.format(measure_num)\
+                                            ).encode('utf-16be')).hexdigest()
+                    right_mp3 = hashlib.md5(('第{}小节 '.format(measure_num)\
                                 + score['scoreContent'][measure_num]['Right']\
-                                            .encode('utf-16be')).hexdigest()
+                                             ).encode('utf-16be')).hexdigest()
 
                 score['scoreContent'][measure_num]['Right'] = {
                     "text" : score['scoreContent'][measure_num]['Right'],
                     "mp3" : right_mp3 + '.mp3'
                 }
                 score['scoreContent'][measure_num]['Left'] = {
-                    "text": '第{}小节'.format(measure_num) + ',左右部分,' + score['scoreContent'][measure_num]['Left'],
-                    "mp3": left_mp3 + '.mp3'
+                    "text" : score['scoreContent'][measure_num]['Left'],
+                    "mp3" : left_mp3 + '.mp3'
                 }
                 #score['scoreContent']
                 # for hand in measure:
                 #     print(hand)
             result = db.score.insert_one(score)
+            print(result)
 
 
 def save_to_mp3(text, filename=None,  cuid='3c:15:c2:d2:0a:02'):
