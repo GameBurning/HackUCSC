@@ -19,6 +19,8 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
         utility.language = lang;
         config.api.music_score = configProfile.api.music_score[lang] || config.api.music_score;
         config.api.fetch_mp3 = configProfile.api.fetch_mp3 || config.api.fetch_mp3;
+
+        config.ready = true;
     });
 
     key('ctrl+1', function() {
