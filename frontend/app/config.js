@@ -3,6 +3,7 @@ angular.module('myApp')
       return {
           api : {
               music_score : "http://duyuepu.com:5000/api/language/english"
-          }
+          },
+          ready : false
       };
   }]);
