@@ -41,21 +41,27 @@ angular.module('myApp.play', ['ngRoute'])
         var score_id = $location.search().id;
         utility.get_score(score_id)
           .then(function(response) {
-            $scope.score_meta = response.metaInfo;
-            var meta_info_text = [];
-            for (var i = 0; i < $scope.score_meta.length; i++) {
-              for (var prop in $scope.score_meta[i]) {
-                meta_info_text.push(prop + ". " + $scope.score_meta[i][prop]);
+              if(response.metaInfo == null) {
+                  alert(display.show('Fail: Get the musicScore'));
               }
-            }
-            playSentencesList(meta_info_text);
+              else {
+                  $scope.score_meta = response.metaInfo;
+                  var meta_info_text = [];
+                  for (var i = 0; i < $scope.score_meta.length; i++) {
+                    for (var prop in $scope.score_meta[i]) {
+                      meta_info_text.push(prop + ". " + $scope.score_meta[i][prop]);
+                    }
+                  }
 
-            $scope.score_content = response.scoreContent;
-            for (var prop in $scope.score_content) {
-              $scope.measures.push($scope.score_content[prop]);
-            }
-            $scope.size = $scope.measures.length;
-            $scope.start();
+                  play([config.api.fetch_mp3 + $scope.score_meta.mp3]);
+
+                  $scope.score_content = response.scoreContent;
+                  for (var prop in $scope.score_content) {
+                    $scope.measures.push($scope.score_content[prop]);
+                  }
+                  $scope.size = $scope.measures.length;
+                  $scope.start();
+              }
           }, function(error) {
             console.log(JSON.stringify(error));
           })
@@ -125,10 +131,17 @@ angular.module('myApp.play', ['ngRoute'])
         //   });
       }
 
+      function tellCurrentOffset() {
+          utility.stop_all_sounds();
+          play([config.api.fetch_mp3 + ($scope.offset + 1) + "_zh.mp3"]);
+
+      }
+
       $scope.nextBlock = function() {
         if ($scope.offset + $scope.blockSize < $scope.size) {
           $scope.offset += $scope.blockSize;
         }
+        tellCurrentOffset();
         $scope.display_list = [];
         for (var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
           if (lang == "chinese") {
@@ -147,6 +160,9 @@ angular.module('myApp.play', ['ngRoute'])
           $scope.offset = 0;
         }
         $scope.display_list = [];
+
+        tellCurrentOffset();
+
         for (var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
           if (lang == "chinese") {
             $scope.display_list.push("第 " + (i + $scope.offset + 1) + " 小节");
@@ -157,15 +173,33 @@ angular.module('myApp.play', ['ngRoute'])
         $scope.$apply();
       }
 
+      $scope.handFeekback = function() {
+          var sound = new Howl({
+              src: ['/resources/sounds/'+$scope.hand+'.mp3'],
+              preload: true,
+              autoplay: true,
+              rate : 1,
+              onload: function() {
+                  utility.stop_all_sounds();
+                  utility.active_sounds.push(sound);
+              },
+              onend: function() {
+                  console.log('Finished!');
+              }
+            });
+      }
+
       $scope.setLeftHand = function() {
         $scope.hand = "Left";
         console.log($scope.hand + "Hand");
+        $scope.handFeekback();
         $scope.$apply();
       }
 
       $scope.setRightHand = function() {
         $scope.hand = "Right";
         console.log($scope.hand + "Hand");
+        $scope.handFeekback();
         $scope.$apply();
       }
 
