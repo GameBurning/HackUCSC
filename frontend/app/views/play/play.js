@@ -9,10 +9,12 @@ angular.module('myApp.play', ['ngRoute'])
     });
   }])
 
-  .controller('PlayCtrl', ['$scope', 'httpUtil', '$location', 'fakeData', '$q', 'utility', 'display', 'config',
-    function($scope, httpUtil, $location, fakeData, $q, utility, display, config) {
+  .controller('PlayCtrl', ['$scope', 'httpUtil', '$location', 'fakeData', '$q', 'utility', 'display', 'config', '$timeout',
+    function($scope, httpUtil, $location, fakeData, $q, utility, display, config, $timeout) {
       console.log($location.search());
-      
+
+      var changingBlockSize = false;
+
       var lang = utility.language;
       $scope.show = display.show;
       $scope.score_meta = null;
@@ -87,22 +89,10 @@ angular.module('myApp.play', ['ngRoute'])
         $scope.blockSize = newblockSize;
         $scope.offset = newOffset;
 
-        $scope.prevBlock();
+        tellCurrentBlockSize();
 
-        // utility.get_voice_by_text(display.show("sentence size") + "," + $scope.blockSize)
-        //   .then(function(sound_url) {
-        //     var sound = new Howl({
-        //       src: [sound_url],
-        //       autoplay: true,
-        //       loop: false,
-        //       onload: function() {
-        //         utility.stop_all_sounds();
-        //         utility.active_sounds.push(sound);
-        //       }
-        //     });
-        //   }, function(error) {
-        //
-        //   });
+        $scope.prevBlock(false);
+
       }
 
       $scope.decreaseBlock = function() {
@@ -114,22 +104,10 @@ angular.module('myApp.play', ['ngRoute'])
         $scope.blockSize = newblockSize;
         $scope.offset = newOffset;
 
-        $scope.prevBlock();
+        tellCurrentBlockSize();
 
-        // utility.get_voice_by_text(display.show("sentence size") + "," + $scope.blockSize)
-        //   .then(function(sound_url) {
-        //     var sound = new Howl({
-        //       src: [sound_url],
-        //       autoplay: true,
-        //       loop: false,
-        //       onload: function() {
-        //         utility.stop_all_sounds();
-        //         utility.active_sounds.push(sound);
-        //       }
-        //     });
-        //   }, function(error) {
-        //
-        //   });
+        $scope.prevBlock(false);
+
       }
 
       function tellCurrentOffset() {
@@ -138,11 +116,33 @@ angular.module('myApp.play', ['ngRoute'])
 
       }
 
-      $scope.nextBlock = function() {
+      var timeout_promise = null;
+
+      function tellCurrentBlockSize() {
+          utility.stop_all_sounds();
+          if(changingBlockSize == false) {
+                play([config.api.fetch_mp3 + 'length' + "_zh.mp3", config.api.fetch_mp3 + 'length/' + $scope.blockSize + ".mp3"]);
+                console.log("sentenceSize");
+                changingBlockSize = true;
+          }
+          else {
+              play([config.api.fetch_mp3 + 'length/' + $scope.blockSize + ".mp3"]);
+          }
+          console.log($scope.blockSize);
+          if(timeout_promise != null) {
+              $timeout.cancel(timeout_promise);
+          }
+          timeout_promise = $timeout(function () {
+              console.log("changingBlockSize = false;");
+              changingBlockSize = false;
+          }, 3000);
+      }
+
+      $scope.nextBlock = function(readout) {
         if ($scope.offset + $scope.blockSize < $scope.size) {
           $scope.offset += $scope.blockSize;
         }
-        tellCurrentOffset();
+        if(readout == undefined || readout == true) tellCurrentOffset();
         $scope.display_list = [];
         for (var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
           if (lang == "chinese") {
@@ -154,7 +154,7 @@ angular.module('myApp.play', ['ngRoute'])
         $scope.$apply();
       }
 
-      $scope.prevBlock = function() {
+      $scope.prevBlock = function(readout) {
         if ($scope.offset - $scope.blockSize > 0) {
           $scope.offset -= $scope.blockSize;
         } else {
@@ -162,7 +162,7 @@ angular.module('myApp.play', ['ngRoute'])
         }
         $scope.display_list = [];
 
-        tellCurrentOffset();
+        if(readout == undefined || readout == true) tellCurrentOffset();
 
         for (var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
           if (lang == "chinese") {
@@ -227,7 +227,7 @@ angular.module('myApp.play', ['ngRoute'])
             list.splice(0, 1);
             setTimeout(function() {
               play(list);
-            }, 500);
+            }, 0);
           }
         });
         utility.active_sounds.push(sound);
@@ -259,52 +259,58 @@ angular.module('myApp.play', ['ngRoute'])
       }
 
       key('f', function() {
-        console.log('F key pressed');
+        // console.log('F key pressed');
+        changingBlockSize = false;
         $scope.like();
       });
 
       key('=', function() {
-        console.log('= key pressed');
+        // console.log('= key pressed');
         $scope.increaseBlock();
       });
 
       key('-', function() {
-        console.log('- key pressed');
+        // console.log('- key pressed');
         $scope.decreaseBlock();
       });
 
       key('+', function() {
-        console.log('+ key pressed');
+        // console.log('+ key pressed');
         $scope.increaseBlock();
       });
 
       key('_', function() {
-        console.log('down key pressed');
+        // console.log('down key pressed');
         $scope.decreaseBlock();
       });
 
       key('down', function() {
-        console.log('down key pressed');
+        // console.log('down key pressed');
+        changingBlockSize = false;
         $scope.setLeftHand();
       });
 
       key('up', function() {
-        console.log('up key pressed');
+        // console.log('up key pressed');
+        changingBlockSize = false;
         $scope.setRightHand();
       });
 
       key('left', function() {
-        console.log('left key pressed');
+        // console.log('left key pressed');
+        changingBlockSize = false;
         $scope.prevBlock();
       });
 
       key('right', function() {
-        console.log('right key pressed');
+        // console.log('right key pressed');
+        changingBlockSize = false;
         $scope.nextBlock();
       });
 
       key('space, enter', function() {
-        console.log('space/enter key pressed');
+        // console.log('space/enter key pressed');
+        changingBlockSize = false;
         utility.stop_all_sounds();
         var sentences = [];
         for (var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
