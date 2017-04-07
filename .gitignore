@@ -11,4 +11,4 @@ text2speech/node_modules
 **/npm-debug.log
 text2speech/voiceStore/*.wav
 text2speech/voiceStore/*.mp3
-
+.vscode

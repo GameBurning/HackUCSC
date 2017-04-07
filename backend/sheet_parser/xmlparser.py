@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import json
 import xml.etree.ElementTree as ET
 # from enum import Enum
 import i18n as i18n
@@ -255,4 +254,4 @@ class XmlParser:
 if __name__ == "__main__":
     #print(generateJson('Sweethearts'))
     parser = XmlParser('../test/testCases', 'chinese')
-    print(parser.generate_score('fur_elise'))
+    print(parser.generate_score('Fur_Elise'))
