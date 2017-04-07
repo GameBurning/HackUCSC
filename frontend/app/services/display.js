@@ -13,7 +13,8 @@ angular.module('myApp')
               "Favorite" : "收藏夹",
               "History" : "历史记录",
               "Composer" : "作曲家",
-              "sentence size" : "小节数"
+              "sentence size" : "小节数",
+              "Fail: Get the musicScore" : "错误：获取该乐谱失败"
           },
           "english" : {
               "Difficulty" : "Difficulty",
@@ -25,7 +26,8 @@ angular.module('myApp')
               "Favorite" : "Favorite",
               "History" : "History",
               "Composer" : "Composer",
-              "sentence size" : "sentence size"
+              "sentence size" : "sentence size",
+              "Fail: Get the musicScore" : "Fail: Get the musicScore"
           }
       };
 

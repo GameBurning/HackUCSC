@@ -9,9 +9,12 @@ angular.module('myApp.play', ['ngRoute'])
     });
   }])
 
-  .controller('PlayCtrl', ['$scope', 'httpUtil', '$location', 'fakeData', '$q', 'utility', 'display', 'config',
-    function($scope, httpUtil, $location, fakeData, $q, utility, display, config) {
+  .controller('PlayCtrl', ['$scope', 'httpUtil', '$location', 'fakeData', '$q', 'utility', 'display', 'config', '$timeout',
+    function($scope, httpUtil, $location, fakeData, $q, utility, display, config, $timeout) {
       console.log($location.search());
+
+      var changingBlockSize = false;
+
       var lang = utility.language;
       $scope.show = display.show;
       $scope.score_meta = null;
@@ -41,21 +44,27 @@ angular.module('myApp.play', ['ngRoute'])
         var score_id = $location.search().id;
         utility.get_score(score_id)
           .then(function(response) {
-            $scope.score_meta = response.metaInfo;
-            var meta_info_text = [];
-            for (var i = 0; i < $scope.score_meta.length; i++) {
-              for (var prop in $scope.score_meta[i]) {
-                meta_info_text.push(prop + ". " + $scope.score_meta[i][prop]);
+              if(response.metaInfo == null) {
+                  alert(display.show('Fail: Get the musicScore'));
               }
-            }
-            playSentencesList(meta_info_text);
+              else {
+                  $scope.score_meta = response.metaInfo;
+                  var meta_info_text = [];
+                  for (var i = 0; i < $scope.score_meta.length; i++) {
+                    for (var prop in $scope.score_meta[i]) {
+                      meta_info_text.push(prop + ". " + $scope.score_meta[i][prop]);
+                    }
+                  }
 
-            $scope.score_content = response.scoreContent;
-            for (var prop in $scope.score_content) {
-              $scope.measures.push($scope.score_content[prop]);
-            }
-            $scope.size = $scope.measures.length;
-            $scope.start();
+                  play([config.api.fetch_mp3 + $scope.score_meta.mp3]);
+
+                  $scope.score_content = response.scoreContent;
+                  for (var prop in $scope.score_content) {
+                    $scope.measures.push($scope.score_content[prop]);
+                  }
+                  $scope.size = $scope.measures.length;
+                  $scope.start();
+              }
           }, function(error) {
             console.log(JSON.stringify(error));
           })
@@ -80,22 +89,10 @@ angular.module('myApp.play', ['ngRoute'])
         $scope.blockSize = newblockSize;
         $scope.offset = newOffset;
 
-        $scope.prevBlock();
+        tellCurrentBlockSize();
 
-        // utility.get_voice_by_text(display.show("sentence size") + "," + $scope.blockSize)
-        //   .then(function(sound_url) {
-        //     var sound = new Howl({
-        //       src: [sound_url],
-        //       autoplay: true,
-        //       loop: false,
-        //       onload: function() {
-        //         utility.stop_all_sounds();
-        //         utility.active_sounds.push(sound);
-        //       }
-        //     });
-        //   }, function(error) {
-        //
-        //   });
+        $scope.prevBlock(false);
+
       }
 
       $scope.decreaseBlock = function() {
@@ -107,28 +104,45 @@ angular.module('myApp.play', ['ngRoute'])
         $scope.blockSize = newblockSize;
         $scope.offset = newOffset;
 
-        $scope.prevBlock();
+        tellCurrentBlockSize();
 
-        // utility.get_voice_by_text(display.show("sentence size") + "," + $scope.blockSize)
-        //   .then(function(sound_url) {
-        //     var sound = new Howl({
-        //       src: [sound_url],
-        //       autoplay: true,
-        //       loop: false,
-        //       onload: function() {
-        //         utility.stop_all_sounds();
-        //         utility.active_sounds.push(sound);
-        //       }
-        //     });
-        //   }, function(error) {
-        //
-        //   });
+        $scope.prevBlock(false);
+
       }
 
-      $scope.nextBlock = function() {
+      function tellCurrentOffset() {
+          utility.stop_all_sounds();
+          play([config.api.fetch_mp3 + ($scope.offset + 1) + "_zh.mp3"]);
+
+      }
+
+      var timeout_promise = null;
+
+      function tellCurrentBlockSize() {
+          utility.stop_all_sounds();
+          if(changingBlockSize == false) {
+                play([config.api.fetch_mp3 + 'length' + "_zh.mp3", config.api.fetch_mp3 + 'length/' + $scope.blockSize + ".mp3"]);
+                console.log("sentenceSize");
+                changingBlockSize = true;
+          }
+          else {
+              play([config.api.fetch_mp3 + 'length/' + $scope.blockSize + ".mp3"]);
+          }
+          console.log($scope.blockSize);
+          if(timeout_promise != null) {
+              $timeout.cancel(timeout_promise);
+          }
+          timeout_promise = $timeout(function () {
+              console.log("changingBlockSize = false;");
+              changingBlockSize = false;
+          }, 3000);
+      }
+
+      $scope.nextBlock = function(readout) {
         if ($scope.offset + $scope.blockSize < $scope.size) {
           $scope.offset += $scope.blockSize;
         }
+        if(readout == undefined || readout == true) tellCurrentOffset();
         $scope.display_list = [];
         for (var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
           if (lang == "chinese") {
@@ -140,13 +154,16 @@ angular.module('myApp.play', ['ngRoute'])
         $scope.$apply();
       }
 
-      $scope.prevBlock = function() {
+      $scope.prevBlock = function(readout) {
         if ($scope.offset - $scope.blockSize > 0) {
           $scope.offset -= $scope.blockSize;
         } else {
           $scope.offset = 0;
         }
         $scope.display_list = [];
+
+        if(readout == undefined || readout == true) tellCurrentOffset();
+
         for (var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
           if (lang == "chinese") {
             $scope.display_list.push("第 " + (i + $scope.offset + 1) + " 小节");
@@ -157,15 +174,33 @@ angular.module('myApp.play', ['ngRoute'])
         $scope.$apply();
       }
 
+      $scope.handFeekback = function() {
+          var sound = new Howl({
+              src: ['/resources/sounds/'+$scope.hand+'.mp3'],
+              preload: true,
+              autoplay: true,
+              rate : 1,
+              onload: function() {
+                  utility.stop_all_sounds();
+                  utility.active_sounds.push(sound);
+              },
+              onend: function() {
+                  console.log('Finished!');
+              }
+            });
+      }
+
       $scope.setLeftHand = function() {
         $scope.hand = "Left";
         console.log($scope.hand + "Hand");
+        $scope.handFeekback();
         $scope.$apply();
       }
 
       $scope.setRightHand = function() {
         $scope.hand = "Right";
         console.log($scope.hand + "Hand");
+        $scope.handFeekback();
         $scope.$apply();
       }
 
@@ -192,7 +227,7 @@ angular.module('myApp.play', ['ngRoute'])
             list.splice(0, 1);
             setTimeout(function() {
               play(list);
-            }, 500);
+            }, 0);
           }
         });
         utility.active_sounds.push(sound);
@@ -224,52 +259,58 @@ angular.module('myApp.play', ['ngRoute'])
       }
 
       key('f', function() {
-        console.log('F key pressed');
+        // console.log('F key pressed');
+        changingBlockSize = false;
         $scope.like();
       });
 
       key('=', function() {
-        console.log('= key pressed');
+        // console.log('= key pressed');
         $scope.increaseBlock();
       });
 
       key('-', function() {
-        console.log('- key pressed');
+        // console.log('- key pressed');
         $scope.decreaseBlock();
       });
 
       key('+', function() {
-        console.log('+ key pressed');
+        // console.log('+ key pressed');
         $scope.increaseBlock();
       });
 
       key('_', function() {
-        console.log('down key pressed');
+        // console.log('down key pressed');
         $scope.decreaseBlock();
       });
 
       key('down', function() {
-        console.log('down key pressed');
+        // console.log('down key pressed');
+        changingBlockSize = false;
         $scope.setLeftHand();
       });
 
       key('up', function() {
-        console.log('up key pressed');
+        // console.log('up key pressed');
+        changingBlockSize = false;
         $scope.setRightHand();
       });
 
       key('left', function() {
-        console.log('left key pressed');
+        // console.log('left key pressed');
+        changingBlockSize = false;
         $scope.prevBlock();
       });
 
       key('right', function() {
-        console.log('right key pressed');
+        // console.log('right key pressed');
+        changingBlockSize = false;
         $scope.nextBlock();
       });
 
       key('space, enter', function() {
-        console.log('space/enter key pressed');
+        // console.log('space/enter key pressed');
+        changingBlockSize = false;
         utility.stop_all_sounds();
         var sentences = [];
         for (var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
