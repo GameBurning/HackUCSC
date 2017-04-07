@@ -87,18 +87,22 @@ class I18N(object):
                 "zhoujielun": "周杰伦"
             },
 
-            "step": dict(zip(['C','D','E','F','G','A','B'], ['多', '来', '咪', '发', '缩', '拉', '西'])),
-            "octave": {'1': '大字二组 ','2': '大字一组 ','3': '大字组 ','4': '小字组 ','5': '小字一组 ','6': '小字二组 ',
+            "step": dict(zip(['C','D','E','F','G','A','B'], \
+                             ['多', '来', '咪', '发', '缩', '拉', '西'])),
+            "octave": {'1': '大字二组 ','2': '大字一组 ','3': '大字组 ',\
+                       '4': '小字组 ','5': '小字一组 ','6': '小字二组 ',
                        '7': '小字三组 ','8': '小字四组 ','9': '小字五组 '},
-            "duration": dict(zip(['64th', '32th', '16th', 'eighth', 'quarter', 'half', 'whole'],
-                             ['64分音符','32分音符','16分音符','8分音符','4分音符','2分音符','全音符'])),
+            "duration": dict(zip(['64th', '32th', '16th', 'eighth', \
+                                  'quarter', 'half', 'whole'],
+                             ['六十四分音符','三十二分音符','十六分音符',\
+                              '八分音符','四分音符','二分音符','全音符'])),
             "other": {
                 "octave_shift": "以下的一组音符需要升高八度",
                 "second musical line": "第二行乐句",
                 "not defined": "未定义",
                 "first musical line": "第一行 ",
                 " rest": " 休止符",
-                "doted": "附点 ",
+                "dotted ": "附点 ",
                 "grace note ": "装饰音 ",
                 "start slur ": " 开始连音 ",
                 "arpeggiated ": "琶音 ",
@@ -107,7 +111,8 @@ class I18N(object):
                 " stop tuplet ": " 结束三连音",
                 "tied note ": "连结音符 ",
                 " note": "",
-                " perminute": " 每分钟"
+                " perminute": " 每分钟",
+                "staccato ": "断音 ",
             }
         }
     }

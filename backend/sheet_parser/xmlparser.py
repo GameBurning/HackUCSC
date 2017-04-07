@@ -4,7 +4,7 @@
 import json
 import xml.etree.ElementTree as ET
 # from enum import Enum
-import sheet_parser.i18n as i18n
+import i18n as i18n
 
 # TODO: First repeat and second repeat have different endings
 
@@ -177,7 +177,7 @@ class XmlParser:
                                 is_tuplet = False
                                 ssset = set()
                                 if note.find('notations/articulations/staccato') is not None:
-                                    note_text = "staccato " + note_text
+                                    note_text = self._("staccato ") + note_text
 
                                 for slur in note.findall('notations/slur'):
                                     ssset.add(slur.attrib['type'])
@@ -255,4 +255,4 @@ class XmlParser:
 if __name__ == "__main__":
     #print(generateJson('Sweethearts'))
     parser = XmlParser('../test/testCases', 'chinese')
-    print(parser.generate_score('千里之外'))
+    print(parser.generate_score('fur_elise'))
