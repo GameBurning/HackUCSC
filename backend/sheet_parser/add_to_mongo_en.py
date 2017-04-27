@@ -11,10 +11,10 @@ from xmlparser import XmlParser
 
 mp3_dir_path = os.path.expanduser('~/static/')
 sheet_dir_path = '../static/sheet_music'
-Update_Mp3 = True
-Update_Index = True
+Update_Mp3 = False
+Update_Index = False
 
-Update_Length = True
+Update_Length = False
 
 def _get_md5_hex(text):
     return hashlib.md5(text.encode('utf-16be')).hexdigest()
@@ -46,7 +46,7 @@ def run():
             meta_text = ""
             for i in score['metaInfo']:
                 for k in i.keys():
-                    meta_text += k + " : " + i[k] + ','
+                    meta_text += k + ". " + i[k] + '. '
             # print(meta_text)
             meta_mp3 = save_to_flac(meta_text)
             score['metaInfo'] = {
@@ -97,7 +97,7 @@ def run():
 
 def save_to_flac(text, filename=None):
     headers = {'accept': 'audio/ogg;codecs=opus'}
-    ibm_api = 'https://stream.watsonplatform.net/text-to-speech/api/v1/synthesize?text='
+    ibm_api = 'https://stream.watsonplatform.net/text-to-speech/api/v1/synthesize?voice=en-US_AllisonVoice&text='
     auth = ('a97c57a2-b373-4aea-b706-869950719784', '5P6rFTI50BOD')
     if filename:
         mp3_name = filename
