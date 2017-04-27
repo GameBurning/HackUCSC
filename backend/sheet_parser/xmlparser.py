@@ -157,8 +157,8 @@ class XmlParser:
 
                         else:
                             if self.trans_class.get_language() == "english":
-                                note_text = self._(_type, "duration") + " " + self._(_step, "step") + \
-                                        self._(_octave, "octave")
+                                note_text = self._(_type, "duration") + " " + '"' + self._(_step, "step") + \
+                                        + '"' + self._(_octave, "octave")
                             else:
                                 note_text = self._(_type, "duration") + " " + self._(_octave, "octave") + \
                                         self._(_step, "step") + " "
