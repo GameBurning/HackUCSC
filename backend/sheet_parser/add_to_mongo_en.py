@@ -21,8 +21,8 @@ def _get_md5_hex(text):
 
 def run():
     client = MongoClient()
-    client.drop_database('beta')
-    db = client.beta
+    client.drop_database('en')
+    db = client.en
     xml_parser = XmlParser(sheet_dir_path, "english")
 
     if Update_Index:
