@@ -10,20 +10,33 @@ from xmlparser import XmlParser
 
 mp3_dir_path = os.path.expanduser('~/static/')
 sheet_dir_path = '../static/sheet_music'
-Update_Mp3 = True
+Update_Mp3 = False
 Update_Index = False
+
+Update_Length = True
+
+def _get_md5_hex(text):
+    return hashlib.md5(text.encode('utf-16be')).hexdigest()
 
 def run():
     client = MongoClient()
     client.drop_database('beta')
     db = client.beta
     xml_parser = XmlParser(sheet_dir_path, "chinese")
+
     if Update_Index:
         for i in range(1000):
             index_test = "第{}越剧".format(i)
             save_to_mp3(index_test, filename=str(i)+"_zh")
         save_to_mp3("左手部分",filename="left_zh")
         save_to_mp3("右手部分",filename="right_zh")
+
+
+    if Update_Length:
+        for i in range(1000):
+            save_to_mp3(str(i), filename="length/" + str(i))
+        save_to_mp3("乐句长度:", filename="length_zh")
+
 
     mp3_files = os.listdir(sheet_dir_path)
     for mp3_file in mp3_files:
@@ -55,19 +68,18 @@ def run():
             for measure_num in score['scoreContent']:
                 # print(measure_num)
                 # print(score['scoreContent'][measure_num])
+                left_text = '第{}小节 '.format(measure_num)\
+                            +score['scoreContent'][measure_num]['Left']
+                right_text = '第{}小节 '.format(measure_num)\
+                            +score['scoreContent'][measure_num]['Right']
 
                 if Update_Mp3:
-                    left_mp3 = save_to_mp3('第{}小节 '.format(measure_num)\
-                                +score['scoreContent'][measure_num]['Left'])
-                    right_mp3 = save_to_mp3('第{}小节 '.format(measure_num)\
-                                +score['scoreContent'][measure_num]['Right'])
+                    left_mp3 = save_to_mp3(left_text)
+                    right_mp3 = save_to_mp3(right_text)
+
                 else:
-                    left_mp3 = hashlib.md5(('第{}小节 '.format(measure_num)\
-                                + score['scoreContent'][measure_num]['Left']\
-                                            ).encode('utf-16be')).hexdigest()
-                    right_mp3 = hashlib.md5(('第{}小节 '.format(measure_num)\
-                                + score['scoreContent'][measure_num]['Right']\
-                                             ).encode('utf-16be')).hexdigest()
+                    left_mp3 = _get_md5_hex(left_text)
+                    right_mp3 = _get_md5_hex(right_text)
 
                 score['scoreContent'][measure_num]['Right'] = {
                     "text" : score['scoreContent'][measure_num]['Right'],
@@ -77,9 +89,7 @@ def run():
                     "text" : score['scoreContent'][measure_num]['Left'],
                     "mp3" : left_mp3 + '.mp3'
                 }
-                #score['scoreContent']
-                # for hand in measure:
-                #     print(hand)
+
             result = db.score.insert_one(score)
             print(result)
 
@@ -90,7 +100,7 @@ def save_to_mp3(text, filename=None,  cuid='3c:15:c2:d2:0a:02'):
     lan = 'zh'
     data = {'tex': text, 'lan': lan, 'cuid': cuid, 'ctp': 1, 'tok': token}
     data_urlencode = urllib.parse.urlencode(data)
-    mp3_name = hashlib.md5(text.encode('utf-16be')).hexdigest()
+    mp3_name = _get_md5_hex(text)
     r = urllib.request.urlopen(baidu_api, str.encode(data_urlencode))
     code = r.getcode()
     print(text)
