@@ -10,8 +10,8 @@ from xmlparser import XmlParser
 
 mp3_dir_path = os.path.expanduser('~/static/')
 sheet_dir_path = '../static/sheet_music'
-Update_Mp3 = False
-Update_Index = False
+Update_Mp3 = True
+Update_Index = True
 
 Update_Length = True
 
@@ -20,8 +20,8 @@ def _get_md5_hex(text):
 
 def run():
     client = MongoClient()
-    client.drop_database('beta')
-    db = client.beta
+    client.drop_database('zh')
+    db = client.zh
     xml_parser = XmlParser(sheet_dir_path, "chinese")
 
     if Update_Index:
