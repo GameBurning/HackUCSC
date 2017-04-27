@@ -45,7 +45,7 @@ angular.module('myApp.play', ['ngRoute'])
         utility.get_score(score_id)
           .then(function(response) {
               if(response.metaInfo == null) {
-                  alert(display.show('Fail: Get the musicScore'));
+                //   alert(display.show('Fail: Get the musicScore'));
               }
               else {
                   $scope.score_meta = response.metaInfo;
@@ -55,7 +55,7 @@ angular.module('myApp.play', ['ngRoute'])
                       meta_info_text.push(prop + ". " + $scope.score_meta[i][prop]);
                     }
                   }
-
+                  utility.stop_all_sounds();
                   play([config.api.fetch_mp3 + $scope.score_meta.mp3]);
 
                   $scope.score_content = response.scoreContent;

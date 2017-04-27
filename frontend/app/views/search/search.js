@@ -94,9 +94,9 @@ angular.module('myApp.search', ['ngRoute'])
             .then(function(response) {
                 if (response !== null) {
                     $scope.searchList = response;
-                    debugger
                     if($scope.searchList.length > 0) {
                         $scope.selected = 0;
+                        utility.stop_all_sounds();
                         var sound = new Howl({
                           src: [config.api.fetch_mp3 + $scope.searchList[$scope.selected].title_mp3],
                           preload: true,
