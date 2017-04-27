@@ -253,5 +253,7 @@ class XmlParser:
 
 if __name__ == "__main__":
     #print(generateJson('Sweethearts'))
-    parser = XmlParser('../test/testCases', 'chinese')
-    print(parser.generate_score('Fur_Elise'))
+    parser_zh = XmlParser('../test/testCases', 'chinese')
+    parser_en = XmlParser('../test/testCases', 'english')
+    print(parser_zh.generate_score('Fur_Elise'))
+    print(parser_en.generate_score('Fur_Elise'))
