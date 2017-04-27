@@ -139,7 +139,7 @@ class XmlParser:
                         _staff = note.find('staff').text
 
                         if note.find('accidental') is not None:
-                            _step = self._(note.find('accidental').text, "accidental") + self._(_step, "step")
+                            _step = self._(note.find('accidental').text, "accidental") + " " + self._(_step, "step")
 
                         if note.find('chord') is not None:
                             # if "chord" not in m_text[int(_staff) - 1][-1]:
