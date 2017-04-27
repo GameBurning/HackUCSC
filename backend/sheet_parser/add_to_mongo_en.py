@@ -28,15 +28,15 @@ def run():
     if Update_Index:
         for i in range(1000):
             index_test = "Measure {}".format(i)
-            save_to_mp3(index_test, filename=str(i)+"_en")
-        save_to_mp3("left hand part",filename="left_en")
-        save_to_mp3("right hand part",filename="right_en")
+            save_to_flac(index_test, filename=str(i) + "_en")
+        save_to_flac("left hand part", filename="left_en")
+        save_to_flac("right hand part", filename="right_en")
 
 
     if Update_Length:
         for i in range(1000):
-            save_to_mp3(str(i), filename="length/" + str(i) + "_en")
-        save_to_mp3("Sentence Length:", filename="length_en")
+            save_to_flac(str(i), filename="length/" + str(i) + "_en")
+        save_to_flac("Sentence Length:", filename="length_en")
 
 
     mp3_files = os.listdir(sheet_dir_path)
@@ -48,23 +48,23 @@ def run():
                 for k in i.keys():
                     meta_text += k + " : " + i[k] + ','
             # print(meta_text)
-            meta_mp3 = save_to_mp3(meta_text)
+            meta_mp3 = save_to_flac(meta_text)
             score['metaInfo'] = {
                 "text" : score['metaInfo'],
-                'mp3' : meta_mp3 + '.mp3'
+                'mp3' : meta_mp3 + '.flac'
             }
             score['title_id'] = score['title']
             score['title'] = {
                 "text": score['title'],
-                'mp3': save_to_mp3(score['title']) + '.mp3'
+                'mp3': save_to_flac(score['title']) + '.flac'
             }
             score['composer'] = {
                 "text": score['composer'],
-                'mp3': save_to_mp3(score['composer']) + '.mp3'
+                'mp3': save_to_flac(score['composer']) + '.flac'
             }
             score['key'] = {
                 "text": score['key'],
-                'mp3': save_to_mp3(score['key']) + '.mp3'
+                'mp3': save_to_flac(score['key']) + '.flac'
             }
             for measure_num in score['scoreContent']:
                 # print(measure_num)
@@ -75,8 +75,8 @@ def run():
                             +score['scoreContent'][measure_num]['Right']
 
                 if Update_Mp3:
-                    left_mp3 = save_to_mp3(left_text)
-                    right_mp3 = save_to_mp3(right_text)
+                    left_mp3 = save_to_flac(left_text)
+                    right_mp3 = save_to_flac(right_text)
 
                 else:
                     left_mp3 = _get_md5_hex(left_text)
@@ -84,18 +84,18 @@ def run():
 
                 score['scoreContent'][measure_num]['Right'] = {
                     "text" : score['scoreContent'][measure_num]['Right'],
-                    "mp3" : right_mp3 + '.mp3'
+                    "mp3" : right_mp3 + '.flac'
                 }
                 score['scoreContent'][measure_num]['Left'] = {
                     "text" : score['scoreContent'][measure_num]['Left'],
-                    "mp3" : left_mp3 + '.mp3'
+                    "mp3" : left_mp3 + '.flac'
                 }
 
             result = db.score.insert_one(score)
             print(result)
 
 
-def save_to_mp3(text, filename=None):
+def save_to_flac(text, filename=None):
     headers = {'accept': 'audio/flac'}
     ibm_api = 'https://stream.watsonplatform.net/text-to-speech/api/v1/synthesize?text='
     auth = ('a97c57a2-b373-4aea-b706-869950719784', '5P6rFTI50BOD')
@@ -107,6 +107,7 @@ def save_to_mp3(text, filename=None):
     code = r.status_code
     print(text)
     print(code)
+    print(mp3_name)
     if code == 200:
         with open(mp3_dir_path + mp3_name+'.flac',"wb") as file:
             for chunk in r.iter_content(1024):
