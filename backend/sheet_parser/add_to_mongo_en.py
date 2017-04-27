@@ -110,6 +110,7 @@ def save_to_flac(text, filename=None):
     print(mp3_name)
     if code == 200:
         with open(mp3_dir_path + mp3_name+'.flac',"wb") as file:
+            print(mp3_dir_path+mp3_name+'.flac')
             for chunk in r.iter_content(1024):
                 file.write(chunk)
         return mp3_name
