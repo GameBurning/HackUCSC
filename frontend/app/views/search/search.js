@@ -9,8 +9,8 @@ angular.module('myApp.search', ['ngRoute'])
   });
 }])
 
-.controller('SearchCtrl', ['$scope', 'httpUtil', 'navigation', 'fakeData', 'utility', 'display',
-    function($scope, httpUtil, navigation, fakeData, utility, display) {
+.controller('SearchCtrl', ['$scope', 'httpUtil', 'navigation', 'fakeData', 'utility', 'display', 'config',
+    function($scope, httpUtil, navigation, fakeData, utility, display, config) {
     $scope.shouldFocus = true;
     $scope.showResult = false;
     $scope.searchString = "";
@@ -71,23 +71,6 @@ angular.module('myApp.search', ['ngRoute'])
                 $scope.selected --;
                 $scope.$apply();
             }
-            utility.get_voice_by_text($scope.searchList[$scope.selected].name)
-                .then(function(sound_url){
-                    var sound = new Howl({
-                        src: [sound_url],
-                        autoplay: true,
-                        loop: false,
-                        onload: function() {
-                            utility.stop_all_sounds();
-                            utility.active_sounds.push(sound);
-                        },
-                        onend: function() {
-                            console.log('Finished!');
-                        }
-                      });
-                }, function(error){
-
-                });
         }
     }
 
@@ -97,23 +80,6 @@ angular.module('myApp.search', ['ngRoute'])
                 $scope.selected ++;
                 $scope.$apply();
             }
-            utility.get_voice_by_text($scope.searchList[$scope.selected].name)
-                .then(function(sound_url){
-                    var sound = new Howl({
-                        src: [sound_url],
-                        autoplay: true,
-                        loop: false,
-                        onload: function() {
-                            utility.stop_all_sounds();
-                            utility.active_sounds.push(sound);
-                        },
-                        onend: function() {
-                            console.log('Finished!');
-                        }
-                      });
-                }, function(error){
-
-                });
         }
     }
 
@@ -128,33 +94,33 @@ angular.module('myApp.search', ['ngRoute'])
             .then(function(response) {
                 if (response !== null) {
                     $scope.searchList = response;
+                    debugger
                     if($scope.searchList.length > 0) {
                         $scope.selected = 0;
-                        utility.get_voice_by_text($scope.searchList[$scope.selected].name)
-                            .then(function(sound_url){
-                                var sound = new Howl({
-                                    src: [sound_url],
-                                    autoplay: true,
-                                    loop: false,
-                                    onload: function() {
-                                        utility.stop_all_sounds();
-                                        utility.active_sounds.push(sound);
-                                    },
-                                    onend: function() {
-                                        console.log('Finished!');
-                                    }
-                                  });
-                            }, function(error){
-
-                            });
+                        var sound = new Howl({
+                          src: [config.api.fetch_mp3 + $scope.searchList[$scope.selected].title_mp3],
+                          preload: true,
+                          autoplay: true,
+                          rate: 1,
+                          onload: function() {
+                            utility.active_sounds.push(sound);
+                          },
+                          onend: function() {
+                            console.log('Finished!');
+                            list.splice(0, 1);
+                            setTimeout(function() {
+                              play(list);
+                            }, 0);
+                            },
+                          onloaderror: function(e){
+                              debugger
+                          }
+                      });
                     }
                 }
+                $scope.$apply();
             }, function(error) {
-                var response = fakeData.searchList; // TODO: Change to real API data
-                if (response !== null) {
-                    $scope.searchList = response;
-                    if($scope.searchList.length > 0) $scope.selected = 0;
-                }
+                debugger
             });
 
         key('enter', function() {
@@ -162,7 +128,7 @@ angular.module('myApp.search', ['ngRoute'])
           $scope.focus();
           $scope.showResult = false;
           $scope.$apply();
-          navigation('play', {"id" : $scope.searchList[$scope.selected].name});
+          navigation('play', {"id" : $scope.searchList[$scope.selected].title});
         });
 
         key('left', function() {
