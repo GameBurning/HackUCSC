@@ -7,7 +7,8 @@ var app = express();
 var urlencode = require('urlencode');
 var randomstring = require("randomstring");
 
-// use:  http://localhost:8001/speak?sentence=good day Jamie
+// use:  http://localhost:8001/speak?language=en&sentence=hello a everyone and oh my god what the hack
+//       http://localhost:8001/speak?language=zh-cn&sentence=hello a everyone and oh my god what the hack
 // use:  http://localhost:8001/voice/ffdsafdsafdsafsadrjenqw.wav
 
 app.use(cors());

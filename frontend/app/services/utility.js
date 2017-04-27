@@ -83,6 +83,7 @@ angular.module('myApp')
         var deferred = $q.defer();
         httpUtil.get(config.api.music_score + "/musicscores/?keyword=" + search_text)
         .then(function(response) {
+            debugger
             if (response !== null) {
                 deferred.resolve(response);
             }
