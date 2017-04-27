@@ -26,7 +26,7 @@ def run():
     xml_parser = XmlParser(sheet_dir_path, "english")
 
     if Update_Index:
-        for i in range(1000):
+        for i in range(50):
             index_test = "Measure {}".format(i)
             save_to_flac(index_test, filename=str(i) + "_en")
         save_to_flac("left hand part", filename="left_en")
@@ -34,7 +34,7 @@ def run():
 
 
     if Update_Length:
-        for i in range(1000):
+        for i in range(10):
             save_to_flac(str(i), filename="length/" + str(i) + "_en")
         save_to_flac("Sentence Length:", filename="length_en")
 
@@ -51,20 +51,20 @@ def run():
             meta_mp3 = save_to_flac(meta_text)
             score['metaInfo'] = {
                 "text" : score['metaInfo'],
-                'mp3' : meta_mp3 + '.flac'
+                'mp3' : meta_mp3 + '.ogg'
             }
             score['title_id'] = score['title']
             score['title'] = {
                 "text": score['title'],
-                'mp3': save_to_flac(score['title']) + '.flac'
+                'mp3': save_to_flac(score['title']) + '.ogg'
             }
             score['composer'] = {
                 "text": score['composer'],
-                'mp3': save_to_flac(score['composer']) + '.flac'
+                'mp3': save_to_flac(score['composer']) + '.ogg'
             }
             score['key'] = {
                 "text": score['key'],
-                'mp3': save_to_flac(score['key']) + '.flac'
+                'mp3': save_to_flac(score['key']) + '.ogg'
             }
             for measure_num in score['scoreContent']:
                 # print(measure_num)
@@ -84,11 +84,11 @@ def run():
 
                 score['scoreContent'][measure_num]['Right'] = {
                     "text" : score['scoreContent'][measure_num]['Right'],
-                    "mp3" : right_mp3 + '.flac'
+                    "mp3" : right_mp3 + '.ogg'
                 }
                 score['scoreContent'][measure_num]['Left'] = {
                     "text" : score['scoreContent'][measure_num]['Left'],
-                    "mp3" : left_mp3 + '.flac'
+                    "mp3" : left_mp3 + '.ogg'
                 }
 
             result = db.score.insert_one(score)
@@ -96,7 +96,7 @@ def run():
 
 
 def save_to_flac(text, filename=None):
-    headers = {'accept': 'audio/flac'}
+    headers = {'accept': 'audio/ogg;codecs=opus'}
     ibm_api = 'https://stream.watsonplatform.net/text-to-speech/api/v1/synthesize?text='
     auth = ('a97c57a2-b373-4aea-b706-869950719784', '5P6rFTI50BOD')
     if filename:
@@ -109,8 +109,8 @@ def save_to_flac(text, filename=None):
     print(code)
     print(mp3_name)
     if code == 200:
-        with open(mp3_dir_path + mp3_name+'.flac',"wb") as file:
-            print(mp3_dir_path+mp3_name+'.flac')
+        with open(mp3_dir_path + mp3_name+'.ogg',"wb") as file:
+            print(mp3_dir_path+mp3_name+'.ogg')
             for chunk in r.iter_content(1024):
                 file.write(chunk)
         return mp3_name

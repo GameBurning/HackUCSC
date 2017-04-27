@@ -10,10 +10,10 @@ from xmlparser import XmlParser
 
 mp3_dir_path = os.path.expanduser('~/static/')
 sheet_dir_path = '../static/sheet_music'
-Update_Mp3 = True
-Update_Index = True
+Update_Mp3 = False
+Update_Index = False
 
-Update_Length = True
+Update_Length = False
 
 def _get_md5_hex(text):
     return hashlib.md5(text.encode('utf-16be')).hexdigest()

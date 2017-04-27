@@ -17,12 +17,12 @@ scoreNames = [m.split('.xml')[0] for m in listdir(dir_name)]
 fav_list = []
 hist_list = []
 
-parser_zh = xmlparser.XmlParser(dir_name, "Chinese")
-parser_en = xmlparser.XmlParser(dir_name)
-
 client = MongoClient()
-db = client.beta
-scores = db.score
+db_zh = client.zh
+scores_zh = db_zh.score
+
+db_en = client.en
+scores_en = db_en.score
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
@@ -75,7 +75,7 @@ def api_search_zh():
         #    hist_list.append(request.args['title'])
         #return parser_zh.generate_json(request.args['title'])
 
-        result = scores.find_one({"title_id":request.args['title']})
+        result = scores_zh.find_one({"title_id":request.args['title']})
         print(type(result))
         return JSONEncoder().encode(result)
     else:
@@ -85,15 +85,8 @@ def api_search_zh():
 @app.route('/api/language/english/musicscores/')
 def api_search_en():
     if 'keyword' in request.args:
-        rList = []
-        for m in scoreNames:
-            if request.args['keyword'].lower() in m.lower():
-                newDict = {}
-                newDict['name'] = m
-                newDict['hardness'] = "Not implemented yet"
-                newDict['composer'] = "Not implemented yet"
-                rList.append(newDict)
-        return json.dumps(rList)
+        result = [{"title": "For Elise", "title_mp3": "69f1ce301c91af6a336171188df2ef2f.ogg", "author": "Beethoven"}]
+        return json.dumps(result)
     if 'title' in request.args:
         # if request.args['title'] not in hist_list:
         #     hist_list.append(request.args['title'])
@@ -101,7 +94,7 @@ def api_search_en():
         #     del (hist_list[hist_list.index(request.args['title'])])
         #     hist_list.append(request.args['title'])
         # return parser_en.generate_json(request.args['title'])
-        result = scores.find_one({"title_id": request.args['title']})
+        result = scores_en.find_one({"title_id": request.args['title']})
         print(type(result))
         return JSONEncoder().encode(result)
     else:
