@@ -112,7 +112,12 @@ angular.module('myApp.play', ['ngRoute'])
 
       function tellCurrentOffset() {
           utility.stop_all_sounds();
-          play([config.api.fetch_mp3 + ($scope.offset + 1) + "_zh.mp3"]);
+          let sound_source =
+              config.api.fetch_mp3
+              + ($scope.offset + 1)
+              + (lang=="chinese"? "_zh.mp3" : "")
+              + (lang=="english"? "_en.ogg" : "")
+          play([sound_source]);
 
       }
 
@@ -121,12 +126,21 @@ angular.module('myApp.play', ['ngRoute'])
       function tellCurrentBlockSize() {
           utility.stop_all_sounds();
           if(changingBlockSize == false) {
+              if(lang=="chinese") {
                 play([config.api.fetch_mp3 + 'length' + "_zh.mp3", config.api.fetch_mp3 + 'length/' + $scope.blockSize + ".mp3"]);
-                console.log("sentenceSize");
-                changingBlockSize = true;
+              }
+              else if(lang=="english") {
+                  play([config.api.fetch_mp3 + 'length' + "_en.ogg", config.api.fetch_mp3 + 'length/' + $scope.blockSize + "_en.ogg"]);
+              }
+              changingBlockSize = true;
           }
           else {
-              play([config.api.fetch_mp3 + 'length/' + $scope.blockSize + ".mp3"]);
+              if(lang=="chinese") {
+                  play([config.api.fetch_mp3 + 'length/' + $scope.blockSize + ".mp3"]);
+              }
+              else if(lang == "english") {
+                  play([config.api.fetch_mp3 + 'length/' + $scope.blockSize + "_en.ogg"]);
+              }
           }
           console.log($scope.blockSize);
           if(timeout_promise != null) {
@@ -143,14 +157,14 @@ angular.module('myApp.play', ['ngRoute'])
           $scope.offset += $scope.blockSize;
         }
         if(readout == undefined || readout == true) tellCurrentOffset();
-        $scope.display_list = [];
-        for (var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
-          if (lang == "chinese") {
-            $scope.display_list.push("第 " + (i + $scope.offset + 1) + " 小节");
-          } else if (lang.indexOf("en") != -1) {
-            $scope.display_list.push("Measure No." + (i + $scope.offset + 1));
-          }
-        }
+        // $scope.display_list = [];
+        // for (var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
+        //   if (lang == "chinese") {
+        //     $scope.display_list.push("第 " + (i + $scope.offset + 1) + " 小节");
+        //   } else if (lang.indexOf("en") != -1) {
+        //     $scope.display_list.push("Measure No." + (i + $scope.offset + 1));
+        //   }
+        // }
         $scope.$apply();
       }
 
@@ -160,23 +174,26 @@ angular.module('myApp.play', ['ngRoute'])
         } else {
           $scope.offset = 0;
         }
-        $scope.display_list = [];
 
         if(readout == undefined || readout == true) tellCurrentOffset();
-
-        for (var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
-          if (lang == "chinese") {
-            $scope.display_list.push("第 " + (i + $scope.offset + 1) + " 小节");
-          } else if (lang.indexOf("en") != -1) {
-            $scope.display_list.push("Measure No." + (i + $scope.offset + 1));
-          }
-        }
+        // $scope.display_list = [];
+        //
+        // for (var i = 0; i < $scope.blockSize && i + $scope.offset < $scope.size; i++) {
+        //   if (lang == "chinese") {
+        //     $scope.display_list.push("第 " + (i + $scope.offset + 1) + " 小节");
+        //   } else if (lang.indexOf("en") != -1) {
+        //     $scope.display_list.push("Measure No." + (i + $scope.offset + 1));
+        //   }
+        // }
         $scope.$apply();
       }
 
       $scope.handFeekback = function() {
+          var sound_source = "/resources/sounds/" + $scope.hand
+                +(lang=="chinese"?".mp3":"")
+                +(lang=="english"?"_en.ogg":"");
           var sound = new Howl({
-              src: ['/resources/sounds/'+$scope.hand+'.mp3'],
+              src: [sound_source],
               preload: true,
               autoplay: true,
               rate : 1,
@@ -186,6 +203,9 @@ angular.module('myApp.play', ['ngRoute'])
               },
               onend: function() {
                   console.log('Finished!');
+              },
+              onloaderror: function(e){
+                  debugger
               }
             });
       }
@@ -228,6 +248,9 @@ angular.module('myApp.play', ['ngRoute'])
             setTimeout(function() {
               play(list);
             }, 0);
+            },
+          onloaderror: function(e){
+              debugger
           }
         });
         utility.active_sounds.push(sound);
