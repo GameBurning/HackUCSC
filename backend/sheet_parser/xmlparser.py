@@ -217,7 +217,7 @@ class XmlParser:
 
             whole_text.append(m_text)
 
-        comma = " , "
+        comma = ". "
 
         metaInfo = [{self._('title', 'meta'): self._(self.metadata["title"], 'title')},
                     {self._('composer', 'meta'): self._(self.metadata["composer"], 'composer')},

@@ -69,9 +69,9 @@ def run():
             for measure_num in score['scoreContent']:
                 # print(measure_num)
                 # print(score['scoreContent'][measure_num])
-                left_text = 'Measure {} '.format(measure_num)\
+                left_text = 'Measure {}. '.format(measure_num)\
                             +score['scoreContent'][measure_num]['Left']
-                right_text = 'Measure {} '.format(measure_num)\
+                right_text = 'Measure {}. '.format(measure_num)\
                             +score['scoreContent'][measure_num]['Right']
 
                 if Update_Mp3:

@@ -64,9 +64,7 @@ def api_hist_zh():
 @app.route('/api/language/chinese/musicscores/')
 def api_search_zh():
     if 'keyword' in request.args:
-
-
-        return json.dumps(rList)
+        return
     if 'title' in request.args:
         #if request.args['title'] not in hist_list:
         #    hist_list.append(request.args['title'])
