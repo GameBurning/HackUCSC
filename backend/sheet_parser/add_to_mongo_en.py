@@ -103,7 +103,7 @@ def save_to_flac(text, filename=None):
         mp3_name = filename
     else:
         mp3_name = _get_md5_hex(text)
-    r = r = requests.get(ibm_api, auth=auth, headers = headers)
+    r = requests.get(ibm_api + text, auth=auth, headers = headers)
     code = r.status_code
     print(text)
     print(code)
